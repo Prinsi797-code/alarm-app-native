@@ -45,6 +45,10 @@ const TONE_MAP: Record<string, any> = {
     'Classic': require('../../assets/sounds/classic.mp3'),
     'Radar': require('../../assets/sounds/radar.mp3'),
     'Beacon': require('../../assets/sounds/beacon.mp3'),
+    'Einnt': require('../../assets/sounds/einnt.mp3'),
+    'Funny': require('../../assets/sounds/funny.mp3'),
+    'Gunfire': require('../../assets/sounds/gunfire.mp3'),
+    'Love': require('../../assets/sounds/love.mp3')
 };
 let playerReady = false;
 
@@ -83,9 +87,23 @@ async function startRinging(alarm: any) {
     try {
         await ensurePlayer();
         await TrackPlayer.reset();
+
+        let trackUrl: any;
+
+        // Custom ringtone check karo
+        if (alarm?.ringtone?.startsWith('custom_')) {
+            const index = parseInt(alarm.ringtone.replace('custom_', ''));
+            const raw = await AsyncStorage.getItem('@custom_ringtones');
+            const customTones: { name: string; uri: string }[] = raw ? JSON.parse(raw) : [];
+            const ct = customTones[index];
+            trackUrl = ct?.uri ?? TONE_MAP['Fine Day'];
+        } else {
+            trackUrl = TONE_MAP[alarm?.ringtone] ?? TONE_MAP['Fine Day'];
+        }
+
         await TrackPlayer.add({
             id: 'alarm_ring',
-            url: TONE_MAP[alarm?.ringtone] ?? TONE_MAP['Fine Day'],
+            url: trackUrl,
             title: alarm?.label ?? 'Alarm',
             artist: 'Alarm',
         });
@@ -93,6 +111,7 @@ async function startRinging(alarm: any) {
         await TrackPlayer.play();
     } catch (e) { console.log('Ring error:', e); }
 }
+
 
 async function stopRinging() {
     try { await TrackPlayer.stop(); await TrackPlayer.reset(); } catch { }
@@ -181,7 +200,7 @@ function generateMath(difficulty: 'Easy' | 'Medium' | 'Hard' = 'Easy'): MathProb
 function MathDismissScreen({
     onSolved,
     onClose,
-    totalCount = 1,    
+    totalCount = 1,
     difficulty = 'Easy',
 }: {
     onSolved: () => void;
@@ -394,14 +413,20 @@ export default function AlarmRingingScreen() {
         try { await notifee.cancelNotification(alarmId); } catch { }
         navigation.goBack();
     };
-
+    const CUSTOM_INDEX_START = 100;
     const { disp, per } = alarm
         ? fmtT(alarm.hour, alarm.minute)
         : fmtT(now.getHours(), now.getMinutes());
 
-    const bgSource = alarm
-        ? BG_IMAGES[alarm.bgIndex % BG_IMAGES.length]
-        : BG_IMAGES[0];
+    const bgSource = (() => {
+        if (!alarm) return BG_IMAGES[0];
+        if (alarm.bgIndex >= CUSTOM_INDEX_START) {
+            const slot = alarm.bgIndex - CUSTOM_INDEX_START;
+            const uri = alarm.customBgUris?.[slot];
+            if (uri) return { uri };
+        }
+        return BG_IMAGES[alarm.bgIndex % BG_IMAGES.length];
+    })();
 
     const dateStr = `${now.getDate()} ${MONTHS[now.getMonth()]}, ${DAYS[now.getDay()]}`;
     const snoozeMin = alarm?.snoozeMinutes ?? 5;

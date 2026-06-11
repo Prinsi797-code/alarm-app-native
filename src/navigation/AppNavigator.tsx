@@ -11,10 +11,13 @@ import ClockScreen from '../screens/ClockScreen';
 import TimerScreen from '../screens/TimerScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import AlarmRingingScreen from '../screens/AlarmRingingScreen';
+import CoinScreen from '../screens/CoinScreen';
 import RingtonePickerScreen from '../screens/RingtonePickerScreen';
 import ThemeModeScreen from '../screens/ThemeModeScreen';
 import LanguageScreen from '../screens/LanguageScreen';
 import SnoozePickerScreen from '../screens/SnoozePickerScreen';
+import SplashScreen from '../screens/SplashScreen';
+
 import { useTranslation } from 'react-i18next';
 
 const Tab = createBottomTabNavigator();
@@ -31,7 +34,7 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
   const activeRouteName: string = state.routes[state.index]?.name ?? '';
   const isTimerTab = activeRouteName === 'Timer';
   const { t } = useTranslation();
-  
+
   const handleAddPress = () => {
     if (activeRouteName === 'Clock') {
       navigation.navigate('Clock', { openAddCountry: Date.now() });
@@ -116,7 +119,11 @@ function BottomTabs() {
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    // <Stack.Navigator screenOptions={{ headerShown: false }}>
+    // <Stack.Screen name="Main" component={BottomTabs} />
+    <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Splash" component={SplashScreen} />
+      <Stack.Screen name="Home" component={AlarmScreen} />
       <Stack.Screen name="Main" component={BottomTabs} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="ThemeMode" component={ThemeModeScreen} options={{ presentation: 'card', animation: 'slide_from_right' }} />
@@ -124,6 +131,7 @@ export default function AppNavigator() {
       <Stack.Screen name="SnoozePicker" component={SnoozePickerScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="RingtonePicker" component={RingtonePickerScreen} options={{ presentation: 'modal', animation: 'fade' }} />
       <Stack.Screen name="AlarmRinging" component={AlarmRingingScreen} options={{ presentation: 'modal', animation: 'fade' }} />
+      <Stack.Screen name="CoinScreen" component={CoinScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );
 }

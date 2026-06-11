@@ -5,7 +5,7 @@ import SnoozePickerScreen from './SnoozePickerScreen';
 import {
     Animated, Dimensions, FlatList, Image, Modal,
     Platform, ScrollView, StyleSheet, PanResponder,
-    Text, TouchableOpacity, View, TextInput
+    Text, TouchableOpacity, View, TextInput, Alert
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -19,7 +19,8 @@ import { loadDefaultVibrate } from './SettingsScreen';
 import { useTranslation } from 'react-i18next';
 import RingtonePickerScreen, { TONES, playPreview, stopPreview } from './RingtonePickerScreen';
 import MathMissionScreen from '../screens/MathMissionScreen';
-
+import { launchImageLibrary } from 'react-native-image-picker';
+import { CoinStore } from '../utils/CoinStore';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 const STORAGE_KEY = '@alarms_v3';
@@ -72,7 +73,8 @@ type Alarm = {
         count: number;
         difficulty: 'Easy' | 'Medium' | 'Hard';
     };
-
+    customBgUri?: string;
+    customBgUris?: string[];
 };
 
 const DAY_S = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
@@ -95,6 +97,10 @@ const TONE_MAP: Record<string, any> = {
     'Classic': require('../../assets/sounds/classic.mp3'),
     'Radar': require('../../assets/sounds/radar.mp3'),
     'Beacon': require('../../assets/sounds/beacon.mp3'),
+    'Einnt': require('../../assets/sounds/einnt.mp3'),
+    'Funny': require('../../assets/sounds/funny.mp3'),
+    'Gunfire': require('../../assets/sounds/gunfire.mp3'),
+    'Love': require('../../assets/sounds/love.mp3')
 };
 
 let playerReady = false;
@@ -190,14 +196,21 @@ async function scheduleAlarm(alarm: Alarm) {
         'Classic': 'classic.caf',
         'Radar': 'radar.caf',
         'Beacon': 'beacon.caf',
+        'Einnt': 'einnt.caf',
+        'Funny': 'funny.caf',
+        'Gunfire': 'gunfire.caf',
+        'Love': 'love.caf'
     };
     const TONE_ANDROID: Record<string, string> = {
         'Fine Day': 'fine_day',
         'Classic': 'classic',
         'Radar': 'radar',
         'Beacon': 'beacon',
+        'Einnt': 'einnt',
+        'Funny': 'funny',
+        'Gunfire': 'gunfire',
+        'Love': 'love'
     };
-
     const iosSoundFile = TONE_IOS[alarm.ringtone] ?? 'fine_day.caf';
     const androidSoundFile = TONE_ANDROID[alarm.ringtone] ?? 'fine_day';
 
@@ -821,11 +834,12 @@ const card = StyleSheet.create({
     dotTxt: { fontSize: 10 },
 });
 
-function EditScreen({ alarm, onSave, onDelete, onBack, colors }: {
+function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
     alarm: Alarm | null;
     onSave: (a: Alarm) => void;
     onDelete: (id: string) => void;
     onBack: () => void;
+    onGoToCoins: () => void;
     colors: any;
 }) {
     const ins = useSafeAreaInsets();
@@ -835,8 +849,50 @@ function EditScreen({ alarm, onSave, onDelete, onBack, colors }: {
         id: Date.now().toString(), hour: 7, minute: 0, label: 'New Alarm',
         days: [1, 2, 3, 4, 5], enabled: true, ringtone: 'Fine Day',
         snoozeMinutes: 5, bgIndex: 0,
+        customBgUris: [],
         mission: { enabled: false, type: 'math', count: 1, difficulty: 'Easy' },
     });
+
+    const CUSTOM_INDEX_START = 100;
+    const isCustomIndex = (idx: number) => idx >= CUSTOM_INDEX_START;
+    const getCustomSlot = (idx: number) => idx - CUSTOM_INDEX_START;
+    const [unlockedItems, setUnlockedItems] = useState<number[]>([]);
+
+    useEffect(() => {
+        CoinStore.getUnlocked().then(list => {
+            setUnlockedItems(list.map(u => u.bgIndex));
+        });
+    }, []);
+
+    const pickCustomImage = () => {
+        const uris = d.customBgUris ?? [];
+        if (uris.length >= 3) return;
+
+        launchImageLibrary(
+            { mediaType: 'photo', quality: 0.8 },
+            (response) => {
+                if (response.didCancel || response.errorCode) return;
+                const uri = response.assets?.[0]?.uri;
+                if (!uri) return;
+                const newUris = [...uris, uri];
+                const newIndex = CUSTOM_INDEX_START + (newUris.length - 1);
+                setD(x => ({ ...x, customBgUris: newUris, bgIndex: newIndex }));
+            }
+        );
+    };
+
+    const removeCustomImage = (slot: number) => {
+        const uris = [...(d.customBgUris ?? [])];
+        uris.splice(slot, 1);
+        let newBgIndex = d.bgIndex;
+        if (d.bgIndex === CUSTOM_INDEX_START + slot) {
+            newBgIndex = 0;
+        } else if (isCustomIndex(d.bgIndex) && getCustomSlot(d.bgIndex) > slot) {
+            newBgIndex = d.bgIndex - 1;
+        }
+        setD(x => ({ ...x, customBgUris: uris, bgIndex: newBgIndex }));
+    };
+
 
     const [showMission, setShowMission] = useState(false);
     const daysStr = (days: number[], specificDate?: string): string => {
@@ -921,6 +977,14 @@ function EditScreen({ alarm, onSave, onDelete, onBack, colors }: {
 
     const S = edit_styles(colors);
 
+    const LOCKED_BG_INDICES = [0, 1, 4, 5];
+    // const LOCKED_BG_INDICES = [0, 1, 2, 3];
+    const isLocked = (idx: number) => {
+        if (idx >= 100) return !unlockedItems.includes(100); // custom
+        if (LOCKED_BG_INDICES.includes(idx)) return !unlockedItems.includes(idx);
+        return false;
+    };
+
     return (
         <View style={[S.root, { paddingTop: ins.top }]}>
             <View style={S.hdr}>
@@ -939,7 +1003,6 @@ function EditScreen({ alarm, onSave, onDelete, onBack, colors }: {
 
             <ScrollView showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: ins.bottom + 48 }}>
-
                 <View style={S.card}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 10 }}>
                         <Image
@@ -1155,13 +1218,35 @@ function EditScreen({ alarm, onSave, onDelete, onBack, colors }: {
 
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -2 }}>
                         {BG_IMAGES.map((src, i) => (
-                            <TouchableOpacity key={i} onPress={() => setD(x => ({ ...x, bgIndex: i }))} style={{ marginHorizontal: 4 }}>
+                            <TouchableOpacity
+                                key={i}
+                                onPress={() => {
+                                    if (isLocked(i)) {
+                                        onGoToCoins();
+                                        // Alert.alert('Locked 🔒', '50 coins mein unlock karo.\nCoin screen pe jao!');
+                                        return;
+                                    }
+                                    setD(x => ({ ...x, bgIndex: i }));
+                                }}
+                                style={{ marginHorizontal: 4 }}
+                            >
                                 <Image source={src} style={{
                                     width: 100, height: 150, borderRadius: 10,
                                     borderWidth: d.bgIndex === i ? 2.5 : 0,
                                     borderColor: colors.primary,
+                                    opacity: isLocked(i) ? 0.5 : 1,
                                 }} resizeMode="cover" />
-                                {d.bgIndex === i && (
+                                {isLocked(i) && (
+                                    <View style={{
+                                        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                                        backgroundColor: 'rgba(0,0,0,0.5)', borderRadius: 10,
+                                        alignItems: 'center', justifyContent: 'center',
+                                    }}>
+                                        <Text style={{ fontSize: 22 }}>🔒</Text>
+                                        {/* <Text style={{ fontSize: 11, color: '#FAC775', fontWeight: '700', marginTop: 4 }}>50 🪙</Text> */}
+                                    </View>
+                                )}
+                                {d.bgIndex === i && !isLocked(i) && (
                                     <View style={{
                                         position: 'absolute', top: 6, right: 6,
                                         width: 20, height: 20, borderRadius: 10,
@@ -1173,6 +1258,117 @@ function EditScreen({ alarm, onSave, onDelete, onBack, colors }: {
                                 )}
                             </TouchableOpacity>
                         ))}
+
+                        {(d.customBgUris ?? []).map((uri, slot) => {
+                            const idx = CUSTOM_INDEX_START + slot;
+                            const isSelected = d.bgIndex === idx;
+                            return (
+                                <TouchableOpacity
+                                    key={`custom_${slot}`}
+                                    onPress={() => setD(x => ({ ...x, bgIndex: idx }))}
+                                    style={{ marginHorizontal: 4 }}
+                                >
+                                    <Image
+                                        source={{ uri }}
+                                        style={{
+                                            width: 100, height: 150, borderRadius: 10,
+                                            borderWidth: isSelected ? 2.5 : 0,
+                                            borderColor: colors.primary,
+                                        }}
+                                        resizeMode="cover"
+                                    />
+                                    {/* Remove (×) button — top-left */}
+                                    <TouchableOpacity
+                                        onPress={() => removeCustomImage(slot)}
+                                        style={{
+                                            position: 'absolute', top: 6, left: 6,
+                                            width: 22, height: 22, borderRadius: 11,
+                                            backgroundColor: 'rgba(0,0,0,0.6)',
+                                            borderWidth: 1, borderColor: 'rgba(255,255,255,0.3)',
+                                            alignItems: 'center', justifyContent: 'center',
+                                        }}
+                                    >
+                                        <Text style={{ color: '#FFF', fontSize: 13, fontWeight: '700', lineHeight: 15 }}>×</Text>
+                                    </TouchableOpacity>
+                                    {/* Selected checkmark — top-right */}
+                                    {isSelected && (
+                                        <View style={{
+                                            position: 'absolute', top: 6, right: 6,
+                                            width: 20, height: 20, borderRadius: 10,
+                                            backgroundColor: colors.primary,
+                                            alignItems: 'center', justifyContent: 'center',
+                                        }}>
+                                            <Text style={{ color: '#FFF', fontSize: 11, fontWeight: '700' }}>✓</Text>
+                                        </View>
+                                    )}
+                                    {/* "Custom" label — bottom */}
+                                    <View style={{
+                                        position: 'absolute', bottom: 0, left: 0, right: 0,
+                                        backgroundColor: 'rgba(0,0,0,0.45)',
+                                        borderBottomLeftRadius: 10, borderBottomRightRadius: 10,
+                                        paddingVertical: 4, alignItems: 'center',
+                                    }}>
+                                        <Text style={{ color: '#FFF', fontSize: 10, fontWeight: '600' }}>
+                                            {t('Custom')} {slot + 1}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                            );
+                        })}
+
+                        {(d.customBgUris ?? []).length < 3 && (
+                            <TouchableOpacity
+                                onPress={() => {
+                                    if (isLocked(100)) {
+                                        onGoToCoins();
+                                        // Alert.alert('Locked 🔒', '50 coins mein unlock karo.\nCoin screen pe jao!');
+                                        return;
+                                    }
+                                    pickCustomImage();
+                                }}
+                                style={{ marginHorizontal: 4 }}
+                            >
+                                <View style={{
+                                    width: 100, height: 150, borderRadius: 10,
+                                    borderWidth: 1.5,
+                                    borderColor: isLocked(100) ? colors.border + '60' : colors.border,
+                                    borderStyle: 'dashed',
+                                    backgroundColor: colors.surfaceAlt,
+                                    alignItems: 'center', justifyContent: 'center',
+                                    gap: 8,
+                                    opacity: isLocked(100) ? 0.6 : 1,
+                                }}>
+                                    {isLocked(100) ? (
+                                        <>
+                                            <Text style={{ fontSize: 22 }}>🔒</Text>
+                                            {/* <Text style={{ fontSize: 10, color: '#FAC775', fontWeight: '700', textAlign: 'center', paddingHorizontal: 8 }}>
+                                                50 🪙{'\n'}Unlock karo
+                                            </Text> */}
+                                        </>
+                                    ) : (
+                                        <>
+                                            <View style={{
+                                                width: 40, height: 40, borderRadius: 20,
+                                                backgroundColor: colors.primary + '18',
+                                                borderWidth: 1, borderColor: colors.primary + '44',
+                                                alignItems: 'center', justifyContent: 'center',
+                                            }}>
+                                                <Ionicons name="add" size={24} color={colors.primary} />
+                                            </View>
+                                            <Text style={{
+                                                fontSize: 11, color: colors.textTertiary,
+                                                fontWeight: '600', textAlign: 'center',
+                                                paddingHorizontal: 8,
+                                            }}>
+                                                {(d.customBgUris ?? []).length > 0
+                                                    ? `${t('AddMore')}\n(${(d.customBgUris ?? []).length}/3)`
+                                                    : t('Custom')}
+                                            </Text>
+                                        </>
+                                    )}
+                                </View>
+                            </TouchableOpacity>
+                        )}
                     </ScrollView>
                     {showPreview && (
                         <AlarmPreviewModal
@@ -1253,7 +1449,7 @@ const edit_styles = (colors: any) => StyleSheet.create({
         padding: 14,
     },
     cardHdrTxt: { fontSize: 13, fontWeight: '600', color: colors.textSecondary },
-    cardLbl: { fontSize: 16, fontWeight: '700', color: colors.text },
+    cardLbl: { fontSize: 16, fontWeight: '500', color: colors.text },
     drumRow: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -1307,11 +1503,43 @@ export default function AlarmScreen() {
     const handleToggle = async (id: string) => {
         await persist(alarms.map(a => a.id === id ? { ...a, enabled: !a.enabled } : a));
     };
+    const [headerCoins, setHeaderCoins] = useState(0);
+    useFocusEffect(useCallback(() => {
+        CoinStore.getCoins().then(setHeaderCoins);
+    }, []));
+
+
+    // const handleSave = async (alarm: Alarm) => {
+    //     const exists = alarms.some(a => a.id === alarm.id);
+    //     await persist(exists ? alarms.map(a => a.id === alarm.id ? alarm : a) : [...alarms, alarm]);
+    //     setEditing(undefined);
+    // };
     const handleSave = async (alarm: Alarm) => {
         const exists = alarms.some(a => a.id === alarm.id);
-        await persist(exists ? alarms.map(a => a.id === alarm.id ? alarm : a) : [...alarms, alarm]);
+        await persist(exists
+            ? alarms.map(a => a.id === alarm.id ? alarm : a)
+            : [...alarms, alarm]
+        );
+
+        // +2 coins for alarm (daily 1 baar)
+        const alarmCoins = await CoinStore.tryEarnCoins('alarm');
+
+        // +5 coins agar mission ON hai (daily 1 baar)
+        let missionCoins = 0;
+        if (alarm.mission?.enabled) {
+            missionCoins = await CoinStore.tryEarnCoins('mission');
+        }
+
+        const total = alarmCoins + missionCoins;
+        if (total > 0) {
+            // Toast ya Alert dikhao
+            Alert.alert(t('CoinsEarned'), `+${total} ${t('CoinsCollected')}\n\n ${t('KeepWatching')}`);
+        }
+
+        setHeaderCoins(await CoinStore.getCoins());
         setEditing(undefined);
     };
+
     const handleDelete = async (id: string) => {
         try { await notifee.cancelNotification(id); } catch { }
         const updated = alarms.filter(a => a.id !== id);
@@ -1360,9 +1588,29 @@ export default function AlarmScreen() {
 
             <View style={[hdr.wrap, { paddingTop: ins.top + 12 }]}>
                 <Text style={[hdr.title, { color: colors.text }]}>{t('Alarm')}</Text>
-                <TouchableOpacity style={hdr.gear} onPress={() => navigation.navigate('Settings')}>
-                    <Image source={require('../../assets/icons/settings.png')} style={{ width: 30, height: 30, tintColor: colors.textSecondary }} resizeMode="contain" />
-                </TouchableOpacity>
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                    {/* Coin Button */}
+                    <TouchableOpacity
+                        style={[hdr.gear, {
+                            flexDirection: 'row', alignItems: 'center', gap: 4,
+                            paddingHorizontal: 10,
+                        }]}
+                        onPress={() => navigation.navigate('CoinScreen')}
+                    >
+                        <Image
+                            source={require('../../assets/img/coin.png')}
+                            style={{ width: 30, height: 30 }}
+                            resizeMode="contain"
+                        />
+                        {/* <Text style={{ fontSize: 13, fontWeight: '700', color: colors.text }}>{headerCoins}</Text> */}
+                    </TouchableOpacity>
+
+                    {/* Settings */}
+                    <TouchableOpacity style={hdr.gear} onPress={() => navigation.navigate('Settings')}>
+                        <Image source={require('../../assets/icons/settings.png')}
+                            style={{ width: 30, height: 30, tintColor: colors.textSecondary }} resizeMode="contain" />
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <Animated.ScrollView
@@ -1476,6 +1724,11 @@ export default function AlarmScreen() {
                         onSave={handleSave}
                         onDelete={handleDelete}
                         onBack={() => setEditing(undefined)}
+                        onGoToCoins={() => {
+                            setEditing(undefined);
+                            navigation.navigate('CoinScreen');
+                        }}
+
                     />
                 )}
             </Modal>

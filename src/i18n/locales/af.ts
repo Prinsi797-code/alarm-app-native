@@ -141,24 +141,76 @@ export default {
     "alarm": "Alarm",
     "timer": "Tydhouer"
   },
-      "Mathmission": "Wiskunde-missie",
-    "Example": "Voorbeeld",
-    "NumberofProblems": "Aantal probleme",
-    "Difficulty": "Moeilikheidsgraad",
-    "Mission": "Missie",
-    "Math": "Wiskunde",
-    "difficulty_desc": {
-      "Easy": "Eenvoudige optelling en aftrekking",
-      "Medium": "Vermenigvuldiging ingesluit",
-      "Hard": "Komplekse berekeninge met meerdere stappe"
-    },
-    "difficulty": {
-      "Easy": "Maklik",
-      "Medium": "Medium",
-      "Hard": "Moeilik"
-    },
-    "SolvetoDismiss": "Los op om af te skakel",
-    "Answercorrectly": "Beantwoord korrek om die alarm af te skakel",
-    "Problem": "Probleem",
-    "of": "van"
+  Mathmission: "Wiskunde-missie",
+  Example: "Voorbeeld",
+  NumberofProblems: "Aantal probleme",
+  Difficulty: "Moeilikheidsgraad",
+  Mission: "Missie",
+  Math: "Wiskunde",
+  "difficulty_desc": {
+    "Easy": "Eenvoudige optelling en aftrekking",
+    "Medium": "Vermenigvuldiging ingesluit",
+    "Hard": "Komplekse berekeninge met meerdere stappe"
+  },
+  "difficulty": {
+    "Easy": "Maklik",
+    "Medium": "Medium",
+    "Hard": "Moeilik"
+  },
+  SolvetoDismiss: "Los op om af te skakel",
+  Answercorrectly: "Beantwoord korrek om die alarm af te skakel",
+  Problem: "Probleem",
+  of: "van",
+  CustomSounds: "Pasgemaakte Klanke",
+  added: "bygevoeg",
+  Picking: "Kies...",
+  Add: "Voeg by",
+  Custom: "Pasgemaak",
+  audiofiles: "Voeg jou eie oudiolêers by (maks 5)",
+  AddMore: "Voeg Meer By",
+
+
+  NotEnoughCoins: "Nie genoeg munte nie",
+  need50coins: "Jy benodig 50 munte. Jy het tans",
+  earnmore: "Stel 'n alarm of aktiveer Math Mission om meer te verdien!",
+  UnlockCustomSounds: "Ontsluit pasgemaakte klanke?",
+  cost50coins: "Dit sal 50 munte kos.",
+  Unlockeddays: "Ontsluit vir 15 dae.",
+  Balance: "Saldo:",
+  Cancel: "Kanselleer",
+  cancel: "kanselleer",
+  Unlock: "Ontsluit",
+  Unlocked: "Ontsluit! 🎉",
+  Customsounds: "Pasgemaakte klanke vir 15 dae ontsluit.",
+  Pleasetryagain: "Iets het verkeerd geloop. Probeer asseblief weer.",
+  Activefor: "Aktief vir 15 dae",
+  Coins: "Munte",
+  TotalCoins: "Totale Munte",
+  HowtoEarnCoins: "Hoe om Munte te Verdien",
+  SetEdit: "Stel of Wysig 'n Alarm",
+  Onceperday: "Een keer per dag · +2 munte",
+  EnableMath: "Aktiveer Math Mission",
+  day5coins: "Een keer per dag · +5 munte",
+  LockedBackgrounds: "Geslote Agtergronde",
+  Activefor15days: "Ontsluit vir 50 munte · Aktief vir 15 dae",
+  dleft: "d oor",
+  Active: "Aktief",
+  CustomBackground: "Pasgemaakte Agtergrond",
+  Useyourownphoto: "Gebruik jou eie foto · 50 munte · 15 dae",
+  ChoosefromGallery: "Kies uit Galery",
+  daysleft: "dae oor",
+  coins50: "50 munte",
+  Unlock50: "50 · Ontsluit",
+  Unlocktoadd: "Ontsluit om pasgemaakte klank by te voeg",
+
+  Alreadyunlocked: "Reeds ontsluit! 🎉",
+  Notenoughcoins: "Nie genoeg munte nie! 💰",
+  Needmore: "Het meer nodig.",
+  coinsFor15days: "50 munte · Vir 15 dae",
+
+  CoinsEarned: "🎉 Munte verdien!",
+  CoinsCollected: "Jy het munte verdien!",
+  KeepWatching: "Hou die opskrif dop."
+
+
 };

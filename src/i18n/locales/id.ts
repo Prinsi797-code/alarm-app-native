@@ -209,7 +209,16 @@ export default {
 
   CoinsEarned: "🎉 Koin Diperoleh!",
   CoinsCollected: "Kamu telah mendapatkan koin!",
-  KeepWatching: "Perhatikan bagian header."
+  KeepWatching: "Perhatikan bagian header.",
+
+  Noresultsfound: "Tidak ada hasil ditemukan",
+  Addcountry: "Tambahkan negara",
+  ThemeMode: "Mode tema",
+  FollowSystem: "Ikuti sistem",
+  DarkMode: "Mode gelap",
+  LightMode: "Mode terang",
+  searchCountry: "Cari negara/kota/wilayah"
+
 
 
 

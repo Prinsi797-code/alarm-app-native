@@ -161,7 +161,16 @@ export default {
 
   CoinsEarned: "🎉 Münzen verdient!",
   CoinsCollected: "Du hast Münzen verdient!",
-  KeepWatching: "Behalte die Kopfzeile im Auge."
+  KeepWatching: "Behalte die Kopfzeile im Auge.",
+
+  Noresultsfound: "Keine Ergebnisse gefunden",
+  Addcountry: "Land hinzufügen",
+  ThemeMode: "Designmodus",
+  FollowSystem: "System folgen",
+  DarkMode: "Dunkelmodus",
+  LightMode: "Hellmodus",
+  searchCountry: "Land/Stadt/Region suchen"
+
 
 
 

@@ -213,9 +213,15 @@ export default {
 
   CoinsEarned: "🎉 تم ربح العملات!",
   CoinsCollected: "لقد ربحت عملات!",
-  KeepWatching: "تابع العنوان باستمرار."
+  KeepWatching: "تابع العنوان باستمرار.",
 
-
+  Noresultsfound: "لم يتم العثور على نتائج",
+  Addcountry: "إضافة دولة",
+  ThemeMode: "وضع السمة",
+  FollowSystem: "اتباع النظام",
+  DarkMode: "الوضع الداكن",
+  LightMode: "الوضع الفاتح",
+  searchCountry: "ابحث عن دولة/مدينة/منطقة"
 
 
 };

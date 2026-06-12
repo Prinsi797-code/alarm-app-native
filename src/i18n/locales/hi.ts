@@ -207,7 +207,17 @@ export default {
 
   CoinsEarned: "🎉 कॉइन मिले!",
   CoinsCollected: "आपने कॉइन कमाए हैं!",
-  KeepWatching: "हेडर पर नज़र बनाए रखें।"
+  KeepWatching: "हेडर पर नज़र बनाए रखें।",
+
+  Noresultsfound: "कोई परिणाम नहीं मिला",
+  Addcountry: "देश जोड़ें",
+  ThemeMode: "थीम मोड",
+  FollowSystem: "सिस्टम का पालन करें",
+  DarkMode: "डार्क मोड",
+  LightMode: "लाइट मोड",
+  searchCountry: "देश/शहर/क्षेत्र खोजें"
+
+
 
 
 

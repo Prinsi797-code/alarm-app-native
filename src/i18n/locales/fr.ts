@@ -162,7 +162,17 @@ export default {
 
   CoinsEarned: "🎉 Pièces gagnées !",
   CoinsCollected: "Vous avez gagné des pièces !",
-  KeepWatching: "Gardez un œil sur l’en-tête."
+  KeepWatching: "Gardez un œil sur l’en-tête.",
+
+  Noresultsfound: "Aucun résultat trouvé",
+  Addcountry: "Ajouter un pays",
+  ThemeMode: "Mode du thème",
+  FollowSystem: "Suivre le système",
+  DarkMode: "Mode sombre",
+  LightMode: "Mode clair",
+  searchCountry: "Rechercher un pays/une ville/une région"
+
+
 
 
 

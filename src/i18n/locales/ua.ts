@@ -199,9 +199,18 @@ export default {
     Alreadyunlocked: "Вже розблоковано! 🎉",
     Notenoughcoins: "Недостатньо монет! 💰",
     Needmore: "Потрібно більше.",
-    coinsFor15days: "50 монет · На 15 днів"
+    coinsFor15days: "50 монет · На 15 днів",
 
+    CoinsEarned: "🎉 Монети отримано!",
+    CoinsCollected: "Ви заробили монети!",
+    KeepWatching: "Слідкуйте за заголовком.",
 
-
+    Noresultsfound: "Результатів не знайдено",
+    Addcountry: "Додати країну",
+    ThemeMode: "Режим теми",
+    FollowSystem: "Слідувати системі",
+    DarkMode: "Темний режим",
+    LightMode: "Світлий режим",
+    searchCountry: "Пошук країни/міста/регіону"
 
 };

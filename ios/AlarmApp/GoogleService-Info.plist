@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyA5ml5m1-UcSaDhYlfIICNo-1H4DKxXSrY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>326915463889</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hevin.alarm</string>
+	<key>PROJECT_ID</key>
+	<string>alarm-app-c1ae8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>alarm-app-c1ae8.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:326915463889:ios:d5bb65077a1a1b571a83f0</string>
+</dict>
+</plist>

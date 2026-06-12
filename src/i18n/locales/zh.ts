@@ -203,7 +203,15 @@ export default {
 
     CoinsEarned: "🎉 获得金币！",
     CoinsCollected: "您已获得金币！",
-    KeepWatching: "请留意顶部栏。"
+    KeepWatching: "请留意顶部栏。",
+
+    Noresultsfound: "未找到结果",
+    Addcountry: "添加国家",
+    ThemeMode: "主题模式",
+    FollowSystem: "跟随系统",
+    DarkMode: "深色模式",
+    LightMode: "浅色模式",
+    searchCountry: "搜索国家/城市/地区"
 
 
 };

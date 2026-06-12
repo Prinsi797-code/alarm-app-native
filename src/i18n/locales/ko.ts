@@ -208,9 +208,15 @@ export default {
 
   CoinsEarned: "🎉 코인 획득!",
   CoinsCollected: "코인을 획득했습니다!",
-  KeepWatching: "헤더를 계속 확인하세요."
+  KeepWatching: "헤더를 계속 확인하세요.",
 
-
+  Noresultsfound: "결과를 찾을 수 없습니다",
+  Addcountry: "국가 추가",
+  ThemeMode: "테마 모드",
+  FollowSystem: "시스템 설정 따르기",
+  DarkMode: "다크 모드",
+  LightMode: "라이트 모드",
+  searchCountry: "국가/도시/지역 검색"
 
 
 };

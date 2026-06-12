@@ -207,10 +207,17 @@ export default {
   CoinsEarned: "🎉 Coins Earned!",
   CoinsCollected: "You've earned coins!",
   KeepWatching: "Keep an eye on the header.",
-
-
   Addyourownaudio: "Add your own audio files · 50 coins · 15 days",
   ChoosefromFiles: "Choose from Files",
+
+  Noresultsfound: "No results found",
+  Addcountry: "Add country",
+  ThemeMode: "Theme Mode",
+  FollowSystem: "Follow System",
+  DarkMode: "Dark Mode",
+  LightMode: "Light Mode"
+
+
   
   
 };

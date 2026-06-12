@@ -14,6 +14,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { COUNTRIES, Country } from '../data/countries';
 import { getTimeForTimezone } from '../utils/timezoneUtils';
 import { useTheme } from '../contexts/ThemeContext';
+import { showInterstitialAd } from '../services/AdService';
+import { useTranslation } from 'react-i18next';
+import AdBanner from '../components/AdBanner';
 
 interface Props {
     alreadyAdded: string[];
@@ -27,6 +30,7 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
     const [query, setQuery] = useState('');
     const [selected, setSelected] = useState<Set<string>>(new Set());
     const [tick, setTick] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         const id = setInterval(() => setTick(t => t + 1), 60000);
@@ -66,15 +70,32 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
     }, [alreadyAdded]);
 
     const handleAdd = () => {
+        if (isLoading) return;
+        setIsLoading(true);
         const toAdd = COUNTRIES.filter(c => selected.has(c.name));
-        onAdd(toAdd);
+        showInterstitialAd('country_screen', () => {
+            setIsLoading(false);
+            onAdd(toAdd);
+        });
     };
+
+
+    const handleBack = () => {
+        if (isLoading) return;
+        setIsLoading(true);
+        showInterstitialAd('country_screen', () => {
+            setIsLoading(false);
+            onBack();
+        });
+    };
+
+  const { t } = useTranslation();
 
     const renderItem = ({ item }: { item: Country }) => {
         const isAdded = alreadyAdded.includes(item.name);
         const isSel = selected.has(item.name);
         const { display, ampm } = getTimeForTimezone(item.tz);
-
+        
         return (
             <TouchableOpacity
                 style={[styles.row, { borderBottomColor: colors.border }]}
@@ -100,17 +121,6 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
 
     return (
         <View style={[styles.container, { backgroundColor: colors.background, paddingTop: ins.top }]}>
-            {/* <View style={[styles.header]}>
-                <TouchableOpacity onPress={onBack} style={styles.backBtn} activeOpacity={0.7}>
-                    <View style={[styles.closeBtnCircle, { backgroundColor: colors.surface }]}>
-                        <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
-                    </View>
-                </TouchableOpacity>
-                <Text style={[styles.headerTitle, { color: colors.text }]}>Add country</Text>
-                <TouchableOpacity onPress={handleAdd} style={[styles.saveBtn, {backgroundColor: colors.primary + '18', borderColor: colors.primary + '44'}]}>
-                    <Text style={[styles.saveTxt, {color: colors.primary }]}>Save</Text>
-                </TouchableOpacity>
-            </View> */}
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
@@ -119,12 +129,12 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
                 paddingVertical: 14,
             }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                    <TouchableOpacity onPress={onBack} style={styles.backBtn} activeOpacity={0.7}>
+                    <TouchableOpacity onPress={handleBack} style={styles.backBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
                         <View style={[styles.closeBtnCircle, { backgroundColor: colors.surface }]}>
                             <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
                         </View>
                     </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: colors.text }]}>Add country</Text>
+                    <Text style={[styles.headerTitle, { color: colors.text }]}>{t('Addcountry')}</Text>
                 </View>
 
                 <TouchableOpacity
@@ -134,10 +144,11 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
                         paddingHorizontal: 20,
                         paddingVertical: 8,
                         borderColor: colors.primary + '44',
+                        opacity: isLoading ? 0.5 : 1,
                     }]}
                 >
                     <Text style={[styles.saveTxt, { fontSize: 15, fontWeight: '700', color: colors.primary }]}>
-                        Save
+                        {t('save')}
                     </Text>
                 </TouchableOpacity>
             </View>
@@ -146,7 +157,7 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
                 <Ionicons name="search-outline" size={20} color={colors.textTertiary} />
                 <TextInput
                     style={[styles.searchInput, { color: colors.text }]}
-                    placeholder="Search country/city/region"
+                    placeholder={t('searchCountry')}
                     placeholderTextColor={colors.textTertiary}
                     value={query}
                     onChangeText={setQuery}
@@ -174,10 +185,13 @@ export default function AddCountryScreen({ alreadyAdded, onAdd, onBack }: Props)
                 contentContainerStyle={{ paddingBottom: ins.bottom + 20 }}
                 ListEmptyComponent={
                     <View style={styles.emptyState}>
-                        <Text style={{ color: colors.textSecondary, fontSize: 15 }}>No results found</Text>
+                        <Text style={{ color: colors.textSecondary, fontSize: 15 }}>{t('Noresultsfound')}</Text>
                     </View>
                 }
             />
+            <View style={{ position: 'absolute', bottom: 12, width: '100%', alignItems: 'center' }}>
+                <AdBanner screen="country_screen" />
+            </View>
         </View>
     );
 }
@@ -205,7 +219,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
     },
     backBtn: { minWidth: 50, alignItems: 'flex-start', justifyContent: 'center' },
-    headerTitle: { fontSize: 18, fontWeight: '700'},
+    headerTitle: { fontSize: 18, fontWeight: '700' },
     addBtn: {
         backgroundColor: '#EEEDFE',
         paddingHorizontal: 16,

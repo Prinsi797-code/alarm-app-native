@@ -208,8 +208,15 @@ export default {
 
   CoinsEarned: "🎉 Monede câștigate!",
   CoinsCollected: "Ai câștigat monede!",
-  KeepWatching: "Urmărește antetul."
+  KeepWatching: "Urmărește antetul.",
 
+  Noresultsfound: "Nu s-au găsit rezultate",
+  Addcountry: "Adaugă țară",
+  ThemeMode: "Mod temă",
+  FollowSystem: "Urmează sistemul",
+  DarkMode: "Mod întunecat",
+  LightMode: "Mod luminos",
+  searchCountry: "Caută țară/ oraș / regiune"
 
 
 };

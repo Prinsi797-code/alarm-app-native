@@ -205,4 +205,12 @@ export default {
   Needmore: "Ne servono di più.",
   coinsFor15days: "50 monete · Per 15 giorni",
 
+  Noresultsfound: "Nessun risultato trovato",
+  Addcountry: "Aggiungi paese",
+  ThemeMode: "Modalità tema",
+  FollowSystem: "Segui il sistema",
+  DarkMode: "Modalità scura",
+  LightMode: "Modalità chiara"
+
+
 };

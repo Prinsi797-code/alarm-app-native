@@ -210,7 +210,16 @@ export default {
 
   CoinsEarned: "🎉 Munte verdien!",
   CoinsCollected: "Jy het munte verdien!",
-  KeepWatching: "Hou die opskrif dop."
+  KeepWatching: "Hou die opskrif dop.",
+
+  Noresultsfound: "Geen resultate gevind nie",
+  Addcountry: "Voeg land by",
+  ThemeMode: "Tema-modus",
+  FollowSystem: "Volg stelsel",
+  DarkMode: "Donker modus",
+  LightMode: "Lig modus",
+  searchCountry: "Soek land/stad/streek"
+
 
 
 };

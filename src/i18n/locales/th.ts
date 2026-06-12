@@ -201,8 +201,14 @@ export default {
 
     CoinsEarned: "🎉 ได้รับเหรียญแล้ว!",
     CoinsCollected: "คุณได้รับเหรียญแล้ว!",
-    KeepWatching: "คอยดูที่ส่วนหัวอยู่เสมอ"
+    KeepWatching: "คอยดูที่ส่วนหัวอยู่เสมอ",
 
-
+    Noresultsfound: "ไม่พบผลลัพธ์",
+    Addcountry: "เพิ่มประเทศ",
+    ThemeMode: "โหมดธีม",
+    FollowSystem: "ใช้ตามระบบ",
+    DarkMode: "โหมดมืด",
+    LightMode: "โหมดสว่าง",
+    searchCountry: "ค้นหาประเทศ/เมือง/ภูมิภาค"
 
 };

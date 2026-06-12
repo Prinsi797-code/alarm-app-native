@@ -162,7 +162,15 @@ export default {
 
   CoinsEarned: "🎉 ¡Monedas ganadas!",
   CoinsCollected: "¡Has ganado monedas!",
-  KeepWatching: "Mantén la vista en el encabezado."
+  KeepWatching: "Mantén la vista en el encabezado.",
+
+  Noresultsfound: "No se encontraron resultados",
+  Addcountry: "Agregar país",
+  ThemeMode: "Modo de tema",
+  FollowSystem: "Seguir sistema",
+  DarkMode: "Modo oscuro",
+  LightMode: "Modo claro",
+  searchCountry: "Buscar país/ciudad/región"
 
 
 

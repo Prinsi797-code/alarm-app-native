@@ -11,6 +11,9 @@ import { useTheme } from '../contexts/ThemeContext';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTranslation } from 'react-i18next';
+import { showInterstitialAd } from '../services/AdService';
+import AdNative from '../components/AdNative';
+
 
 const LANGUAGES = [
   { code: 'en', label: 'English', subtitle: '(English)', flag: require("../../assets/flag/UnitedStates.png"), rtl: false },
@@ -60,8 +63,17 @@ export default function LanguageScreen() {
       navigation.goBack();
     } catch (e) {
       console.error('Language save error:', e);
-      navigation.goBack();
+      showInterstitialAd('language_screen', () => {
+        navigation.goBack();
+      });
+
     }
+  };
+
+  const handleBack = () => {
+    showInterstitialAd('language_screen', () => {
+      navigation.goBack();
+    });
   };
 
   const S = makeStyles(colors, isDark);
@@ -76,7 +88,7 @@ export default function LanguageScreen() {
         paddingVertical: 14,
       }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-          <TouchableOpacity onPress={() => navigation.goBack()} style={S.closeBtn} activeOpacity={0.7}>
+          <TouchableOpacity onPress={handleBack} style={S.closeBtn} activeOpacity={0.7}>
             <View style={[S.closeBtnCircle, { backgroundColor: colors.surface }]}>
               <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
             </View>
@@ -114,23 +126,23 @@ export default function LanguageScreen() {
                 onPress={() => setSelected(lang.code)}
                 activeOpacity={0.6}
               >
-                {/* Radio circle */}
                 <View style={[S.radio, isActive && S.radioActive]}>
                   {isActive && <View style={S.radioDot} />}
                 </View>
 
-                {/* Language name */}
                 <Text style={[S.rowLabel, isActive && S.rowLabelActive]}>
                   {lang.label}  {lang.subtitle}
                 </Text>
 
-                {/* Flag emoji */}
                 <Image source={lang.flag} style={S.flag} />
               </TouchableOpacity>
             );
           })}
         </View>
       </ScrollView>
+      <View style={S.stickyAdContainer}>
+        <AdNative screen="language_screen" colors={colors} />
+      </View>
     </View>
   );
 }
@@ -174,6 +186,12 @@ const makeStyles = (colors: any, isDark: boolean) =>
       width: 40,
       alignItems: 'flex-start',
       justifyContent: 'center',
+    },
+    stickyAdContainer: {
+      position: 'absolute',
+      bottom: 12,
+      width: '100%',
+      alignItems: 'center',
     },
     backCircle: {
       width: 36,

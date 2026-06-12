@@ -208,9 +208,14 @@ export default {
 
   CoinsEarned: "🎉 Zdobyto monety!",
   CoinsCollected: "Zdobyłeś monety!",
-  KeepWatching: "Obserwuj nagłówek."
+  KeepWatching: "Obserwuj nagłówek.",
 
-
-
+  Noresultsfound: "Nie znaleziono wyników",
+  Addcountry: "Dodaj kraj",
+  ThemeMode: "Tryb motywu",
+  FollowSystem: "Dopasuj do systemu",
+  DarkMode: "Tryb ciemny",
+  LightMode: "Tryb jasny",
+  searchCountry: "Szukaj kraju/miasta/regionu"
 
 };

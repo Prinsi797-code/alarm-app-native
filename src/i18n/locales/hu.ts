@@ -207,7 +207,16 @@ export default {
 
   CoinsEarned: "🎉 Érmék megszerezve!",
   CoinsCollected: "Érméket szereztél!",
-  KeepWatching: "Figyeld a fejlécet."
+  KeepWatching: "Figyeld a fejlécet.",
+
+  Noresultsfound: "Nincs találat",
+  Addcountry: "Ország hozzáadása",
+  ThemeMode: "Téma mód",
+  FollowSystem: "Rendszer követése",
+  DarkMode: "Sötét mód",
+  LightMode: "Világos mód",
+  searchCountry: "Ország/város/régió keresése"
+
 
 
 

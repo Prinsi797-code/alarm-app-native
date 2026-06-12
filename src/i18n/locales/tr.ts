@@ -203,7 +203,16 @@ export default {
 
   CoinsEarned: "🎉 Jeton Kazandınız!",
   CoinsCollected: "Jeton kazandınız!",
-  KeepWatching: "Başlığı takip etmeye devam edin."
+  KeepWatching: "Başlığı takip etmeye devam edin.",
+
+  Noresultsfound: "Sonuç bulunamadı",
+  Addcountry: "Ülke ekle",
+  ThemeMode: "Tema Modu",
+  FollowSystem: "Sistemi takip et",
+  DarkMode: "Karanlık Mod",
+  LightMode: "Aydınlık Mod",
+  searchCountry: "Ülke/şehir/bölge ara"
+
 
 
 

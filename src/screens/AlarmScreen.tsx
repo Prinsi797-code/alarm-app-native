@@ -5,7 +5,7 @@ import SnoozePickerScreen from './SnoozePickerScreen';
 import {
     Animated, Dimensions, FlatList, Image, Modal,
     Platform, ScrollView, StyleSheet, PanResponder,
-    Text, TouchableOpacity, View, TextInput, Alert
+    Text, TouchableOpacity, View, TextInput, Alert, ActivityIndicator
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,6 +21,9 @@ import RingtonePickerScreen, { TONES, playPreview, stopPreview } from './Rington
 import MathMissionScreen from '../screens/MathMissionScreen';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { CoinStore } from '../utils/CoinStore';
+import { showInterstitialAd } from '../services/AdService';
+import { AlarmEvents } from '../services/AnalyticsService';
+import AdNative from '../components/AdNative';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 const STORAGE_KEY = '@alarms_v3';
@@ -834,13 +837,15 @@ const card = StyleSheet.create({
     dotTxt: { fontSize: 10 },
 });
 
-function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
+// function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
+function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBackLoading }: {
     alarm: Alarm | null;
     onSave: (a: Alarm) => void;
     onDelete: (id: string) => void;
     onBack: () => void;
     onGoToCoins: () => void;
     colors: any;
+    isBackLoading?: boolean;
 }) {
     const ins = useSafeAreaInsets();
     const [showSnoozePicker, setShowSnoozePicker] = useState(false);
@@ -989,14 +994,24 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
         <View style={[S.root, { paddingTop: ins.top }]}>
             <View style={S.hdr}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                    <TouchableOpacity onPress={onBack} style={S.closeBtn} activeOpacity={0.7}>
+
+                    <TouchableOpacity
+                        onPress={isBackLoading ? undefined : onBack}
+                        style={S.closeBtn}
+                        activeOpacity={isBackLoading ? 1 : 0.7}
+                        disabled={isBackLoading}
+                    >
                         <View style={S.closeBtnCircle}>
                             <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
                         </View>
                     </TouchableOpacity>
                     <Text style={S.hdrTitle}>{isNew ? t('createAlarm') : t('editAlarm')}</Text>
                 </View>
-                <TouchableOpacity onPress={() => onSave(d)} style={S.saveBtn}>
+                <TouchableOpacity
+                    onPress={() => onSave(d)}
+                    style={[S.saveBtn, { opacity: isBackLoading ? 0.5 : 1 }]}
+                    disabled={isBackLoading}
+                >
                     <Text style={S.saveTxt}>{t('save')}</Text>
                 </TouchableOpacity>
             </View>
@@ -1215,7 +1230,6 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
                         </View>
                     </View>
 
-
                     <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -2 }}>
                         {BG_IMAGES.map((src, i) => (
                             <TouchableOpacity
@@ -1379,6 +1393,7 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
                 </View>
             </ScrollView>
 
+            <AdNative screen="alarm_screen" colors={colors} />
             <Modal visible={showRingtonePicker} animationType="slide" presentationStyle="fullScreen">
                 <RingtonePickerScreen
                     selected={d.ringtone}
@@ -1485,6 +1500,8 @@ export default function AlarmScreen() {
     const [alarms, setAlarms] = useState<Alarm[]>([]);
     const [editing, setEditing] = useState<Alarm | null | undefined>(undefined);
     const showEdit = editing !== undefined;
+    const [isAdLoading, setIsAdLoading] = useState(false);
+
 
     useFocusEffect(useCallback(() => {
         if (route.params?.openNew) setEditing(null);
@@ -1501,6 +1518,8 @@ export default function AlarmScreen() {
         for (const a of list) await scheduleAlarm(a);
     };
     const handleToggle = async (id: string) => {
+        const alarm = alarms.find(a => a.id === id);
+        if (alarm) AlarmEvents.alarmToggled(!alarm.enabled);
         await persist(alarms.map(a => a.id === id ? { ...a, enabled: !a.enabled } : a));
     };
     const [headerCoins, setHeaderCoins] = useState(0);
@@ -1508,39 +1527,42 @@ export default function AlarmScreen() {
         CoinStore.getCoins().then(setHeaderCoins);
     }, []));
 
-
-    // const handleSave = async (alarm: Alarm) => {
-    //     const exists = alarms.some(a => a.id === alarm.id);
-    //     await persist(exists ? alarms.map(a => a.id === alarm.id ? alarm : a) : [...alarms, alarm]);
-    //     setEditing(undefined);
-    // };
     const handleSave = async (alarm: Alarm) => {
         const exists = alarms.some(a => a.id === alarm.id);
+        if (exists) AlarmEvents.alarmEdited();
+        else AlarmEvents.alarmCreated(alarm.ringtone);
+        if (alarm.mission?.enabled) {
+            AlarmEvents.missionEnabled(alarm.mission.difficulty, alarm.mission.count);
+        }
+
         await persist(exists
             ? alarms.map(a => a.id === alarm.id ? alarm : a)
             : [...alarms, alarm]
         );
 
-        // +2 coins for alarm (daily 1 baar)
         const alarmCoins = await CoinStore.tryEarnCoins('alarm');
-
-        // +5 coins agar mission ON hai (daily 1 baar)
         let missionCoins = 0;
         if (alarm.mission?.enabled) {
             missionCoins = await CoinStore.tryEarnCoins('mission');
         }
-
         const total = alarmCoins + missionCoins;
-        if (total > 0) {
-            // Toast ya Alert dikhao
-            Alert.alert(t('CoinsEarned'), `+${total} ${t('CoinsCollected')}\n\n ${t('KeepWatching')}`);
-        }
 
         setHeaderCoins(await CoinStore.getCoins());
-        setEditing(undefined);
+        setIsAdLoading(true);
+
+        showInterstitialAd('alarm_screen', () => {
+            setIsAdLoading(false);
+            setEditing(undefined);
+            if (total > 0) {
+                setTimeout(() => {
+                    Alert.alert(t('CoinsEarned'), `+${total} ${t('CoinsCollected')}\n\n ${t('KeepWatching')}`);
+                }, 300);
+            }
+        });
     };
 
     const handleDelete = async (id: string) => {
+        AlarmEvents.alarmDeleted();
         try { await notifee.cancelNotification(id); } catch { }
         const updated = alarms.filter(a => a.id !== id);
         await saveAlarms(updated);
@@ -1723,12 +1745,19 @@ export default function AlarmScreen() {
                         colors={colors}
                         onSave={handleSave}
                         onDelete={handleDelete}
-                        onBack={() => setEditing(undefined)}
+                        isBackLoading={isAdLoading}
+                        onBack={() => {
+                            if (isAdLoading) return;
+                            setIsAdLoading(true);
+                            showInterstitialAd('alarm_screen', () => {
+                                setIsAdLoading(false);
+                                setEditing(undefined);
+                            });
+                        }}
                         onGoToCoins={() => {
                             setEditing(undefined);
                             navigation.navigate('CoinScreen');
                         }}
-
                     />
                 )}
             </Modal>

@@ -202,9 +202,15 @@ export default {
 
     CoinsEarned: "🎉 Đã nhận xu!",
     CoinsCollected: "Bạn đã kiếm được xu!",
-    KeepWatching: "Hãy theo dõi phần tiêu đề."
+    KeepWatching: "Hãy theo dõi phần tiêu đề.",
 
-
+    Noresultsfound: "Không tìm thấy kết quả",
+    Addcountry: "Thêm quốc gia",
+    ThemeMode: "Chế độ giao diện",
+    FollowSystem: "Theo hệ thống",
+    DarkMode: "Chế độ tối",
+    LightMode: "Chế độ sáng",
+    searchCountry: "Tìm kiếm quốc gia/thành phố/khu vực"
 
 
 

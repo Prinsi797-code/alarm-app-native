@@ -9,6 +9,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../contexts/ThemeContext';
 import { useTranslation } from 'react-i18next';
 import { CoinStore, UnlockedItem } from '../utils/CoinStore';
+import { showInterstitialAd } from '../services/AdService';
+import AdBanner from '../components/AdBanner';
+
 
 const LOCKED_BG_IMAGES = [
     { index: 0, label: 'Aurora', src: require('../../assets/background/bg1.jpeg') },
@@ -39,32 +42,6 @@ export default function CoinScreen() {
     };
 
     useFocusEffect(useCallback(() => { load(); }, []));
-
-    // const handleUnlock = async (bgIndex: number) => {
-    //     if (coins < 50) {
-    //         Alert.alert(t('NotEnoughCoins'), `${t('need50coins')} ${coins}.\n\n${t('earnmore')}`);
-    //         return;
-    //     }
-    //     Alert.alert(
-    //         t('Unlock'),
-    //         `${t('cost50coins')}\n${t('Unlockeddays')}\n${t('Balance')} ${coins} → ${coins - 50}`,
-    //         [
-    //             { text: t('Cancel'), style: 'cancel' },
-    //             {
-    //                 text: 'Unlock',
-    //                 onPress: async () => {
-    //                     const res = await CoinStore.unlock(bgIndex);
-    //                     if (res.success) {
-    //                         Alert.alert(t('Unlocked'), t('Activefor'));
-    //                         load();
-    //                     } else {
-    //                         Alert.alert('Error', res.message);
-    //                     }
-    //                 },
-    //             },
-    //         ]
-    //     );
-    // };
 
     const handleUnlock = async (bgIndex: number) => {
         if (coins < 50) {
@@ -99,6 +76,12 @@ export default function CoinScreen() {
         );
     };
 
+    const handleBack = () => {
+        showInterstitialAd('coin_screen', () => {
+            navigation.goBack();
+        });
+    };
+
     const getItemState = (bgIndex: number): { unlocked: boolean; daysLeft: number } => {
         const item = unlocked.find(u => u.bgIndex === bgIndex);
         if (!item) return { unlocked: false, daysLeft: 0 };
@@ -110,7 +93,7 @@ export default function CoinScreen() {
         <View style={[S.root, { paddingTop: ins.top }]}>
             {/* Header */}
             <View style={S.header}>
-                <TouchableOpacity onPress={() => navigation.goBack()} style={S.closeBtn} activeOpacity={0.7}>
+                <TouchableOpacity onPress={handleBack} style={S.closeBtn} activeOpacity={0.7}>
                     <View style={[S.closeBtnCircle, { backgroundColor: colors.surface }]}>
                         <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
                     </View>
@@ -198,14 +181,6 @@ export default function CoinScreen() {
                                 {!state.unlocked && (
                                     <View style={S.lockOverlay}>
                                         <Text style={{ fontSize: 22 }}>🔒</Text>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 2 }}>
-                                            <Image
-                                                source={require('../../assets/img/coin.png')}
-                                                style={{ width: 14, height: 14 }}
-                                                resizeMode="contain"
-                                            />
-                                            <Text style={S.lockCoinTxt}>50</Text>
-                                        </View> */}
                                     </View>
                                 )}
                                 {state.unlocked && (
@@ -291,7 +266,6 @@ export default function CoinScreen() {
 
                 {/* Custom Sounds unlock */}
                 <Text style={S.sectionTitle}>{t('CustomSounds')}</Text>
-                {/* <Text style={S.sectionSub}>{t('Addyourownaudio')}</Text> */}
                 <View style={S.customCard}>
                     {(() => {
                         const state = getItemState(200);
@@ -338,6 +312,9 @@ export default function CoinScreen() {
                     })()}
                 </View>
             </ScrollView>
+            <View style={S.stickyAdContainer}>
+                <AdBanner screen="coin_screen" />
+            </View>
         </View>
     );
 }
@@ -348,6 +325,12 @@ const styles = (colors: any) => StyleSheet.create({
         flexDirection: 'row', alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 16, paddingVertical: 12,
+    },
+    stickyAdContainer: {
+        position: 'absolute',
+        bottom: 12,
+        width: '100%',
+        alignItems: 'center',
     },
     headerTitle: { fontSize: 18, fontWeight: '700', color: colors.text },
     closeBtn: { minWidth: 50, alignItems: 'flex-start', justifyContent: 'center' },

@@ -16,13 +16,14 @@ import { useTranslation } from 'react-i18next';
 import TrackPlayer, { RepeatMode, Capability } from 'react-native-track-player';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTheme } from '../contexts/ThemeContext';
-
+import { showInterstitialAd } from '../services/AdService';
 export const TONES = ['Fine Day', 'Classic', 'Radar', 'Beacon', 'Einnt', 'Funny', 'Gunfire', 'Love'];
 export const DEFAULT_RINGTONE_KEY = '@default_ringtone';
 export const DEFAULT_RINGTONE = 'Fine Day';
 import { launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
 import { CoinStore } from '../utils/CoinStore';
+import AdBanner from '../components/AdBanner';
 
 
 const TONE_MAP: Record<string, any> = {
@@ -212,6 +213,8 @@ export default function RingtonePickerScreen({
     const [customSoundsUnlocked, setCustomSoundsUnlocked] = useState(false);
     const [customSoundsDaysLeft, setCustomSoundsDaysLeft] = useState(0);
     const [unlockingSound, setUnlockingSound] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const handleTonePress = async (tone: string, customUri?: string) => {
         setLocalSelected(tone);
@@ -279,38 +282,41 @@ export default function RingtonePickerScreen({
         if (isNavigatorMode) {
             loadDefaultRingtone().then(tone => setLocalSelected(tone));
         }
-        // ADD THIS:
         CoinStore.isUnlocked(200).then(setCustomSoundsUnlocked);
         CoinStore.getDaysLeft(200).then(setCustomSoundsDaysLeft);
         return () => { stopPreview(); };
     }, []);
 
-
     const handleSave = async () => {
+        if (isLoading) return;
+        setIsLoading(true);
         await stopPreview();
-        if (isNavigatorMode) {
-            await saveDefaultRingtone(localSelected);
-            navigation?.goBack();
-        } else {
-            onSave?.();
-        }
+        showInterstitialAd('sound_screen', async () => {
+            setIsLoading(false);
+            if (isNavigatorMode) {
+                await saveDefaultRingtone(localSelected);
+                navigation?.goBack();
+            } else {
+                onSave?.();
+            }
+        });
     };
+
+
     const pickCustomAudio = async () => {
         if (customTones.length >= 5) return;
         try {
             setPickingAudio(true);
             const result = await DocumentPicker.pickSingle({
                 type: [DocumentPicker.types.audio],
-                copyTo: 'documentDirectory', // URI persistent rahega
+                copyTo: 'documentDirectory',
             });
             const uri = result.fileCopyUri ?? result.uri;
             const rawName = result.name ?? `Custom ${customTones.length + 1}`;
-            // Extension hata do name se
             const name = rawName.replace(/\.[^/.]+$/, '');
             const newTones = [...customTones, { name, uri }];
             setCustomTones(newTones);
             await saveCustomTones(newTones);
-            // Auto select karo
             setLocalSelected(`custom_${customTones.length}`);
             onSelect?.(`custom_${customTones.length}`);
         } catch (e) {
@@ -321,7 +327,6 @@ export default function RingtonePickerScreen({
     };
 
     const removeCustomTone = async (index: number) => {
-        // Agar selected tone remove ho rahi hai to default pe reset karo
         if (localSelected === `custom_${index}`) {
             setLocalSelected(DEFAULT_RINGTONE);
             onSelect?.(DEFAULT_RINGTONE);
@@ -336,12 +341,14 @@ export default function RingtonePickerScreen({
 
 
     const handleBack = () => {
+        if (isLoading) return;
+        setIsLoading(true);
         stopPreview();
-        if (isNavigatorMode) {
-            navigation?.goBack();
-        } else {
-            onBack?.();
-        }
+        showInterstitialAd('sound_screen', () => {
+            setIsLoading(false);
+            if (isNavigatorMode) navigation?.goBack();
+            else onBack?.();
+        });
     };
 
     return (
@@ -355,7 +362,7 @@ export default function RingtonePickerScreen({
                 paddingVertical: 14,
             }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                    <TouchableOpacity onPress={handleBack} style={Sn.closeBtn} activeOpacity={0.7}>
+                    <TouchableOpacity onPress={handleBack} style={Sn.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
                         <View style={[Sn.closeBtnCircle, { backgroundColor: colors.surface }]}>
                             <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
                         </View>
@@ -369,6 +376,7 @@ export default function RingtonePickerScreen({
                         paddingHorizontal: 20,
                         paddingVertical: 8,
                         borderColor: colors.primary + '44',
+                        opacity: isLoading ? 0.5 : 1
                     }]}
                 >
                     <Text style={[Sn.saveTxt, { fontSize: 15, fontWeight: '700', color: colors.primary }]}>
@@ -485,7 +493,6 @@ export default function RingtonePickerScreen({
                             </View>
                         </View>
 
-                        {/* RIGHT SIDE: lock button OR add button */}
                         {!customSoundsUnlocked ? (
                             <TouchableOpacity
                                 onPress={handleUnlockCustomSounds}
@@ -523,7 +530,6 @@ export default function RingtonePickerScreen({
                         ) : null}
                     </View>
 
-                    {/* Body: locked placeholder OR tone list */}
                     {!customSoundsUnlocked ? (
                         <View style={{ paddingVertical: 24, alignItems: 'center', gap: 6 }}>
                             <Text style={{ fontSize: 28 }}>🔒</Text>
@@ -614,6 +620,9 @@ export default function RingtonePickerScreen({
                     )}
                 </View>
             </ScrollView>
+            <View style={Sn.stickyAdContainer}>
+                <AdBanner screen="sound_screen" />
+            </View>
         </View>
     );
 }
@@ -626,6 +635,12 @@ const Sn = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    stickyAdContainer: {
+        position: 'absolute',
+        bottom: 12,
+        width: '100%',
+        alignItems: 'center',
     },
     hdrTitle: { fontSize: 18, fontWeight: '700' },
     saveBtn: {

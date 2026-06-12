@@ -203,9 +203,14 @@ export default {
 
   CoinsEarned: "🎉 Монеты получены!",
   CoinsCollected: "Вы заработали монеты!",
-  KeepWatching: "Следите за заголовком."
+  KeepWatching: "Следите за заголовком.",
 
-
-
+  Noresultsfound: "Результаты не найдены",
+  Addcountry: "Добавить страну",
+  ThemeMode: "Режим темы",
+  FollowSystem: "Следовать системе",
+  DarkMode: "Тёмный режим",
+  LightMode: "Светлый режим",
+  searchCountry: "Поиск страны/города/региона"
 
 };

@@ -208,8 +208,15 @@ export default {
 
     CoinsEarned: "🎉 Nakakuha ng Coins!",
     CoinsCollected: "Nakakuha ka ng coins!",
-    KeepWatching: "Patuloy na tingnan ang header."
+    KeepWatching: "Patuloy na tingnan ang header.",
 
+    Noresultsfound: "Walang nahanap na resulta",
+    Addcountry: "Magdagdag ng bansa",
+    ThemeMode: "Mode ng tema",
+    FollowSystem: "Sundin ang system",
+    DarkMode: "Madilim na mode",
+    LightMode: "Maliwanag na mode",
+    searchCountry: "Maghanap ng bansa/lungsod/rehiyon"
 
 
 

@@ -993,8 +993,7 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
     return (
         <View style={[S.root, { paddingTop: ins.top }]}>
             <View style={S.hdr}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-
+                {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, position: 'relative' }}> */}
                     <TouchableOpacity
                         onPress={isBackLoading ? undefined : onBack}
                         style={S.closeBtn}
@@ -1006,7 +1005,7 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
                         </View>
                     </TouchableOpacity>
                     <Text style={S.hdrTitle}>{isNew ? t('createAlarm') : t('editAlarm')}</Text>
-                </View>
+                {/* </View> */}
                 <TouchableOpacity
                     onPress={() => onSave(d)}
                     style={[S.saveBtn, { opacity: isBackLoading ? 0.5 : 1 }]}
@@ -1448,7 +1447,7 @@ const edit_styles = (colors: any) => StyleSheet.create({
     },
     hdr: {
         flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-        paddingHorizontal: 18, paddingVertical: 14, borderBottomColor: colors.border,
+        paddingHorizontal: 18, paddingVertical: 14, borderBottomColor: colors.border,position: 'relative'
     },
     hdrTitle: { fontSize: 18, fontWeight: '700', color: colors.text },
     saveBtn: {

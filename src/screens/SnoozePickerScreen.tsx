@@ -179,14 +179,14 @@ export default function SnoozePickerScreen(props: Props) {
         <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: ins.top }}>
             {/* Header */}
             <View style={S.hdr}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}> */}
                     <TouchableOpacity onPress={handleBack} style={S.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
                         <View style={[S.closeBtnCircle, { backgroundColor: colors.surface }]}>
                             <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
                         </View>
                     </TouchableOpacity>
                     <Text style={[S.hdrTitle, { color: colors.text }]}>{t('snooze')}</Text>
-                </View>
+                {/* </View> */}
                 <TouchableOpacity
                     onPress={handleSave}
                     style={[S.saveBtn, {
@@ -280,7 +280,7 @@ export default function SnoozePickerScreen(props: Props) {
 }
 
 const S = StyleSheet.create({
-    hdr: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 18, paddingVertical: 14 },
+    hdr: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 18, paddingVertical: 14, position: 'relative' },
     closeBtn: { minWidth: 50, alignItems: 'flex-start', justifyContent: 'center' },
     closeBtnCircle: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
     hdrTitle: { fontSize: 18, fontWeight: '700' },

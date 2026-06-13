@@ -286,7 +286,7 @@ export default function ClockScreen() {
           {worldClocks.length === 0 ? (
             <View style={{ alignItems: 'center', paddingTop: 30, justifyContent: 'center', flex: 1, minHeight: 200 }}>
               <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textSecondary }}>
-                {t('noWorld')}
+                {/* {t('noWorld')} */}
               </Text>
             </View>
           ) : (

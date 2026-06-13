@@ -360,15 +360,16 @@ export default function RingtonePickerScreen({
                 justifyContent: 'space-between',
                 paddingHorizontal: 18,
                 paddingVertical: 14,
+                position: 'relative',
             }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}> */}
                     <TouchableOpacity onPress={handleBack} style={Sn.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
                         <View style={[Sn.closeBtnCircle, { backgroundColor: colors.surface }]}>
                             <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
                         </View>
                     </TouchableOpacity>
                     <Text style={[Sn.hdrTitle, { color: colors.text }]}>{t('alarmSound')}</Text>
-                </View>
+                {/* </View> */}
                 <TouchableOpacity
                     onPress={handleSave}
                     style={[Sn.saveBtn, {

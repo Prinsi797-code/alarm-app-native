@@ -86,15 +86,16 @@ export default function LanguageScreen() {
         justifyContent: 'space-between',
         paddingHorizontal: 18,
         paddingVertical: 14,
+        position: 'relative',
       }}>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}> */}
           <TouchableOpacity onPress={handleBack} style={S.closeBtn} activeOpacity={0.7}>
             <View style={[S.closeBtnCircle, { backgroundColor: colors.surface }]}>
               <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
             </View>
           </TouchableOpacity>
           <Text style={[S.hdrTitle, { color: colors.text }]}>{t('switchLanguage')}</Text>
-        </View>
+        {/* </View> */}
 
         <TouchableOpacity
           onPress={handleSave}

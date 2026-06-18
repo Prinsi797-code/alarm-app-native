@@ -216,7 +216,19 @@ export default {
   FollowSystem: "시스템 설정 따르기",
   DarkMode: "다크 모드",
   LightMode: "라이트 모드",
-  searchCountry: "국가/도시/지역 검색"
+  searchCountry: "국가/도시/지역 검색",
+
+  AppIcon: "앱 아이콘",
+  CHOOSEAPPICON: "앱 아이콘 선택",
+  Iconselect: "앱 아이콘을 선택하면 iOS가 시스템 팝업을 표시합니다 — 정상적인 동작입니다 ✓",
+  Defaultapp: "기본 앱 아이콘",
+  Darktheme: "강한 라이트 테마 아이콘",
+  Warmsunset: "강한 다크 아이콘",
+  Naturegreen: "다크 아이콘",
+  Classic: "클래식",
+  Dark: "강한 라이트",
+  Sunset: "강한 다크",
+  Forest: "다크"
 
 
 };

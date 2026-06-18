@@ -210,8 +210,19 @@ export default {
     FollowSystem: "Theo hệ thống",
     DarkMode: "Chế độ tối",
     LightMode: "Chế độ sáng",
-    searchCountry: "Tìm kiếm quốc gia/thành phố/khu vực"
+    searchCountry: "Tìm kiếm quốc gia/thành phố/khu vực",
 
+    AppIcon: "Biểu tượng ứng dụng",
+    CHOOSEAPPICON: "CHỌN BIỂU TƯỢNG ỨNG DỤNG",
+    Iconselect: "Khi bạn chọn biểu tượng ứng dụng, iOS sẽ hiển thị cửa sổ bật lên hệ thống — điều này là bình thường ✓",
+    Defaultapp: "Biểu tượng ứng dụng mặc định",
+    Darktheme: "Biểu tượng chủ đề sáng nổi bật",
+    Warmsunset: "Biểu tượng tối nổi bật",
+    Naturegreen: "Biểu tượng tối",
+    Classic: "Cổ điển",
+    Dark: "Sáng Nổi Bật",
+    Sunset: "Tối Nổi Bật",
+    Forest: "Tối"
 
 
 };

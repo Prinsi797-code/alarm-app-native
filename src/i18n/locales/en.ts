@@ -215,7 +215,27 @@ export default {
   ThemeMode: "Theme Mode",
   FollowSystem: "Follow System",
   DarkMode: "Dark Mode",
-  LightMode: "Light Mode"
+  LightMode: "Light Mode",
+  searchCountry: "Search country/city/region",
+
+
+  AppIcon: "App Icon",
+  CHOOSEAPPICON: "CHOOSE APP ICON",
+  Iconselect: "When you select the app icon, iOS will display a system popup — this is normal ✓",
+  Defaultapp: "Default app icon",
+  Darktheme: "Loud Light theme icon",
+  Warmsunset: "Loud Dark icon",
+  Naturegreen: "Dark icon",
+  Classic: "Classic",
+  Dark: "Loud Light",
+  Sunset: "Loud Dark",
+  Forest: "Dark"
+
+
+
+
+
+
 
 
   

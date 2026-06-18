@@ -216,6 +216,19 @@ export default {
   FollowSystem: "Dopasuj do systemu",
   DarkMode: "Tryb ciemny",
   LightMode: "Tryb jasny",
-  searchCountry: "Szukaj kraju/miasta/regionu"
+  searchCountry: "Szukaj kraju/miasta/regionu",
+
+  AppIcon: "Ikona aplikacji",
+  CHOOSEAPPICON: "WYBIERZ IKONĘ APLIKACJI",
+  Iconselect: "Po wybraniu ikony aplikacji system iOS wyświetli okno podręczne — to normalne ✓",
+  Defaultapp: "Domyślna ikona aplikacji",
+  Darktheme: "Intensywna jasna ikona motywu",
+  Warmsunset: "Intensywna ciemna ikona",
+  Naturegreen: "Ciemna ikona",
+  Classic: "Klasyczny",
+  Dark: "Intensywny Jasny",
+  Sunset: "Intensywny Ciemny",
+  Forest: "Ciemny"
+
 
 };

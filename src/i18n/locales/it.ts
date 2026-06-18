@@ -210,7 +210,20 @@ export default {
   ThemeMode: "Modalità tema",
   FollowSystem: "Segui il sistema",
   DarkMode: "Modalità scura",
-  LightMode: "Modalità chiara"
+  LightMode: "Modalità chiara",
+  searchCountry: "Cerca paese/città/regione",
+
+  AppIcon: "Icona App",
+  CHOOSEAPPICON: "SCEGLI ICONA APP",
+  Iconselect: "Quando selezioni l'icona dell'app, iOS mostrerà un popup di sistema: è normale ✓",
+  Defaultapp: "Icona app predefinita",
+  Darktheme: "Icona tema chiaro intensa",
+  Warmsunset: "Icona scura intensa",
+  Naturegreen: "Icona scura",
+  Classic: "Classico",
+  Dark: "Chiaro Intenso",
+  Sunset: "Scuro Intenso",
+  Forest: "Scuro"
 
 
 };

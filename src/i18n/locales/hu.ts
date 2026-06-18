@@ -215,9 +215,19 @@ export default {
   FollowSystem: "Rendszer követése",
   DarkMode: "Sötét mód",
   LightMode: "Világos mód",
-  searchCountry: "Ország/város/régió keresése"
+  searchCountry: "Ország/város/régió keresése",
 
-
+  AppIcon: "Alkalmazásikon",
+  CHOOSEAPPICON: "ALKALMAZÁSIKON KIVÁLASZTÁSA",
+  Iconselect: "Az alkalmazásikon kiválasztásakor az iOS egy rendszerfelugró ablakot jelenít meg — ez normális ✓",
+  Defaultapp: "Alapértelmezett alkalmazásikon",
+  Darktheme: "Erős világos téma ikon",
+  Warmsunset: "Erős sötét ikon",
+  Naturegreen: "Sötét ikon",
+  Classic: "Klasszikus",
+  Dark: "Erős Világos",
+  Sunset: "Erős Sötét",
+  Forest: "Sötét"
 
 
 };

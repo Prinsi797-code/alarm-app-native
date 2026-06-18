@@ -170,7 +170,20 @@ export default {
   FollowSystem: "Seguir sistema",
   DarkMode: "Modo oscuro",
   LightMode: "Modo claro",
-  searchCountry: "Buscar país/ciudad/región"
+  searchCountry: "Buscar país/ciudad/región",
+
+  AppIcon: "Icono de la aplicación",
+  CHOOSEAPPICON: "ELEGIR ICONO DE LA APLICACIÓN",
+  Iconselect: "Cuando selecciones el icono de la aplicación, iOS mostrará una ventana emergente del sistema; esto es normal ✓",
+  Defaultapp: "Icono predeterminado de la aplicación",
+  Darktheme: "Icono de tema claro intenso",
+  Warmsunset: "Icono oscuro intenso",
+  Naturegreen: "Icono oscuro",
+  Classic: "Clásico",
+  Dark: "Claro Intenso",
+  Sunset: "Oscuro Intenso",
+  Forest: "Oscuro"
+
 
 
 

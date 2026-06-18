@@ -211,7 +211,19 @@ export default {
     FollowSystem: "跟随系统",
     DarkMode: "深色模式",
     LightMode: "浅色模式",
-    searchCountry: "搜索国家/城市/地区"
+    searchCountry: "搜索国家/城市/地区",
+
+    AppIcon: "应用图标",
+    CHOOSEAPPICON: "选择应用图标",
+    Iconselect: "选择应用图标后，iOS 将显示系统弹窗——这是正常现象 ✓",
+    Defaultapp: "默认应用图标",
+    Darktheme: "高亮浅色主题图标",
+    Warmsunset: "高亮深色图标",
+    Naturegreen: "深色图标",
+    Classic: "经典",
+    Dark: "高亮浅色",
+    Sunset: "高亮深色",
+    Forest: "深色"
 
 
 };

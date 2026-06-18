@@ -215,12 +215,19 @@ export default {
   FollowSystem: "सिस्टम का पालन करें",
   DarkMode: "डार्क मोड",
   LightMode: "लाइट मोड",
-  searchCountry: "देश/शहर/क्षेत्र खोजें"
+  searchCountry: "देश/शहर/क्षेत्र खोजें",
 
-
-
-
-
+  AppIcon: "ऐप आइकन",
+  CHOOSEAPPICON: "ऐप आइकन चुनें",
+  Iconselect: "जब आप ऐप आइकन चुनते हैं, तो iOS एक सिस्टम पॉपअप दिखाएगा — यह सामान्य है ✓",
+  Defaultapp: "डिफ़ॉल्ट ऐप आइकन",
+  Darktheme: "लाउड लाइट थीम आइकन",
+  Warmsunset: "लाउड डार्क आइकन",
+  Naturegreen: "डार्क आइकन",
+  Classic: "क्लासिक",
+  Dark: "लाउड लाइट",
+  Sunset: "लाउड डार्क",
+  Forest: "डार्क"
 
 
 };

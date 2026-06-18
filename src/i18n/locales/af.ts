@@ -218,7 +218,20 @@ export default {
   FollowSystem: "Volg stelsel",
   DarkMode: "Donker modus",
   LightMode: "Lig modus",
-  searchCountry: "Soek land/stad/streek"
+  searchCountry: "Soek land/stad/streek",
+
+  AppIcon: "Programikoon",
+  CHOOSEAPPICON: "KIES PROGRAMIKOON",
+  Iconselect: "Wanneer jy die programikoon kies, sal iOS 'n stelselopspringvenster wys — dit is normaal ✓",
+  Defaultapp: "Verstek programikoon",
+  Darktheme: "Harde Lig-tema ikoon",
+  Warmsunset: "Harde Donker ikoon",
+  Naturegreen: "Donker ikoon",
+  Classic: "Klassiek",
+  Dark: "Harde Lig",
+  Sunset: "Harde Donker",
+  Forest: "Donker"
+
 
 
 

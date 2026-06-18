@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.hevin.alarm.refresh</string>
+	</array>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -24,8 +28,12 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-3940256099942544~1458002511</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAlarmKitUsageDescription</key>
+	<string>This app needs alarm access to wake you up on time.</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
@@ -33,44 +41,76 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>CFBundleIcons</key>
+<dict>
+    <key>CFBundlePrimaryIcon</key>
+    <dict>
+        <key>CFBundleIconFiles</key>
+        <array>
+            <string>logo</string>
+        </array>
+    </dict>
+    <key>CFBundleAlternateIcons</key>
+    <dict>
+        <key>logo1</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array><string>logo1</string></array>
+            <key>UIPrerenderedIcon</key>
+            <false/>
+        </dict>
+        <key>logo2</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array><string>logo2</string></array>
+            <key>UIPrerenderedIcon</key>
+            <false/>
+        </dict>
+        <key>logo3</key>
+        <dict>
+            <key>CFBundleIconFiles</key>
+            <array><string>logo3</string></array>
+            <key>UIPrerenderedIcon</key>
+            <false/>
+        </dict>
+    </dict>
+</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>RCTNewArchEnabled</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Access microphone for audio files</string>
-	<key>GADApplicationIdentifier</key>
-	<string>ca-app-pub-3940256099942544~1458002511</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Select a background image for your alarm</string>
+	<key>RCTNewArchEnabled</key>
+	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>MaterialIcons.ttf</string>
+		<string>Ionicons.ttf</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>arm64</string>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
-		<string>UIInterfaceOrientationPortrait</string>
-	</array>
-	<key>UISupportedInterfaceOrientations~ipad</key>
-	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Select a background image for your alarm</string>
-	<key>UIBackgroundModes</key>
+	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
-  		<string>audio</string>
-		<string>fetch</string>
-		<string>processing</string>
-  		<string>remote-notification</string>
-	</array>
-	<key>UIAppFonts</key>
-	<array>
-  		<string>MaterialIcons.ttf</string>
-		<string>Ionicons.ttf</string>
+		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

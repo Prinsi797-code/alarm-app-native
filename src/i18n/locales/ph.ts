@@ -216,8 +216,19 @@ export default {
     FollowSystem: "Sundin ang system",
     DarkMode: "Madilim na mode",
     LightMode: "Maliwanag na mode",
-    searchCountry: "Maghanap ng bansa/lungsod/rehiyon"
+    searchCountry: "Maghanap ng bansa/lungsod/rehiyon",
 
+    AppIcon: "Icon ng App",
+    CHOOSEAPPICON: "PUMILI NG ICON NG APP",
+    Iconselect: "Kapag pinili mo ang icon ng app, magpapakita ang iOS ng system popup — normal ito ✓",
+    Defaultapp: "Default na icon ng app",
+    Darktheme: "Matingkad na light theme icon",
+    Warmsunset: "Matingkad na dark icon",
+    Naturegreen: "Dark icon",
+    Classic: "Klasiko",
+    Dark: "Matingkad na Light",
+    Sunset: "Matingkad na Dark",
+    Forest: "Dark"
 
 
 };

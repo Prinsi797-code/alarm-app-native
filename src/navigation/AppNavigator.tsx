@@ -18,7 +18,8 @@ import ThemeModeScreen from '../screens/ThemeModeScreen';
 import LanguageScreen from '../screens/LanguageScreen';
 import SnoozePickerScreen from '../screens/SnoozePickerScreen';
 import SplashScreen from '../screens/SplashScreen';
-import AdBanner from '../components/AdBanner';      // ← add
+import AppLogoScreen from '../screens/AppLogoScreen';
+import AdBanner from '../components/AdBanner';
 
 import { useTranslation } from 'react-i18next';
 
@@ -138,8 +139,9 @@ function BottomTabs() {
 
 export default function AppNavigator() {
   return (
-    <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Splash" component={SplashScreen} />
+    // <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
+    <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
+      {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
       <Stack.Screen name="Home" component={AlarmScreen} />
       <Stack.Screen name="Main" component={BottomTabs} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
@@ -148,6 +150,7 @@ export default function AppNavigator() {
       <Stack.Screen name="SnoozePicker" component={SnoozePickerScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="RingtonePicker" component={RingtonePickerScreen} options={{ presentation: 'modal', animation: 'fade' }} />
       <Stack.Screen name="AlarmRinging" component={AlarmRingingScreen} options={{ presentation: 'modal', animation: 'fade' }} />
+      <Stack.Screen name="AppLogo" component={AppLogoScreen} options={{ presentation: 'modal', animation: 'fade' }} />
       <Stack.Screen name="CoinScreen" component={CoinScreen} options={{ headerShown: false }} />
     </Stack.Navigator>
   );

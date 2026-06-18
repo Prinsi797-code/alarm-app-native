@@ -90,11 +90,10 @@ async function startRinging(alarm: any) {
 
         let trackUrl: any;
 
-        // Custom ringtone check karo
         if (alarm?.ringtone?.startsWith('custom_')) {
             const index = parseInt(alarm.ringtone.replace('custom_', ''));
             const raw = await AsyncStorage.getItem('@custom_ringtones');
-            const customTones: { name: string; uri: string }[] = raw ? JSON.parse(raw) : [];
+            const customTones: { name: string; uri: string; bundleFileName?: string }[] = raw ? JSON.parse(raw) : [];
             const ct = customTones[index];
             trackUrl = ct?.uri ?? TONE_MAP['Fine Day'];
         } else {
@@ -121,15 +120,22 @@ async function scheduleSnooze(alarm: any) {
     const snoozeMin: number = alarm.snoozeMinutes ?? 5;
     const fire = new Date(Date.now() + snoozeMin * 60 * 1000);
     const { disp, per } = fmtT(alarm.hour, alarm.minute);
-    try { await notifee.cancelNotification(`snooze_${alarm.id}`); } catch { }
-    if (Platform.OS === 'android') {
-        await notifee.createChannel({
-            id: 'alarms', name: 'Alarms',
-            importance: AndroidImportance.HIGH,
-            visibility: AndroidVisibility.PUBLIC,
-            sound: 'default', vibration: true,
-        });
+
+    // ✅ Custom sound ka bundleFileName nikalo
+    let notifSound = 'default';
+    if (alarm?.ringtone?.startsWith('custom_')) {
+        const index = parseInt(alarm.ringtone.replace('custom_', ''));
+        const raw = await AsyncStorage.getItem('@custom_ringtones');
+        const customTones: { name: string; uri: string; bundleFileName?: string }[]
+            = raw ? JSON.parse(raw) : [];
+        const ct = customTones[index];
+        if (ct?.bundleFileName) {
+            notifSound = ct.bundleFileName; // ← yahi notification mein jaayega
+        }
     }
+
+    try { await notifee.cancelNotification(`snooze_${alarm.id}`); } catch { }
+
     await notifee.createTriggerNotification(
         {
             id: `snooze_${alarm.id}`,
@@ -144,7 +150,11 @@ async function scheduleSnooze(alarm: any) {
                 vibrationPattern: alarm.vibrate ? [0, 400, 200, 400] : undefined,
                 pressAction: { id: 'default' },
             },
-            ios: { sound: 'default', critical: false },
+            ios: {
+                sound: notifSound,   // ✅ User ki custom sound
+                critical: true,      // Entitlement milne ke baad
+                criticalVolume: 1.0,
+            },
         },
         { type: TriggerType.TIMESTAMP, timestamp: fire.getTime() }
     );
@@ -186,7 +196,6 @@ function generateMath(difficulty: 'Easy' | 'Medium' | 'Hard' = 'Easy'): MathProb
         }
         question = `${a}  ${op}  ${b}`;
     } else {
-        // Hard — multi step
         a = Math.floor(Math.random() * 20) + 5;
         b = Math.floor(Math.random() * 12) + 2;
         const c = Math.floor(Math.random() * 20) + 5;
@@ -397,6 +406,9 @@ export default function AlarmRingingScreen() {
     }, []);
 
     const handleDismiss = async () => {
+        await TrackPlayer.stop();
+        await TrackPlayer.reset();
+
         stopVibrating();
         await stopRinging();
         try {
@@ -407,6 +419,9 @@ export default function AlarmRingingScreen() {
     };
 
     const handleSnooze = async () => {
+        await TrackPlayer.stop();
+        await TrackPlayer.reset();
+
         stopVibrating();
         await stopRinging();
         if (alarm) await scheduleSnooze(alarm);

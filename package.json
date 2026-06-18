@@ -1,6 +1,6 @@
 {
-  "name": "AlarmApp",
-  "version": "0.0.1",
+  "name": "Alarm2026",
+  "version": "1.0.8",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -25,7 +25,9 @@
     "react-i18next": "^17.0.8",
     "react-native": "0.85.3",
     "react-native-background-timer": "^2.4.1",
+    "react-native-change-icon": "^5.0.0",
     "react-native-document-picker": "^9.3.1",
+    "react-native-fs": "^2.20.0",
     "react-native-gesture-handler": "^2.31.2",
     "react-native-google-mobile-ads": "^16.3.3",
     "react-native-image-picker": "^8.2.1",
@@ -33,7 +35,8 @@
     "react-native-screens": "^4.25.2",
     "react-native-svg": "^15.15.5",
     "react-native-track-player": "^4.1.2",
-    "react-native-vector-icons": "^10.3.0"
+    "react-native-vector-icons": "^10.3.0",
+    "rn-native-alarmkit": "^0.1.13"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

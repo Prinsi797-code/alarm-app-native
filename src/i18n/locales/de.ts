@@ -169,9 +169,19 @@ export default {
   FollowSystem: "System folgen",
   DarkMode: "Dunkelmodus",
   LightMode: "Hellmodus",
-  searchCountry: "Land/Stadt/Region suchen"
+  searchCountry: "Land/Stadt/Region suchen",
 
-
+  AppIcon: "App-Symbol",
+  CHOOSEAPPICON: "APP-SYMBOL AUSWÄHLEN",
+  Iconselect: "Wenn du das App-Symbol auswählst, zeigt iOS ein System-Popup an — das ist normal ✓",
+  Defaultapp: "Standard-App-Symbol",
+  Darktheme: "Lautes Hellmodus-Symbol",
+  Warmsunset: "Lautes Dunkelsymbol",
+  Naturegreen: "Dunkelsymbol",
+  Classic: "Klassisch",
+  Dark: "Laut Hell",
+  Sunset: "Laut Dunkel",
+  Forest: "Dunkel"
 
 
 };

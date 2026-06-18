@@ -209,6 +209,19 @@ export default {
     FollowSystem: "ใช้ตามระบบ",
     DarkMode: "โหมดมืด",
     LightMode: "โหมดสว่าง",
-    searchCountry: "ค้นหาประเทศ/เมือง/ภูมิภาค"
+    searchCountry: "ค้นหาประเทศ/เมือง/ภูมิภาค",
+
+    AppIcon: "ไอคอนแอป",
+    CHOOSEAPPICON: "เลือกไอคอนแอป",
+    Iconselect: "เมื่อคุณเลือกไอคอนแอป iOS จะแสดงป๊อปอัปของระบบ — เป็นเรื่องปกติ ✓",
+    Defaultapp: "ไอคอนแอปเริ่มต้น",
+    Darktheme: "ไอคอนธีมสว่างเด่น",
+    Warmsunset: "ไอคอนมืดเด่น",
+    Naturegreen: "ไอคอนมืด",
+    Classic: "คลาสสิก",
+    Dark: "สว่างเด่น",
+    Sunset: "มืดเด่น",
+    Forest: "มืด"
+
 
 };

@@ -1,7 +1,7 @@
 // src/screens/SettingsScreen.tsx
-// Default vibrate toggle add kiya gaya hai
+// Default vibrate toggle + App Icon row added
 
-import React, { useState, useCallback, useRef } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View, Text, TouchableOpacity, ScrollView,
   StyleSheet, Linking, Share, Animated,
@@ -16,11 +16,12 @@ import { loadDefaultSnooze, SNOOZE_LABELS, SNOOZE_OPTS } from './SnoozePickerScr
 import { loadDefaultRingtone } from './RingtonePickerScreen';
 
 const DEFAULT_VIBRATE_KEY = '@default_vibrate';
+const ICON_KEY = '@selected_app_icon';
 
 export async function loadDefaultVibrate(): Promise<boolean> {
   try {
     const v = await AsyncStorage.getItem(DEFAULT_VIBRATE_KEY);
-    return v === null ? true : v === 'true'; 
+    return v === null ? true : v === 'true';
   } catch { return true; }
 }
 
@@ -56,9 +57,18 @@ export default function SettingsScreen() {
   const ins = useSafeAreaInsets();
   const { t } = useTranslation();
 
-  const [snoozeSub, setSnoozeSub]         = useState('');
-  const [ringtoneSub, setRingtoneSub]     = useState('');
+  const [snoozeSub, setSnoozeSub] = useState('');
+  const [ringtoneSub, setRingtoneSub] = useState('');
   const [defaultVibrate, setDefaultVibrate] = useState(true);
+  const [iconSub, setIconSub] = useState('Classic');
+
+
+  const ICON_LABELS: Record<string, string> = {
+    Default: t('Classic'),
+    logo1: t('Dark'),
+    logo2: t('Sunset'),
+    logo3: t('Forest'),
+  };
 
   useFocusEffect(
     useCallback(() => {
@@ -67,6 +77,12 @@ export default function SettingsScreen() {
       });
       loadDefaultRingtone().then(tone => setRingtoneSub(tone));
       loadDefaultVibrate().then(v => setDefaultVibrate(v));
+
+      // App Icon sub-label refresh (screen se wapas aane pe update ho)
+      AsyncStorage.getItem(ICON_KEY).then(v => {
+        const key = v ?? 'Default';
+        setIconSub(ICON_LABELS[key] ?? 'Classic');
+      });
     }, [])
   );
 
@@ -76,17 +92,20 @@ export default function SettingsScreen() {
   };
 
   const MAIN_ROWS = [
-    // { icon: 'time-outline',           label: t('timeZone'),       sub: '',           screen: 'TimeZone',     accent: '#6563FF' },
-    { icon: 'alarm-outline',          label: t('snooze'),         sub: snoozeSub,    screen: 'SnoozePicker', accent: '#6563FF' },
-    { icon: 'musical-notes-outline',  label: t('alarmSound'),     sub: ringtoneSub,  screen: 'RingtonePicker', accent: '#6563FF' },
-    { icon: 'language-outline',       label: t('switchLanguage'), sub: t('english'), screen: 'Language',     accent: '#6563FF' },
-    { icon: 'moon-outline',           label: t('themeMode'),      sub: t('followSystem'), screen: 'ThemeMode', accent: '#6563FF' },
+    { icon: 'alarm-outline', label: t('snooze'), sub: snoozeSub, screen: 'SnoozePicker', accent: '#6563FF' },
+    { icon: 'musical-notes-outline', label: t('alarmSound'), sub: ringtoneSub, screen: 'RingtonePicker', accent: '#6563FF' },
+    { icon: 'language-outline', label: t('switchLanguage'), sub: t('english'), screen: 'Language', accent: '#6563FF' },
+    { icon: 'moon-outline', label: t('themeMode'), sub: t('followSystem'), screen: 'ThemeMode', accent: '#6563FF' },
+    // ↓ App Icon row — NEW
+    { icon: 'color-palette-outline', label: t('appIcon') ?? 'App Icon', sub: iconSub, screen: 'AppLogo', accent: '#6563FF' },
+
+    // { icon: 'color-palette-outline', label: t('appIcon') ?? 'App Icon', sub: iconSub, screen: 'AppLogo', accent: '#6563FF' },
   ];
 
   const MORE_ROWS = [
-    { icon: 'share-social-outline', label: t('share'),         key: 'Share'   },
-    { icon: 'star-outline',         label: t('rateUs'),        key: 'Rate'    },
-    { icon: 'shield-outline',       label: t('privacyPolicy'), key: 'Privacy' },
+    { icon: 'share-social-outline', label: t('share'), key: 'Share' },
+    { icon: 'star-outline', label: t('rateUs'), key: 'Rate' },
+    { icon: 'shield-outline', label: t('privacyPolicy'), key: 'Privacy' },
   ];
 
   const handleMore = async (key: string) => {
@@ -137,8 +156,9 @@ export default function SettingsScreen() {
           })}
         </View>
 
-        <View style={[S.section]}>
-          <View style={[S.row]}>
+        {/* Vibrate toggle */}
+        <View style={S.section}>
+          <View style={S.row}>
             <View style={[S.iconBox, { backgroundColor: '#6563FF18' }]}>
               <Ionicons name="phone-portrait-outline" size={20} color="#6563FF" />
             </View>
@@ -148,14 +168,11 @@ export default function SettingsScreen() {
                 {defaultVibrate ? t('vibrateOn') : t('vibrateOff')}
               </Text>
             </View>
-            <Toggle
-              value={defaultVibrate}
-              onChange={handleVibrateToggle}
-              primary={colors.primary}
-            />
+            <Toggle value={defaultVibrate} onChange={handleVibrateToggle} primary={colors.primary} />
           </View>
         </View>
 
+        {/* More rows */}
         <View style={S.section}>
           {MORE_ROWS.map((item, idx) => {
             const isLast = idx === MORE_ROWS.length - 1;

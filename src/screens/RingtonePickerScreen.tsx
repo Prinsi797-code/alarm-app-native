@@ -24,6 +24,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import DocumentPicker from 'react-native-document-picker';
 import { CoinStore } from '../utils/CoinStore';
 import AdBanner from '../components/AdBanner';
+import RNFS from 'react-native-fs';
 
 
 const TONE_MAP: Record<string, any> = {
@@ -48,14 +49,14 @@ export async function loadDefaultRingtone(): Promise<string> {
     }
 }
 
-export async function loadCustomTones(): Promise<{ name: string; uri: string }[]> {
+export async function loadCustomTones(): Promise<{ name: string; uri: string; bundleFileName?: string }[]> {
     try {
         const raw = await AsyncStorage.getItem(CUSTOM_TONES_KEY);
         return raw ? JSON.parse(raw) : [];
     } catch { return []; }
 }
 
-export async function saveCustomTones(tones: { name: string; uri: string }[]): Promise<void> {
+export async function saveCustomTones(tones: { name: string; uri: string; bundleFileName?: string }[]): Promise<void> {
     try { await AsyncStorage.setItem(CUSTOM_TONES_KEY, JSON.stringify(tones)); } catch { }
 }
 
@@ -206,15 +207,13 @@ export default function RingtonePickerScreen({
         return () => { stopPreview(); };
     }, []);
 
-    const [customTones, setCustomTones] = useState<{ name: string; uri: string }[]>([]);
+    const [customTones, setCustomTones] = useState<{ name: string; uri: string; bundleFileName?: string }[]>([]);
     const [pickingAudio, setPickingAudio] = useState(false);
-
 
     const [customSoundsUnlocked, setCustomSoundsUnlocked] = useState(false);
     const [customSoundsDaysLeft, setCustomSoundsDaysLeft] = useState(0);
     const [unlockingSound, setUnlockingSound] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
-
 
     const handleTonePress = async (tone: string, customUri?: string) => {
         setLocalSelected(tone);
@@ -311,10 +310,20 @@ export default function RingtonePickerScreen({
                 type: [DocumentPicker.types.audio],
                 copyTo: 'documentDirectory',
             });
-            const uri = result.fileCopyUri ?? result.uri;
+
+            const sourceUri = result.fileCopyUri ?? result.uri;
             const rawName = result.name ?? `Custom ${customTones.length + 1}`;
             const name = rawName.replace(/\.[^/.]+$/, '');
-            const newTones = [...customTones, { name, uri }];
+            const destFileName = `alarm_custom_${Date.now()}.wav`;
+            const destPath = `${RNFS.LibraryDirectoryPath}/${destFileName}`;
+
+            await RNFS.copyFile(sourceUri, destPath);
+
+            const newTones = [...customTones, {
+                name,
+                uri: sourceUri,
+                bundleFileName: destFileName
+            }];
             setCustomTones(newTones);
             await saveCustomTones(newTones);
             setLocalSelected(`custom_${customTones.length}`);
@@ -363,12 +372,12 @@ export default function RingtonePickerScreen({
                 position: 'relative',
             }}>
                 {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}> */}
-                    <TouchableOpacity onPress={handleBack} style={Sn.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
-                        <View style={[Sn.closeBtnCircle, { backgroundColor: colors.surface }]}>
-                            <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={[Sn.hdrTitle, { color: colors.text }]}>{t('alarmSound')}</Text>
+                <TouchableOpacity onPress={handleBack} style={Sn.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
+                    <View style={[Sn.closeBtnCircle, { backgroundColor: colors.surface }]}>
+                        <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
+                    </View>
+                </TouchableOpacity>
+                <Text style={[Sn.hdrTitle, { color: colors.text }]}>{t('alarmSound')}</Text>
                 {/* </View> */}
                 <TouchableOpacity
                     onPress={handleSave}

@@ -216,7 +216,19 @@ export default {
   FollowSystem: "Urmează sistemul",
   DarkMode: "Mod întunecat",
   LightMode: "Mod luminos",
-  searchCountry: "Caută țară/ oraș / regiune"
+  searchCountry: "Caută țară/ oraș / regiune",
+
+  AppIcon: "Pictogramă aplicație",
+  CHOOSEAPPICON: "ALEGE PICTOGRAMA APLICAȚIEI",
+  Iconselect: "Când selectezi pictograma aplicației, iOS va afișa o fereastră pop-up de sistem — este normal ✓",
+  Defaultapp: "Pictogramă implicită",
+  Darktheme: "Pictogramă temă luminoasă intensă",
+  Warmsunset: "Pictogramă întunecată intensă",
+  Naturegreen: "Pictogramă întunecată",
+  Classic: "Clasic",
+  Dark: "Luminos Intens",
+  Sunset: "Întunecat Intens",
+  Forest: "Întunecat"
 
 
 };

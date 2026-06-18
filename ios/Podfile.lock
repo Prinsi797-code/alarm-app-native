@@ -1519,9 +1519,33 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
+  - react-native-alarmkit (0.1.13):
+    - React-Core
   - react-native-background-timer (2.4.1):
     - React-Core
   - react-native-blur (4.4.1):
+    - hermes-engine
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-Core-prebuilt
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - ReactNativeDependencies
+    - Yoga
+  - react-native-change-icon (5.0.0):
     - hermes-engine
     - RCTRequired
     - RCTTypeSafety
@@ -2116,6 +2140,8 @@ PODS:
     - ReactNativeDependencies
     - RNFBApp
     - Yoga
+  - RNFS (2.20.0):
+    - React-Core
   - RNGestureHandler (2.31.2):
     - hermes-engine
     - RCTRequired
@@ -2326,8 +2352,10 @@ DEPENDENCIES:
   - React-Mapbuffer (from `../node_modules/react-native/ReactCommon`)
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - React-mutationobservernativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver`)
+  - react-native-alarmkit (from `../node_modules/rn-native-alarmkit`)
   - react-native-background-timer (from `../node_modules/react-native-background-timer`)
   - "react-native-blur (from `../node_modules/@react-native-community/blur`)"
+  - react-native-change-icon (from `../node_modules/react-native-change-icon`)
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
@@ -2369,6 +2397,7 @@ DEPENDENCIES:
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBRemoteConfig (from `../node_modules/@react-native-firebase/remote-config`)"
+  - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleMobileAds (from `../node_modules/react-native-google-mobile-ads`)
   - "RNNotifee (from `../node_modules/@notifee/react-native`)"
@@ -2478,10 +2507,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/microtasks"
   React-mutationobservernativemodule:
     :path: "../node_modules/react-native/ReactCommon/react/nativemodule/mutationobserver"
+  react-native-alarmkit:
+    :path: "../node_modules/rn-native-alarmkit"
   react-native-background-timer:
     :path: "../node_modules/react-native-background-timer"
   react-native-blur:
     :path: "../node_modules/@react-native-community/blur"
+  react-native-change-icon:
+    :path: "../node_modules/react-native-change-icon"
   react-native-document-picker:
     :path: "../node_modules/react-native-document-picker"
   react-native-image-picker:
@@ -2564,6 +2597,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBRemoteConfig:
     :path: "../node_modules/@react-native-firebase/remote-config"
+  RNFS:
+    :path: "../node_modules/react-native-fs"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleMobileAds:
@@ -2635,8 +2670,10 @@ SPEC CHECKSUMS:
   React-Mapbuffer: fec3e025f0ffba6b32cd2a1d7bbdee3e269aae90
   React-microtasksnativemodule: ab33a818d339f5a1da308893c11b487be66121a8
   React-mutationobservernativemodule: a42d1626651ccd7d0dc02a56e69d4ec77c248893
+  react-native-alarmkit: 886a1d215759b79a52b110036a0728b043d4ae23
   react-native-background-timer: 4638ae3bee00320753647900b21260b10587b6f7
   react-native-blur: ea6c78ddeaa7aa0fce36ea29d1f81dd23063032a
+  react-native-change-icon: cc3539131bd3b8b6468489b8a8b48e077a68902b
   react-native-document-picker: dbb2852adc7e2fcbd522268006aa71ebbe542e24
   react-native-image-picker: 23540feacc79c63c60857f318fdfa8477c26e70a
   react-native-safe-area-context: fb5c8ee9f6dd62ef710611b3d370c501f42a4ac0
@@ -2678,6 +2715,7 @@ SPEC CHECKSUMS:
   RNFBAnalytics: f63f5392ae5c6ccc10471d58764ff6317c75aafb
   RNFBApp: 7a47a118d5a2632db57b0dcc560e3488ce1552fd
   RNFBRemoteConfig: 6c7d055e8cf1fc262b0d2014cbe39a8b569ae9d7
+  RNFS: 89de7d7f4c0f6bafa05343c578f61118c8282ed8
   RNGestureHandler: 2ff61eac036eaf89f6818bf4ed9c39771a17d134
   RNGoogleMobileAds: fe6d089a58e2ad76b592486ae44014aa9f12f9b3
   RNNotifee: 5e3b271e8ea7456a36eec994085543c9adca9168

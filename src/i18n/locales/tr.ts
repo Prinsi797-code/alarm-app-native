@@ -211,10 +211,19 @@ export default {
   FollowSystem: "Sistemi takip et",
   DarkMode: "Karanlık Mod",
   LightMode: "Aydınlık Mod",
-  searchCountry: "Ülke/şehir/bölge ara"
+  searchCountry: "Ülke/şehir/bölge ara",
 
-
-
+  AppIcon: "Uygulama Simgesi",
+  CHOOSEAPPICON: "UYGULAMA SİMGESİ SEÇ",
+  Iconselect: "Uygulama simgesini seçtiğinizde iOS bir sistem açılır penceresi gösterecektir — bu normaldir ✓",
+  Defaultapp: "Varsayılan uygulama simgesi",
+  Darktheme: "Canlı açık tema simgesi",
+  Warmsunset: "Canlı koyu simge",
+  Naturegreen: "Koyu simge",
+  Classic: "Klasik",
+  Dark: "Canlı Açık",
+  Sunset: "Canlı Koyu",
+  Forest: "Koyu"
 
 
 };

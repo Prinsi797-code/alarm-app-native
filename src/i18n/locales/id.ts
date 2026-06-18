@@ -217,10 +217,18 @@ export default {
   FollowSystem: "Ikuti sistem",
   DarkMode: "Mode gelap",
   LightMode: "Mode terang",
-  searchCountry: "Cari negara/kota/wilayah"
+  searchCountry: "Cari negara/kota/wilayah",
 
-
-
-
+  AppIcon: "Ikon Aplikasi",
+  CHOOSEAPPICON: "PILIH IKON APLIKASI",
+  Iconselect: "Saat Anda memilih ikon aplikasi, iOS akan menampilkan popup sistem — ini normal ✓",
+  Defaultapp: "Ikon aplikasi bawaan",
+  Darktheme: "Ikon tema terang mencolok",
+  Warmsunset: "Ikon gelap mencolok",
+  Naturegreen: "Ikon gelap",
+  Classic: "Klasik",
+  Dark: "Terang Mencolok",
+  Sunset: "Gelap Mencolok",
+  Forest: "Gelap"
 
 };

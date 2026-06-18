@@ -22,6 +22,7 @@ import MathMissionScreen from '../screens/MathMissionScreen';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { CoinStore } from '../utils/CoinStore';
 import { showInterstitialAd } from '../services/AdService';
+import { NativeAlarmManager, AlarmError, AlarmErrorCode } from 'rn-native-alarmkit';
 import { AlarmEvents } from '../services/AnalyticsService';
 import AdNative from '../components/AdNative';
 
@@ -162,6 +163,7 @@ async function askPermission() {
         });
     }
 }
+
 function AlarmPreviewModal({ bgIndex, onClose }: { bgIndex: number; onClose: () => void }) {
     const ins = useSafeAreaInsets();
     return (
@@ -181,19 +183,170 @@ function AlarmPreviewModal({ bgIndex, onClose }: { bgIndex: number; onClose: () 
     );
 }
 
+async function checkAlarmKitAvailable(): Promise<boolean> {
+    if (Platform.OS !== 'ios') return false;
+    try {
+        const cap = await NativeAlarmManager.checkCapability();
+        return cap?.capability === 'native_alarms'; // iOS 26+ only
+    } catch {
+        return false;
+    }
+}
+
+// async function scheduleAlarm(alarm: Alarm) {
+//     try { await notifee.cancelNotification(alarm.id); } catch { }
+//     if (!alarm.enabled) return;
+//     let fire: Date;
+//     if (alarm.specificDate) {
+//         fire = new Date(`${alarm.specificDate}T${p2(alarm.hour)}:${p2(alarm.minute)}:00`);
+//         if (fire <= new Date()) return;
+//     } else {
+//         fire = new Date();
+//         fire.setHours(alarm.hour, alarm.minute, 0, 0);
+//         if (fire <= new Date()) fire.setDate(fire.getDate() + 1);
+//     }
+//     const { disp, per } = fmtT(alarm.hour, alarm.minute);
+//     const TONE_IOS: Record<string, string> = {
+//         'Fine Day': 'fine_day.caf',
+//         'Classic': 'classic.caf',
+//         'Radar': 'radar.caf',
+//         'Beacon': 'beacon.caf',
+//         'Einnt': 'einnt.caf',
+//         'Funny': 'funny.caf',
+//         'Gunfire': 'gunfire.caf',
+//         'Love': 'love.caf'
+//     };
+//     const TONE_ANDROID: Record<string, string> = {
+//         'Fine Day': 'fine_day',
+//         'Classic': 'classic',
+//         'Radar': 'radar',
+//         'Beacon': 'beacon',
+//         'Einnt': 'einnt',
+//         'Funny': 'funny',
+//         'Gunfire': 'gunfire',
+//         'Love': 'love'
+//     };
+//     const iosSoundFile = TONE_IOS[alarm.ringtone] ?? 'fine_day.caf';
+//     const androidSoundFile = TONE_ANDROID[alarm.ringtone] ?? 'fine_day';
+
+//     await notifee.createTriggerNotification({
+//         id: alarm.id,
+//         title: `⏰ ${alarm.label}`,
+//         body: `${disp} ${per}`,
+//         data: { alarmId: alarm.id },
+//         ios: {
+//             sound: TONE_IOS[alarm.ringtone] ?? 'fine_day.caf',
+//             critical: false,
+//             interruptionLevel: 'timeSensitive',
+//             foregroundPresentationOptions: {
+//                 alert: true,
+//                 sound: true,
+//                 banner: true,
+//             },
+//         },
+//     }, {
+//         type: TriggerType.TIMESTAMP,
+//         timestamp: fire.getTime(),
+//     });
+// }
 async function scheduleAlarm(alarm: Alarm) {
     try { await notifee.cancelNotification(alarm.id); } catch { }
-    if (!alarm.enabled) return;
-    let fire: Date;
-    if (alarm.specificDate) {
-        fire = new Date(`${alarm.specificDate}T${p2(alarm.hour)}:${p2(alarm.minute)}:00`);
-        if (fire <= new Date()) return;
-    } else {
-        fire = new Date();
-        fire.setHours(alarm.hour, alarm.minute, 0, 0);
-        if (fire <= new Date()) fire.setDate(fire.getDate() + 1);
+    if (Platform.OS === 'ios') {
+        try { await NativeAlarmManager.cancelAlarm(alarm.id); } catch { }
     }
+
+    if (!alarm.enabled) return;
+
+    let fireDate: Date;
+    if (alarm.specificDate) {
+        fireDate = new Date(`${alarm.specificDate}T${p2(alarm.hour)}:${p2(alarm.minute)}:00`);
+        if (fireDate <= new Date()) return;
+    } else {
+        fireDate = new Date();
+        fireDate.setHours(alarm.hour, alarm.minute, 0, 0);
+        if (fireDate <= new Date()) fireDate.setDate(fireDate.getDate() + 1);
+    }
+
     const { disp, per } = fmtT(alarm.hour, alarm.minute);
+    const alarmLabel = `⏰ ${alarm.label}`;
+    const alarmBody = `${disp} ${per}`;
+
+    const alarmKitAvailable = await checkAlarmKitAvailable();
+
+    if (alarmKitAvailable) {
+        try {
+            const granted = await NativeAlarmManager.requestAuthorization();
+            if (!granted) throw new Error('AlarmKit permission denied');
+
+            if (alarm.days.length > 0 && !alarm.specificDate) {
+                await NativeAlarmManager.scheduleAlarm(
+                    {
+                        id: alarm.id,
+                        type: 'recurring',
+                        time: { hour: alarm.hour, minute: alarm.minute },
+                        daysOfWeek: alarm.days,
+                    },
+                    {
+                        title: alarmLabel,
+                        body: alarmBody,
+                        data: { alarmId: alarm.id },
+                        actions: [
+                            {
+                                actionId: 'dismiss',
+                                title: 'Dismiss',
+                                behavior: 'dismiss',
+                            },
+                            {
+                                actionId: 'snooze',
+                                title: `Snooze ${alarm.snoozeMinutes}m`,
+                                behavior: 'snooze',
+                                snoozeIntervalSeconds: alarm.snoozeMinutes * 60,
+                            },
+                        ],
+                    }
+                );
+            } else {
+                await NativeAlarmManager.scheduleAlarm(
+                    {
+                        id: alarm.id,
+                        type: 'fixed',
+                        time: { hour: alarm.hour, minute: alarm.minute },
+                        date: fireDate,
+                    },
+                    {
+                        title: alarmLabel,
+                        body: alarmBody,
+                        data: { alarmId: alarm.id },
+                        actions: [
+                            {
+                                actionId: 'dismiss',
+                                title: 'Dismiss',
+                                behavior: 'dismiss',
+                            },
+                            {
+                                actionId: 'snooze',
+                                title: `Snooze ${alarm.snoozeMinutes}m`,
+                                behavior: 'snooze',
+                                snoozeIntervalSeconds: alarm.snoozeMinutes * 60,
+                            },
+                        ],
+                    }
+                );
+            }
+
+            console.log('AlarmKit scheduled:', alarm.id, alarm.label);
+            return;
+
+        } catch (e) {
+            if (e instanceof AlarmError) {
+                console.warn('AlarmError:', e.code, e.message);
+            } else {
+                console.warn('AlarmKit failed, falling back to notifee:', e);
+            }
+        }
+    }
+
+    console.log('📲 Notifee fallback for:', alarm.id);
     const TONE_IOS: Record<string, string> = {
         'Fine Day': 'fine_day.caf',
         'Classic': 'classic.caf',
@@ -202,40 +355,36 @@ async function scheduleAlarm(alarm: Alarm) {
         'Einnt': 'einnt.caf',
         'Funny': 'funny.caf',
         'Gunfire': 'gunfire.caf',
-        'Love': 'love.caf'
+        'Love': 'love.caf',
     };
-    const TONE_ANDROID: Record<string, string> = {
-        'Fine Day': 'fine_day',
-        'Classic': 'classic',
-        'Radar': 'radar',
-        'Beacon': 'beacon',
-        'Einnt': 'einnt',
-        'Funny': 'funny',
-        'Gunfire': 'gunfire',
-        'Love': 'love'
-    };
-    const iosSoundFile = TONE_IOS[alarm.ringtone] ?? 'fine_day.caf';
-    const androidSoundFile = TONE_ANDROID[alarm.ringtone] ?? 'fine_day';
 
-    await notifee.createTriggerNotification({
-        id: alarm.id,
-        title: `⏰ ${alarm.label}`,
-        body: `${disp} ${per}`,
-        data: { alarmId: alarm.id },
-        ios: {
-            sound: TONE_IOS[alarm.ringtone] ?? 'fine_day.caf',
-            critical: false,
-            interruptionLevel: 'timeSensitive',
-            foregroundPresentationOptions: {
-                alert: true,
-                sound: true,
-                banner: true,
+    await notifee.createTriggerNotification(
+        {
+            id: alarm.id,
+            title: alarmLabel,
+            body: alarmBody,
+            data: { alarmId: alarm.id },
+            ios: {
+                sound: TONE_IOS[alarm.ringtone] ?? 'fine_day.caf',
+                critical: false,
+                interruptionLevel: 'timeSensitive',
+                foregroundPresentationOptions: {
+                    alert: true,
+                    sound: true,
+                    banner: true,
+                },
+            },
+            android: {
+                channelId: 'alarms',
+                pressAction: { id: 'default' },
+                fullScreenAction: { id: 'default' },
             },
         },
-    }, {
-        type: TriggerType.TIMESTAMP,
-        timestamp: fire.getTime(),
-    });
+        {
+            type: TriggerType.TIMESTAMP,
+            timestamp: fireDate.getTime(),
+        }
+    );
 }
 
 const loadAlarms = async (): Promise<Alarm[]> => {
@@ -850,12 +999,30 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
     const ins = useSafeAreaInsets();
     const [showSnoozePicker, setShowSnoozePicker] = useState(false);
     const isNew = alarm === null;
-    const [d, setD] = useState<Alarm>(alarm ?? {
-        id: Date.now().toString(), hour: 7, minute: 0, label: 'New Alarm',
-        days: [1, 2, 3, 4, 5], enabled: true, ringtone: 'Fine Day',
-        snoozeMinutes: 5, bgIndex: 0,
-        customBgUris: [],
-        mission: { enabled: false, type: 'math', count: 1, difficulty: 'Easy' },
+    // const [d, setD] = useState<Alarm>(alarm ?? {
+    //     id: Date.now().toString(), hour: 7, minute: 0, label: 'New Alarm',
+    //     days: [1, 2, 3, 4, 5], enabled: true, ringtone: 'Fine Day',
+    //     snoozeMinutes: 5, bgIndex: 0,
+    //     customBgUris: [],
+    //     mission: { enabled: false, type: 'math', count: 1, difficulty: 'Easy' },
+    // });
+    // NAYA CODE - lagao
+    const getDefaultTime = () => {
+        const now = new Date();
+        now.setMinutes(now.getMinutes() + 2);
+        return { hour: now.getHours(), minute: now.getMinutes() };
+    };
+
+    const [d, setD] = useState<Alarm>(() => {
+        if (alarm) return alarm;
+        const { hour, minute } = getDefaultTime();
+        return {
+            id: Date.now().toString(), hour, minute, label: 'New Alarm',
+            days: [1, 2, 3, 4, 5], enabled: true, ringtone: 'Fine Day',
+            snoozeMinutes: 5, bgIndex: 0,
+            customBgUris: [],
+            mission: { enabled: false, type: 'math', count: 1, difficulty: 'Easy' },
+        };
     });
 
     const CUSTOM_INDEX_START = 100;
@@ -994,17 +1161,17 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
         <View style={[S.root, { paddingTop: ins.top }]}>
             <View style={S.hdr}>
                 {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, position: 'relative' }}> */}
-                    <TouchableOpacity
-                        onPress={isBackLoading ? undefined : onBack}
-                        style={S.closeBtn}
-                        activeOpacity={isBackLoading ? 1 : 0.7}
-                        disabled={isBackLoading}
-                    >
-                        <View style={S.closeBtnCircle}>
-                            <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={S.hdrTitle}>{isNew ? t('createAlarm') : t('editAlarm')}</Text>
+                <TouchableOpacity
+                    onPress={isBackLoading ? undefined : onBack}
+                    style={S.closeBtn}
+                    activeOpacity={isBackLoading ? 1 : 0.7}
+                    disabled={isBackLoading}
+                >
+                    <View style={S.closeBtnCircle}>
+                        <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
+                    </View>
+                </TouchableOpacity>
+                <Text style={S.hdrTitle}>{isNew ? t('createAlarm') : t('editAlarm')}</Text>
                 {/* </View> */}
                 <TouchableOpacity
                     onPress={() => onSave(d)}
@@ -1447,7 +1614,7 @@ const edit_styles = (colors: any) => StyleSheet.create({
     },
     hdr: {
         flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-        paddingHorizontal: 18, paddingVertical: 14, borderBottomColor: colors.border,position: 'relative'
+        paddingHorizontal: 18, paddingVertical: 14, borderBottomColor: colors.border, position: 'relative'
     },
     hdrTitle: { fontSize: 18, fontWeight: '700', color: colors.text },
     saveBtn: {

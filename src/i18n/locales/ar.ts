@@ -221,7 +221,20 @@ export default {
   FollowSystem: "اتباع النظام",
   DarkMode: "الوضع الداكن",
   LightMode: "الوضع الفاتح",
-  searchCountry: "ابحث عن دولة/مدينة/منطقة"
+  searchCountry: "ابحث عن دولة/مدينة/منطقة",
+
+  AppIcon: "أيقونة التطبيق",
+  CHOOSEAPPICON: "اختر أيقونة التطبيق",
+  Iconselect: "عند تحديد أيقونة التطبيق، سيعرض iOS نافذة منبثقة للنظام — هذا أمر طبيعي ✓",
+  Defaultapp: "أيقونة التطبيق الافتراضية",
+  Darktheme: "أيقونة السمة الفاتحة الصاخبة",
+  Warmsunset: "أيقونة داكنة صاخبة",
+  Naturegreen: "أيقونة داكنة",
+  Classic: "كلاسيكي",
+  Dark: "فاتح صاخب",
+  Sunset: "داكن صاخب",
+  Forest: "داكن"
+
 
 
 };

@@ -215,7 +215,19 @@ export default {
   FollowSystem: "システムに従う",
   DarkMode: "ダークモード",
   LightMode: "ライトモード",
-  searchCountry: "国/都市/地域を検索"
+  searchCountry: "国/都市/地域を検索",
+
+  AppIcon: "アプリアイコン",
+  CHOOSEAPPICON: "アプリアイコンを選択",
+  Iconselect: "アプリアイコンを選択すると、iOSがシステムポップアップを表示します — これは正常です ✓",
+  Defaultapp: "デフォルトのアプリアイコン",
+  Darktheme: "派手なライトテーマアイコン",
+  Warmsunset: "派手なダークアイコン",
+  Naturegreen: "ダークアイコン",
+  Classic: "クラシック",
+  Dark: "派手なライト",
+  Sunset: "派手なダーク",
+  Forest: "ダーク"
 
 
 };

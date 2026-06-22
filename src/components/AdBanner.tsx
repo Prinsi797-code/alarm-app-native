@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, AppState } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
 import { getScreenAdConfig } from '../services/AdService';
+import { PremiumStore } from '../utils/PremiumStore';
 
 interface Props {
     screen: string;
@@ -10,6 +11,12 @@ interface Props {
 
 export default function AdBanner({ screen }: Props) {
     const [config, setConfig] = useState(() => getScreenAdConfig(screen));
+    const [isPremium, setIsPremium] = useState(false);
+
+    useEffect(() => {
+        PremiumStore.isPremiumActive().then(setIsPremium);
+    }, []);
+
 
     useEffect(() => {
         setConfig(getScreenAdConfig(screen));
@@ -24,7 +31,7 @@ export default function AdBanner({ screen }: Props) {
         return () => sub.remove();
     }, [screen]);
 
-    // Strict check — both falsy AND explicit 0
+    if (isPremium) return null;
     if (!config.bannerFlag || config.bannerFlag === 0) return null;
 
     return (

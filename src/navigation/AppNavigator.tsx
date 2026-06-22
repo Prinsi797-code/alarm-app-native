@@ -20,8 +20,10 @@ import SnoozePickerScreen from '../screens/SnoozePickerScreen';
 import SplashScreen from '../screens/SplashScreen';
 import AppLogoScreen from '../screens/AppLogoScreen';
 import AdBanner from '../components/AdBanner';
-
+import { PremiumStore } from '../utils/PremiumStore';
 import { useTranslation } from 'react-i18next';
+import PurchaseScreen from '../screens/PurchaseScreen';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -37,7 +39,13 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
   const activeRouteName: string = state.routes[state.index]?.name ?? '';
   const isTimerTab = activeRouteName === 'Timer';
   const { t } = useTranslation();
-  const [adHeight, setAdHeight] = useState(0); 
+  const [adHeight, setAdHeight] = useState(0);
+  const [isPremium, setIsPremium] = useState(false);
+
+  useFocusEffect(useCallback(() => {
+    PremiumStore.isPremiumActive().then(setIsPremium);
+  }, []));
+
 
   const handleAddPress = () => {
     if (activeRouteName === 'Clock') {
@@ -53,11 +61,11 @@ function CustomTabBar({ state, descriptors, navigation }: any) {
   // tab row ki approximate height (paddingTop+Bottom=20, pill~36) + ios safe area
   const tabRowH = 66 + (Platform.OS === 'ios' ? 24 : 10);
 
-return (
+  return (
     <View style={[bar.wrap, { backgroundColor: colors.background }]}>
 
       {/* Tab row + button inline */}
-      <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 20, marginTop: 10, marginBottom: 4 }}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 20, marginTop: 10, marginBottom: 14 }}>
         <View style={[bar.row, { borderColor: colors.border, flex: 1 }]}>
           {state.routes.map((route: any, index: number) => {
             const focused = state.index === index;
@@ -100,10 +108,11 @@ return (
         </TouchableOpacity>
       </View>
 
-      <View style={{ paddingBottom: Platform.OS === 'ios' ? 24 : 10 }}>
-        <AdBanner screen="main_screen" />
-      </View>
-
+      {!isPremium && (
+        <View style={{ paddingBottom: Platform.OS === 'ios' ? 24 : 10 }}>
+          <AdBanner screen="main_screen" />
+        </View>
+      )}
     </View>
   );
 }
@@ -142,16 +151,17 @@ export default function AppNavigator() {
     // <Stack.Navigator initialRouteName="Splash" screenOptions={{ headerShown: false }}>
     <Stack.Navigator initialRouteName="Main" screenOptions={{ headerShown: false }}>
       {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
-      <Stack.Screen name="Home" component={AlarmScreen} />
-      <Stack.Screen name="Main" component={BottomTabs} />
+      <Stack.Screen name="Home" component={AlarmScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
+      <Stack.Screen name="Main" component={BottomTabs} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="ThemeMode" component={ThemeModeScreen} options={{ presentation: 'card', animation: 'slide_from_right' }} />
       <Stack.Screen name="Language" component={LanguageScreen} options={{ presentation: 'card', animation: 'slide_from_right' }} />
       <Stack.Screen name="SnoozePicker" component={SnoozePickerScreen} options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
       <Stack.Screen name="RingtonePicker" component={RingtonePickerScreen} options={{ presentation: 'modal', animation: 'fade' }} />
       <Stack.Screen name="AlarmRinging" component={AlarmRingingScreen} options={{ presentation: 'modal', animation: 'fade' }} />
+      <Stack.Screen name="Purchase" component={PurchaseScreen} options={{ presentation: 'modal', animation: 'fade' }} />
       <Stack.Screen name="AppLogo" component={AppLogoScreen} options={{ presentation: 'modal', animation: 'fade' }} />
-      <Stack.Screen name="CoinScreen" component={CoinScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="CoinScreen" component={CoinScreen} options={{ presentation: 'modal', animation: 'fade' }} />
     </Stack.Navigator>
   );
 }

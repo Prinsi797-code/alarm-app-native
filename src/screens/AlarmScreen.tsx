@@ -25,6 +25,10 @@ import { showInterstitialAd } from '../services/AdService';
 import { NativeAlarmManager, AlarmError, AlarmErrorCode } from 'rn-native-alarmkit';
 import { AlarmEvents } from '../services/AnalyticsService';
 import AdNative from '../components/AdNative';
+import PurchaseScreen from './PurchaseScreen';
+import LottieView from 'lottie-react-native';
+import { PremiumStore } from '../utils/PremiumStore';
+import { maybeShowRatingPrompt } from '../utils/RatingPrompt';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 const STORAGE_KEY = '@alarms_v3';
@@ -987,7 +991,7 @@ const card = StyleSheet.create({
 });
 
 // function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors }: {
-function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBackLoading }: {
+function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBackLoading, isPremium }: {
     alarm: Alarm | null;
     onSave: (a: Alarm) => void;
     onDelete: (id: string) => void;
@@ -995,10 +999,14 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
     onGoToCoins: () => void;
     colors: any;
     isBackLoading?: boolean;
+    isPremium?: boolean;
+
 }) {
     const ins = useSafeAreaInsets();
+    const [showPremium, setShowPremium] = useState(false);
     const [showSnoozePicker, setShowSnoozePicker] = useState(false);
     const isNew = alarm === null;
+
     // const [d, setD] = useState<Alarm>(alarm ?? {
     //     id: Date.now().toString(), hour: 7, minute: 0, label: 'New Alarm',
     //     days: [1, 2, 3, 4, 5], enabled: true, ringtone: 'Fine Day',
@@ -1035,6 +1043,11 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
             setUnlockedItems(list.map(u => u.bgIndex));
         });
     }, []);
+
+    // useFocusEffect(useCallback(() => {
+    //     PremiumStore.isPremiumActive().then(setIsPremium);
+    // }, []));
+
 
     const pickCustomImage = () => {
         const uris = d.customBgUris ?? [];
@@ -1152,6 +1165,7 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
     const LOCKED_BG_INDICES = [0, 1, 4, 5];
     // const LOCKED_BG_INDICES = [0, 1, 2, 3];
     const isLocked = (idx: number) => {
+        if (isPremium) return false;
         if (idx >= 100) return !unlockedItems.includes(100); // custom
         if (LOCKED_BG_INDICES.includes(idx)) return !unlockedItems.includes(idx);
         return false;
@@ -1559,7 +1573,7 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
                 </View>
             </ScrollView>
 
-            <AdNative screen="alarm_screen" colors={colors} />
+            {!isPremium && <AdNative screen="alarm_screen" colors={colors} />}
             <Modal visible={showRingtonePicker} animationType="slide" presentationStyle="fullScreen">
                 <RingtonePickerScreen
                     selected={d.ringtone}
@@ -1581,6 +1595,15 @@ function EditScreen({ alarm, onSave, onDelete, onBack, onGoToCoins, colors, isBa
                     onBack={() => setShowMission(false)}
                 />
             </Modal>
+
+            <PurchaseScreen
+                visible={showPremium}
+                onClose={() => setShowPremium(false)}
+                onSuccess={() => {
+                    setShowPremium(false);
+                    // PremiumStore.isPremiumActive().then(setIsPremium);
+                }}
+            />
 
             <Modal visible={showSnoozePicker} animationType="slide" presentationStyle="fullScreen">
                 <SnoozePickerScreen
@@ -1667,8 +1690,8 @@ export default function AlarmScreen() {
     const [editing, setEditing] = useState<Alarm | null | undefined>(undefined);
     const showEdit = editing !== undefined;
     const [isAdLoading, setIsAdLoading] = useState(false);
-
-
+    const [showPremium, setShowPremium] = useState(false);
+    const [isPremium, setIsPremium] = useState(false);
     useFocusEffect(useCallback(() => {
         if (route.params?.openNew) setEditing(null);
     }, [route.params?.openNew]));
@@ -1677,6 +1700,11 @@ export default function AlarmScreen() {
         askPermission();
         loadAlarms().then(setAlarms);
     }, []);
+
+    useFocusEffect(useCallback(() => {
+        PremiumStore.isPremiumActive().then(setIsPremium);
+    }, []));
+
 
     const persist = async (list: Alarm[]) => {
         setAlarms(list);
@@ -1715,6 +1743,17 @@ export default function AlarmScreen() {
 
         setHeaderCoins(await CoinStore.getCoins());
         setIsAdLoading(true);
+        if (isPremium) {
+            // Premium users ko ad nahi dikhana, seedha close karo
+            setIsAdLoading(false);
+            setEditing(undefined);
+            if (total > 0) {
+                setTimeout(() => {
+                    Alert.alert(t('CoinsEarned'), `+${total} ${t('CoinsCollected')}\n\n ${t('KeepWatching')}`);
+                }, 300);
+            }
+            return;
+        }
 
         showInterstitialAd('alarm_screen', () => {
             setIsAdLoading(false);
@@ -1724,9 +1763,63 @@ export default function AlarmScreen() {
                     Alert.alert(t('CoinsEarned'), `+${total} ${t('CoinsCollected')}\n\n ${t('KeepWatching')}`);
                 }, 300);
             }
+            setTimeout(() => {
+                maybeShowRatingPrompt();
+            }, 1500);
         });
     };
 
+    function SlideModal({
+        visible,
+        backgroundColor,
+        children,
+    }: {
+        visible: boolean;
+        backgroundColor: string;
+        children: React.ReactNode;
+    }) {
+        const [mounted, setMounted] = useState(visible);
+        const translateY = useRef(new Animated.Value(SH)).current;
+
+        useEffect(() => {
+            if (visible) {
+                setMounted(true);
+                translateY.setValue(SH);
+                Animated.timing(translateY, {
+                    toValue: 0,
+                    duration: 280,
+                    useNativeDriver: true,
+                }).start();
+            } else if (mounted) {
+                Animated.timing(translateY, {
+                    toValue: SH,
+                    duration: 240,
+                    useNativeDriver: true,
+                }).start(() => setMounted(false));
+            }
+        }, [visible]);
+
+        if (!mounted) return null;
+
+        return (
+            <Modal
+                visible={mounted}
+                animationType="none"
+                transparent
+                statusBarTranslucent
+            >
+                <Animated.View
+                    style={{
+                        flex: 1,
+                        backgroundColor,
+                        transform: [{ translateY }],
+                    }}
+                >
+                    {children}
+                </Animated.View>
+            </Modal>
+        );
+    }
     const handleDelete = async (id: string) => {
         AlarmEvents.alarmDeleted();
         try { await notifee.cancelNotification(id); } catch { }
@@ -1742,6 +1835,7 @@ export default function AlarmScreen() {
     const CLOCK_SMALL = SW * 0.24;
     const LARGE_CLOCK_SECTION_H = CLOCK_LARGE + 80 + 80 + 20;
     const THRESHOLD = LARGE_CLOCK_SECTION_H * 0.7;
+
 
     const miniClockOpacity = scrollY.interpolate({ inputRange: [THRESHOLD * 0.5, THRESHOLD], outputRange: [0, 1], extrapolate: 'clamp' });
     const miniClockScale = scrollY.interpolate({ inputRange: [THRESHOLD * 0.5, THRESHOLD], outputRange: [0.6, 1], extrapolate: 'clamp' });
@@ -1777,23 +1871,18 @@ export default function AlarmScreen() {
             <View style={[hdr.wrap, { paddingTop: ins.top + 12 }]}>
                 <Text style={[hdr.title, { color: colors.text }]}>{t('Alarm')}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                    {/* Coin Button */}
                     <TouchableOpacity
-                        style={[hdr.gear, {
-                            flexDirection: 'row', alignItems: 'center', gap: 4,
-                            paddingHorizontal: 10,
-                        }]}
-                        onPress={() => navigation.navigate('CoinScreen')}
+                        onPress={() => setShowPremium(true)}
+                        style={[hdr.gear, { marginTop: -15 }]}
+                        activeOpacity={0.8}
                     >
-                        <Image
-                            source={require('../../assets/img/coin.png')}
-                            style={{ width: 30, height: 30 }}
-                            resizeMode="contain"
+                        <LottieView
+                            source={require('../../assets/animations/premium_star.json')}
+                            autoPlay
+                            loop
+                            style={{ width: 43, height: 43 }}
                         />
-                        {/* <Text style={{ fontSize: 13, fontWeight: '700', color: colors.text }}>{headerCoins}</Text> */}
                     </TouchableOpacity>
-
-                    {/* Settings */}
                     <TouchableOpacity style={hdr.gear} onPress={() => navigation.navigate('Settings')}>
                         <Image source={require('../../assets/icons/settings.png')}
                             style={{ width: 30, height: 30, tintColor: colors.textSecondary }} resizeMode="contain" />
@@ -1904,11 +1993,12 @@ export default function AlarmScreen() {
                 </Animated.View>
             </View>
 
-            <Modal visible={showEdit} animationType="slide" presentationStyle="fullScreen">
+            {/* <Modal visible={showEdit} animationType="slide" presentationStyle="fullScreen">
                 {showEdit && (
                     <EditScreen
                         alarm={editing ?? null}
                         colors={colors}
+                        isPremium={isPremium}
                         onSave={handleSave}
                         onDelete={handleDelete}
                         isBackLoading={isAdLoading}
@@ -1926,7 +2016,43 @@ export default function AlarmScreen() {
                         }}
                     />
                 )}
-            </Modal>
+            </Modal> */}
+            <SlideModal visible={showEdit} backgroundColor={colors.background}>
+                {showEdit && (
+                    <EditScreen
+                        alarm={editing ?? null}
+                        colors={colors}
+                        isPremium={isPremium}
+                        onSave={handleSave}
+                        onDelete={handleDelete}
+                        isBackLoading={isAdLoading}
+                        onBack={() => {
+                            if (isAdLoading) return;
+                            if (isPremium) {
+                                setEditing(undefined);
+                                return;
+                            }
+                            setIsAdLoading(true);
+                            showInterstitialAd('alarm_screen', () => {
+                                setIsAdLoading(false);
+                                setEditing(undefined);
+                            });
+                        }}
+                        onGoToCoins={() => {
+                            setEditing(undefined);
+                            navigation.navigate('CoinScreen');
+                        }}
+                    />
+                )}
+            </SlideModal>
+            <PurchaseScreen
+                visible={showPremium}
+                onClose={() => setShowPremium(false)}
+                onSuccess={() => {
+                    setShowPremium(false);
+                    setIsPremium(true);
+                }}
+            />
         </View>
     );
 }

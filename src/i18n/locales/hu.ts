@@ -181,7 +181,7 @@ export default {
   Customsounds: "Az egyéni hangok 15 napra feloldva.",
   Pleasetryagain: "Valami hiba történt. Kérlek próbáld újra.",
   Activefor: "15 napig aktív",
-  Coins: "Érmék",
+  Coins: "Érme Egyenleg",
   TotalCoins: "Összes érme",
   HowtoEarnCoins: "Hogyan szerezz érméket",
   SetEdit: "Ébresztő beállítása vagy szerkesztése",
@@ -227,7 +227,38 @@ export default {
   Classic: "Klasszikus",
   Dark: "Erős Világos",
   Sunset: "Erős Sötét",
-  Forest: "Sötét"
+  Forest: "Sötét",
+
+  HowToUnlocked: "Hátterek és csengőhangok feloldása",
+  CoinBalance: "Érme Egyenleg",
+  CoinsButton: "Érmék »",
+  RemoveAd: "Prémium feloldása és hirdetések eltávolítása",
+  ChoosePlan: "Válasszon csomagot",
+  Perweek: "Hetente",
+  Bestannual: "Legjobb éves ajánlat",
+  Permonth: "Havonta",
+  subscribe: "Előfizetés most",
+  cancelanytime: "Bármikor lemondható. Biztonságos az App Store-on keresztül",
+  Restorepurchase: "Vásárlások visszaállítása",
+  termsofservice: "Szolgáltatási feltételek",
+  privacypolicy: "Adatvédelmi szabályzat",
+
+  Monthly: "Havi",
+  Weekly: "Heti",
+  Yearly: "Éves",
+  Restored: "✅ Visszaállítva!",
+  Yourpurchases: "A vásárlásaid sikeresen visszaállítva.",
+  NoPurchases: "Nem található vásárlás",
+  Noprevious: "Ehhez a fiókhoz nem található korábbi vásárlás.",
+  RestoreFailed: "Visszaállítás sikertelen",
+  Couldnotrestore: "A vásárlások visszaállítása nem sikerült. Kérjük, próbáld újra.",
+  WelcometoPremium: "🎉 Üdvözlünk a Premiumban!",
+  Yoursubscriptionisnowactive: "Az előfizetésed most aktív. Élvezd az összes funkciót!",
+  LetsGo: "Induljunk!",
+  PurchasePending: "Vásárlás függőben",
+  Yourpurchaseis: "A vásárlás jóváhagyásra vár. Jóváhagyás után aktiválódik.",
+  PurchaseFailed: "Vásárlás sikertelen",
+  Somethingwentwrong: "Valami hiba történt. Kérjük, próbáld újra."
 
 
 };

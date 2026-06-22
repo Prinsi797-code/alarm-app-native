@@ -175,7 +175,7 @@ export default {
     Customsounds: "ปลดล็อกเสียงกำหนดเองเป็นเวลา 15 วัน",
     Pleasetryagain: "เกิดข้อผิดพลาด กรุณาลองอีกครั้ง",
     Activefor: "ใช้งานได้ 15 วัน",
-    Coins: "เหรียญ",
+    Coins: "ยอดเหรียญ",
     TotalCoins: "เหรียญทั้งหมด",
     HowtoEarnCoins: "วิธีรับเหรียญ",
     SetEdit: "ตั้งค่าหรือแก้ไขนาฬิกาปลุก",
@@ -221,7 +221,40 @@ export default {
     Classic: "คลาสสิก",
     Dark: "สว่างเด่น",
     Sunset: "มืดเด่น",
-    Forest: "มืด"
+    Forest: "มืด",
+
+    HowToUnlocked: "วิธีปลดล็อกพื้นหลังและเสียงเรียกเข้า",
+    CoinBalance: "ยอดเหรียญ",
+    CoinsButton: "เหรียญ »",
+    RemoveAd: "ปลดล็อกพรีเมียมและลบโฆษณา",
+    ChoosePlan: "เลือกแพ็กเกจของคุณ",
+    Perweek: "ต่อสัปดาห์",
+    Bestannual: "ข้อเสนอรายปีที่ดีที่สุด",
+    Permonth: "ต่อเดือน",
+    subscribe: "สมัครตอนนี้",
+    cancelanytime: "ยกเลิกได้ทุกเมื่อ ปลอดภัยด้วย App Store",
+    Restorepurchase: "กู้คืนการซื้อ",
+    termsofservice: "ข้อกำหนดการให้บริการ",
+    privacypolicy: "นโยบายความเป็นส่วนตัว",
+
+    Monthly: "รายเดือน",
+    Weekly: "รายสัปดาห์",
+    Yearly: "รายปี",
+    Restored: "✅ กู้คืนแล้ว!",
+    Yourpurchases: "กู้คืนการซื้อของคุณสำเร็จแล้ว",
+    NoPurchases: "ไม่พบการซื้อ",
+    Noprevious: "ไม่พบการซื้อก่อนหน้าสำหรับบัญชีนี้",
+    RestoreFailed: "การกู้คืนล้มเหลว",
+    Couldnotrestore: "ไม่สามารถกู้คืนการซื้อได้ โปรดลองอีกครั้ง",
+    WelcometoPremium: "🎉 ยินดีต้อนรับสู่ Premium!",
+    Yoursubscriptionisnowactive: "การสมัครสมาชิกของคุณเปิดใช้งานแล้ว เพลิดเพลินกับทุกฟีเจอร์!",
+    LetsGo: "เริ่มกันเลย!",
+    PurchasePending: "การซื้อรอดำเนินการ",
+    Yourpurchaseis: "การซื้อของคุณกำลังรอการอนุมัติ และจะเปิดใช้งานเมื่อได้รับอนุมัติ",
+    PurchaseFailed: "การซื้อล้มเหลว",
+    Somethingwentwrong: "เกิดข้อผิดพลาดบางอย่าง โปรดลองอีกครั้ง"
+
+
 
 
 };

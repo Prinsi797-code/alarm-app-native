@@ -135,7 +135,7 @@ export default {
   Customsounds: "Benutzerdefinierte Sounds für 15 Tage freigeschaltet.",
   Pleasetryagain: "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
   Activefor: "15 Tage aktiv",
-  Coins: "Münzen",
+  Coins: "Münzsaldo",
   TotalCoins: "Gesamte Münzen",
   HowtoEarnCoins: "Wie man Münzen verdient",
   SetEdit: "Alarm einstellen oder bearbeiten",
@@ -181,7 +181,38 @@ export default {
   Classic: "Klassisch",
   Dark: "Laut Hell",
   Sunset: "Laut Dunkel",
-  Forest: "Dunkel"
+  Forest: "Dunkel",
+
+  HowToUnlocked: "So entsperren Sie Hintergründe und Klingeltöne",
+  CoinBalance: "Münzsaldo",
+  CoinsButton: "Münzen »",
+  RemoveAd: "Premium freischalten & Werbung entfernen",
+  ChoosePlan: "Wählen Sie Ihren Plan",
+  Perweek: "Pro Woche",
+  Bestannual: "Bestes Jahresangebot",
+  Permonth: "Pro Monat",
+  subscribe: "Jetzt abonnieren",
+  cancelanytime: "Jederzeit kündbar. Sicher über den App Store",
+  Restorepurchase: "Käufe wiederherstellen",
+  termsofservice: "Nutzungsbedingungen",
+  privacypolicy: "Datenschutzrichtlinie",
+
+  Monthly: "Monatlich",
+  Weekly: "Wöchentlich",
+  Yearly: "Jährlich",
+  Restored: "✅ Wiederhergestellt!",
+  Yourpurchases: "Ihre Käufe wurden erfolgreich wiederhergestellt.",
+  NoPurchases: "Keine Käufe gefunden",
+  Noprevious: "Für dieses Konto wurden keine früheren Käufe gefunden.",
+  RestoreFailed: "Wiederherstellung fehlgeschlagen",
+  Couldnotrestore: "Käufe konnten nicht wiederhergestellt werden. Bitte versuchen Sie es erneut.",
+  WelcometoPremium: "🎉 Willkommen bei Premium!",
+  Yoursubscriptionisnowactive: "Ihr Abonnement ist jetzt aktiv. Genießen Sie alle Funktionen!",
+  LetsGo: "Los geht's!",
+  PurchasePending: "Kauf ausstehend",
+  Yourpurchaseis: "Ihr Kauf wartet auf Genehmigung. Er wird nach der Genehmigung aktiviert.",
+  PurchaseFailed: "Kauf fehlgeschlagen",
+  Somethingwentwrong: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
 
 
 };

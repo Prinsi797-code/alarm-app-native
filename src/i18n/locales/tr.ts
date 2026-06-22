@@ -177,7 +177,7 @@ export default {
   Customsounds: "Özel seslerin kilidi 15 günlüğüne açıldı.",
   Pleasetryagain: "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
   Activefor: "15 gün boyunca aktif",
-  Coins: "Jeton",
+  Coins: "Jeton Bakiyesi",
   TotalCoins: "Toplam Jeton",
   HowtoEarnCoins: "Jeton Nasıl Kazanılır",
   SetEdit: "Alarm Kur veya Düzenle",
@@ -223,7 +223,38 @@ export default {
   Classic: "Klasik",
   Dark: "Canlı Açık",
   Sunset: "Canlı Koyu",
-  Forest: "Koyu"
+  Forest: "Koyu",
+
+  HowToUnlocked: "Arka Planlar ve Zil Sesleri Nasıl Açılır",
+  CoinBalance: "Jeton Bakiyesi",
+  CoinsButton: "Jetonlar »",
+  RemoveAd: "Premium'u Aç ve Reklamları Kaldır",
+  ChoosePlan: "Planınızı Seçin",
+  Perweek: "Haftalık",
+  Bestannual: "En iyi yıllık fırsat",
+  Permonth: "Aylık",
+  subscribe: "Şimdi Abone Ol",
+  cancelanytime: "İstediğiniz zaman iptal edin. App Store güvencesiyle",
+  Restorepurchase: "Satın Alımları Geri Yükle",
+  termsofservice: "Hizmet şartları",
+  privacypolicy: "Gizlilik politikası",
+
+  Monthly: "Aylık",
+  Weekly: "Haftalık",
+  Yearly: "Yıllık",
+  Restored: "✅ Geri Yüklendi!",
+  Yourpurchases: "Satın alımlarınız başarıyla geri yüklendi.",
+  NoPurchases: "Satın Alma Bulunamadı",
+  Noprevious: "Bu hesap için önceki satın alma bulunamadı.",
+  RestoreFailed: "Geri Yükleme Başarısız",
+  Couldnotrestore: "Satın alımlar geri yüklenemedi. Lütfen tekrar deneyin.",
+  WelcometoPremium: "🎉 Premium'a Hoş Geldiniz!",
+  Yoursubscriptionisnowactive: "Aboneliğiniz artık aktif. Tüm özelliklerin tadını çıkarın!",
+  LetsGo: "Hadi Başlayalım!",
+  PurchasePending: "Satın Alma Beklemede",
+  Yourpurchaseis: "Satın almanız onay bekliyor. Onaylandıktan sonra etkinleşecektir.",
+  PurchaseFailed: "Satın Alma Başarısız",
+  Somethingwentwrong: "Bir şeyler ters gitti. Lütfen tekrar deneyin."
 
 
 };

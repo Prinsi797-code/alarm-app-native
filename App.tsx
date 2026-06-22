@@ -12,6 +12,8 @@ import notifee from '@notifee/react-native';
 import analytics from '@react-native-firebase/analytics';
 import { startAlarmWatcher, stopAlarmWatcher } from './src/services/AlarmWatcherService';
 import { NativeAlarmManager } from 'rn-native-alarmkit';
+import { incrementLaunchCount, maybeShowRatingPrompt } from './src/utils/RatingPrompt';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 function navigateWhenReady(screen: string, params?: object) {
   const tryNav = () => {
@@ -23,7 +25,6 @@ function navigateWhenReady(screen: string, params?: object) {
   };
   setTimeout(tryNav, 300);
 }
-
 async function checkAlarmKitAvailable(): Promise<boolean> {
   if (Platform.OS !== 'ios') return false;
   try {
@@ -50,6 +51,7 @@ function AppContent() {
       if (next === 'active') {
         startAlarmWatcher();
         initRemoteConfig();
+        incrementLaunchCount(); 
       }
       console.log(`AppState: ${prev} → ${next}`);
     });

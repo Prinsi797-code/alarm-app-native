@@ -181,7 +181,7 @@ export default {
   Customsounds: "カスタムサウンドが15日間アンロックされました。",
   Pleasetryagain: "問題が発生しました。もう一度お試しください。",
   Activefor: "15日間有効",
-  Coins: "コイン",
+  Coins: "コイン残高",
   TotalCoins: "合計コイン",
   HowtoEarnCoins: "コインの獲得方法",
   SetEdit: "アラームを設定または編集",
@@ -227,7 +227,38 @@ export default {
   Classic: "クラシック",
   Dark: "派手なライト",
   Sunset: "派手なダーク",
-  Forest: "ダーク"
+  Forest: "ダーク",
+
+  HowToUnlocked: "背景と着信音をアンロックする方法",
+  CoinBalance: "コイン残高",
+  CoinsButton: "コイン »",
+  RemoveAd: "プレミアムを解除して広告を削除",
+  ChoosePlan: "プランを選択",
+  Perweek: "週ごと",
+  Bestannual: "年間ベストプラン",
+  Permonth: "月ごと",
+  subscribe: "今すぐ登録",
+  cancelanytime: "いつでもキャンセル可能。App Storeで安全",
+  Restorepurchase: "購入を復元",
+  termsofservice: "利用規約",
+  privacypolicy: "プライバシーポリシー",
+
+  Monthly: "月額",
+  Weekly: "週間",
+  Yearly: "年間",
+  Restored: "✅ 復元完了！",
+  Yourpurchases: "購入が正常に復元されました。",
+  NoPurchases: "購入履歴が見つかりません",
+  Noprevious: "このアカウントには以前の購入が見つかりません。",
+  RestoreFailed: "復元失敗",
+  Couldnotrestore: "購入を復元できませんでした。もう一度お試しください。",
+  WelcometoPremium: "🎉 Premiumへようこそ！",
+  Yoursubscriptionisnowactive: "サブスクリプションが有効になりました。すべての機能をお楽しみください！",
+  LetsGo: "始めましょう！",
+  PurchasePending: "購入保留中",
+  Yourpurchaseis: "購入は承認待ちです。承認後に有効になります。",
+  PurchaseFailed: "購入失敗",
+  Somethingwentwrong: "問題が発生しました。もう一度お試しください。"
 
 
 };

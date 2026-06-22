@@ -182,7 +182,7 @@ export default {
   Customsounds: "Sunete personalizate deblocate pentru 15 zile.",
   Pleasetryagain: "Ceva nu a mers bine. Te rugăm să încerci din nou.",
   Activefor: "Activ timp de 15 zile",
-  Coins: "Monede",
+  Coins: "Sold Monede",
   TotalCoins: "Total Monede",
   HowtoEarnCoins: "Cum să câștigi monede",
   SetEdit: "Setează sau editează o alarmă",
@@ -228,7 +228,38 @@ export default {
   Classic: "Clasic",
   Dark: "Luminos Intens",
   Sunset: "Întunecat Intens",
-  Forest: "Întunecat"
+  Forest: "Întunecat",
+
+  HowToUnlocked: "Cum să deblochezi fundaluri și tonuri de apel",
+  CoinBalance: "Sold Monede",
+  CoinsButton: "Monede »",
+  RemoveAd: "Deblochează Premium și elimină reclamele",
+  ChoosePlan: "Alege planul tău",
+  Perweek: "Pe săptămână",
+  Bestannual: "Cea mai bună ofertă anuală",
+  Permonth: "Pe lună",
+  subscribe: "Abonează-te acum",
+  cancelanytime: "Anulează oricând. Sigur prin App Store",
+  Restorepurchase: "Restabilește achizițiile",
+  termsofservice: "Termeni de utilizare",
+  privacypolicy: "Politica de confidențialitate",
+
+  Monthly: "Lunar",
+  Weekly: "Săptămânal",
+  Yearly: "Anual",
+  Restored: "✅ Restaurat!",
+  Yourpurchases: "Achizițiile tale au fost restaurate cu succes.",
+  NoPurchases: "Nu s-au găsit achiziții",
+  Noprevious: "Nu s-au găsit achiziții anterioare pentru acest cont.",
+  RestoreFailed: "Restaurarea a eșuat",
+  Couldnotrestore: "Nu s-au putut restaura achizițiile. Încearcă din nou.",
+  WelcometoPremium: "🎉 Bun venit la Premium!",
+  Yoursubscriptionisnowactive: "Abonamentul tău este acum activ. Bucură-te de toate funcțiile!",
+  LetsGo: "Să Începem!",
+  PurchasePending: "Achiziție în așteptare",
+  Yourpurchaseis: "Achiziția ta este în așteptarea aprobării. Se va activa după aprobare.",
+  PurchaseFailed: "Achiziție eșuată",
+  Somethingwentwrong: "Ceva nu a mers bine. Încearcă din nou."
 
 
 };

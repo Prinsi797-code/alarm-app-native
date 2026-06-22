@@ -1,10 +1,9 @@
 // src/screens/SettingsScreen.tsx
-// Default vibrate toggle + App Icon row added
 
 import React, { useState, useCallback } from 'react';
 import {
   View, Text, TouchableOpacity, ScrollView,
-  StyleSheet, Linking, Share, Animated,
+  StyleSheet, Linking, Share, Animated,Image
 } from 'react-native';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,6 +13,7 @@ import { useTranslation } from 'react-i18next';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { loadDefaultSnooze, SNOOZE_LABELS, SNOOZE_OPTS } from './SnoozePickerScreen';
 import { loadDefaultRingtone } from './RingtonePickerScreen';
+import LottieView from 'lottie-react-native';
 
 const DEFAULT_VIBRATE_KEY = '@default_vibrate';
 const ICON_KEY = '@selected_app_icon';
@@ -62,7 +62,6 @@ export default function SettingsScreen() {
   const [defaultVibrate, setDefaultVibrate] = useState(true);
   const [iconSub, setIconSub] = useState('Classic');
 
-
   const ICON_LABELS: Record<string, string> = {
     Default: t('Classic'),
     logo1: t('Dark'),
@@ -78,7 +77,6 @@ export default function SettingsScreen() {
       loadDefaultRingtone().then(tone => setRingtoneSub(tone));
       loadDefaultVibrate().then(v => setDefaultVibrate(v));
 
-      // App Icon sub-label refresh (screen se wapas aane pe update ho)
       AsyncStorage.getItem(ICON_KEY).then(v => {
         const key = v ?? 'Default';
         setIconSub(ICON_LABELS[key] ?? 'Classic');
@@ -96,10 +94,7 @@ export default function SettingsScreen() {
     { icon: 'musical-notes-outline', label: t('alarmSound'), sub: ringtoneSub, screen: 'RingtonePicker', accent: '#6563FF' },
     { icon: 'language-outline', label: t('switchLanguage'), sub: t('english'), screen: 'Language', accent: '#6563FF' },
     { icon: 'moon-outline', label: t('themeMode'), sub: t('followSystem'), screen: 'ThemeMode', accent: '#6563FF' },
-    // ↓ App Icon row — NEW
     { icon: 'color-palette-outline', label: t('appIcon') ?? 'App Icon', sub: iconSub, screen: 'AppLogo', accent: '#6563FF' },
-
-    // { icon: 'color-palette-outline', label: t('appIcon') ?? 'App Icon', sub: iconSub, screen: 'AppLogo', accent: '#6563FF' },
   ];
 
   const MORE_ROWS = [
@@ -127,12 +122,68 @@ export default function SettingsScreen() {
         <Text style={S.headerTitle}>{t('settings')}</Text>
         <View style={{ width: 40 }} />
       </View>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('CoinScreen')}
+        activeOpacity={0.9}
+        style={{
+          marginHorizontal: 16,
+          marginBottom: 12,
+          borderRadius: 20,
+          overflow: 'hidden',
+        }}
+      >
+        <Image
+          source={require('../../assets/animations/bgcoin.png')}
+          style={{
+            position: 'absolute',
+            top: 0, left: 0, right: 0, bottom: 0,
+            width: '100%',
+            height: '100%',
+          }}
+          resizeMode="cover"
+        />
+        <View style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          paddingVertical: 16,
+          paddingHorizontal: 16,
+        }}>
+          <LottieView
+            source={require('../../assets/animations/gift.json')}
+            autoPlay
+            loop
+            style={{ width: 80, height: 70 }}
+          />
 
+          <View style={{ flex: 1, marginLeft: 2 }}>
+            <Text style={{ fontSize: 18, fontWeight: '800', color: '#FFFFFF' }}>
+              {t('CoinBalance')}
+            </Text>
+            <Text style={{ fontSize: 10, color: 'rgba(255,255,255,0.75)', marginTop: 2 }}>
+              {t('HowToUnlocked')}
+            </Text>
+          </View>
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate('CoinScreen')}
+            activeOpacity={0.85}
+            style={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 24,
+              paddingVertical: 10,
+              paddingHorizontal: 16,
+            }}
+          >
+            <Text style={{ fontSize: 14, fontWeight: '700', color: '#1565C0' }}>
+              {t('CoinsButton')}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </TouchableOpacity>
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: ins.bottom + 32, paddingTop: 8 }}
       >
-        {/* Main navigation rows */}
         <View style={S.section}>
           {MAIN_ROWS.map((item, idx) => {
             const isLast = idx === MAIN_ROWS.length - 1;
@@ -156,7 +207,6 @@ export default function SettingsScreen() {
           })}
         </View>
 
-        {/* Vibrate toggle */}
         <View style={S.section}>
           <View style={S.row}>
             <View style={[S.iconBox, { backgroundColor: '#6563FF18' }]}>
@@ -172,7 +222,6 @@ export default function SettingsScreen() {
           </View>
         </View>
 
-        {/* More rows */}
         <View style={S.section}>
           {MORE_ROWS.map((item, idx) => {
             const isLast = idx === MORE_ROWS.length - 1;

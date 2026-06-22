@@ -136,7 +136,7 @@ export default {
   Customsounds: "Sonidos personalizados desbloqueados por 15 días.",
   Pleasetryagain: "Algo salió mal. Inténtalo de nuevo.",
   Activefor: "Activo durante 15 días",
-  Coins: "Monedas",
+  Coins: "Saldo de Monedas",
   TotalCoins: "Monedas Totales",
   HowtoEarnCoins: "Cómo ganar monedas",
   SetEdit: "Configurar o editar una alarma",
@@ -182,9 +182,38 @@ export default {
   Classic: "Clásico",
   Dark: "Claro Intenso",
   Sunset: "Oscuro Intenso",
-  Forest: "Oscuro"
+  Forest: "Oscuro",
 
+  HowToUnlocked: "Cómo desbloquear fondos y tonos de llamada",
+  CoinBalance: "Saldo de Monedas",
+  CoinsButton: "Monedas »",
+  RemoveAd: "Desbloquea Premium y elimina anuncios",
+  ChoosePlan: "Elige tu plan",
+  Perweek: "Por semana",
+  Bestannual: "Mejor oferta anual",
+  Permonth: "Por mes",
+  subscribe: "Suscribirse ahora",
+  cancelanytime: "Cancela en cualquier momento. Seguro con App Store",
+  Restorepurchase: "Restaurar compras",
+  termsofservice: "Términos de servicio",
+  privacypolicy: "Política de privacidad",
 
+  Monthly: "Mensual",
+  Weekly: "Semanal",
+  Yearly: "Anual",
+  Restored: "✅ ¡Restaurado!",
+  Yourpurchases: "Tus compras se han restaurado correctamente.",
+  NoPurchases: "No se encontraron compras",
+  Noprevious: "No se encontraron compras anteriores para esta cuenta.",
+  RestoreFailed: "Error al restaurar",
+  Couldnotrestore: "No se pudieron restaurar las compras. Inténtalo de nuevo.",
+  WelcometoPremium: "🎉 ¡Bienvenido a Premium!",
+  Yoursubscriptionisnowactive: "Tu suscripción ya está activa. ¡Disfruta de todas las funciones!",
+  LetsGo: "¡Vamos!",
+  PurchasePending: "Compra pendiente",
+  Yourpurchaseis: "Tu compra está pendiente de aprobación. Se activará una vez aprobada.",
+  PurchaseFailed: "Compra fallida",
+  Somethingwentwrong: "Algo salió mal. Inténtalo de nuevo."
 
 
 };

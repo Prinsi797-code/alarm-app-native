@@ -182,7 +182,7 @@ export default {
   Customsounds: "사용자 지정 사운드가 15일 동안 잠금 해제되었습니다.",
   Pleasetryagain: "문제가 발생했습니다. 다시 시도해주세요.",
   Activefor: "15일 동안 활성",
-  Coins: "코인",
+  Coins: "코인 잔액",
   TotalCoins: "총 코인",
   HowtoEarnCoins: "코인 획득 방법",
   SetEdit: "알람 설정 또는 편집",
@@ -228,7 +228,38 @@ export default {
   Classic: "클래식",
   Dark: "강한 라이트",
   Sunset: "강한 다크",
-  Forest: "다크"
+  Forest: "다크",
+
+  HowToUnlocked: "배경화면 및 벨소리 잠금 해제 방법",
+  CoinBalance: "코인 잔액",
+  CoinsButton: "코인 »",
+  RemoveAd: "프리미엄 잠금 해제 및 광고 제거",
+  ChoosePlan: "플랜 선택",
+  Perweek: "주당",
+  Bestannual: "최고의 연간 할인",
+  Permonth: "월당",
+  subscribe: "지금 구독",
+  cancelanytime: "언제든 취소 가능. App Store 보안 적용",
+  Restorepurchase: "구매 복원",
+  termsofservice: "서비스 약관",
+  privacypolicy: "개인정보 처리방침",
+
+  Monthly: "월간",
+  Weekly: "주간",
+  Yearly: "연간",
+  Restored: "✅ 복원 완료!",
+  Yourpurchases: "구매 내역이 성공적으로 복원되었습니다.",
+  NoPurchases: "구매 내역 없음",
+  Noprevious: "이 계정에 대한 이전 구매 내역이 없습니다.",
+  RestoreFailed: "복원 실패",
+  Couldnotrestore: "구매 내역을 복원할 수 없습니다. 다시 시도해 주세요.",
+  WelcometoPremium: "🎉 Premium에 오신 것을 환영합니다!",
+  Yoursubscriptionisnowactive: "구독이 활성화되었습니다. 모든 기능을 즐겨보세요!",
+  LetsGo: "시작하기!",
+  PurchasePending: "구매 대기 중",
+  Yourpurchaseis: "구매가 승인 대기 중입니다. 승인되면 활성화됩니다.",
+  PurchaseFailed: "구매 실패",
+  Somethingwentwrong: "문제가 발생했습니다. 다시 시도해 주세요."
 
 
 };

@@ -187,7 +187,7 @@ export default {
   Customsounds: "تم فتح الأصوات المخصصة لمدة 15 يوماً.",
   Pleasetryagain: "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   Activefor: "نشط لمدة 15 يوماً",
-  Coins: "عملات",
+  Coins: "رصيد العملات",
   TotalCoins: "إجمالي العملات",
   HowtoEarnCoins: "كيفية كسب العملات",
   SetEdit: "تعيين أو تعديل منبه",
@@ -233,7 +233,38 @@ export default {
   Classic: "كلاسيكي",
   Dark: "فاتح صاخب",
   Sunset: "داكن صاخب",
-  Forest: "داكن"
+  Forest: "داكن",
+
+  HowToUnlocked: "كيفية فتح الخلفيات ونغمات الرنين",
+  CoinBalance: "رصيد العملات",
+  CoinsButton: "العملات »",
+  RemoveAd: "افتح المميزات المدفوعة وأزل الإعلانات",
+  ChoosePlan: "اختر خطتك",
+  Perweek: "في الأسبوع",
+  Bestannual: "أفضل عرض سنوي",
+  Permonth: "في الشهر",
+  subscribe: "اشترك الآن",
+  cancelanytime: "يمكن الإلغاء في أي وقت. آمن عبر App Store",
+  Restorepurchase: "استعادة المشتريات",
+  termsofservice: "شروط الخدمة",
+  privacypolicy: "سياسة الخصوصية",
+
+  Monthly: "شهري",
+  Weekly: "أسبوعي",
+  Yearly: "سنوي",
+  Restored: "✅ تم الاستعادة!",
+  Yourpurchases: "تمت استعادة مشترياتك بنجاح.",
+  NoPurchases: "لم يتم العثور على مشتريات",
+  Noprevious: "لم يتم العثور على مشتريات سابقة لهذا الحساب.",
+  RestoreFailed: "فشلت الاستعادة",
+  Couldnotrestore: "تعذر استعادة المشتريات. يرجى المحاولة مرة أخرى.",
+  WelcometoPremium: "🎉 مرحبًا بك في Premium!",
+  Yoursubscriptionisnowactive: "اشتراكك نشط الآن. استمتع بجميع الميزات!",
+  LetsGo: "هيا بنا!",
+  PurchasePending: "الشراء قيد الانتظار",
+  Yourpurchaseis: "عملية الشراء الخاصة بك بانتظار الموافقة. سيتم تفعيلها بمجرد الموافقة عليها.",
+  PurchaseFailed: "فشل الشراء",
+  Somethingwentwrong: "حدث خطأ ما. يرجى المحاولة مرة أخرى."
 
 
 

@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { CoinStore, UnlockedItem } from '../utils/CoinStore';
 import { showInterstitialAd } from '../services/AdService';
 import AdBanner from '../components/AdBanner';
-
+import LottieView from 'lottie-react-native';
 
 const LOCKED_BG_IMAGES = [
     { index: 0, label: 'Aurora', src: require('../../assets/background/bg1.jpeg') },
@@ -25,7 +25,7 @@ export default function CoinScreen() {
     const { colors } = useTheme();
     const { t } = useTranslation();
     const S = styles(colors);
-
+    const [showCoinsAnim, setShowCoinsAnim] = useState(true);
     const [coins, setCoins] = useState(0);
     const [unlocked, setUnlocked] = useState<UnlockedItem[]>([]);
     const [earnedToday, setEarnedToday] = useState<string[]>([]);
@@ -315,6 +315,28 @@ export default function CoinScreen() {
             <View style={S.stickyAdContainer}>
                 <AdBanner screen="coin_screen" />
             </View>
+
+            {/* Coin Rain Animation - Screen open hone par */}
+            {showCoinsAnim && (
+                <LottieView
+                    source={require('../../assets/animations/money.json')}
+                    autoPlay
+                    loop={false}
+                    onAnimationFinish={() => setShowCoinsAnim(false)}
+                    style={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        width: '100%',
+                        height: '100%',
+                        zIndex: 999,
+                        pointerEvents: 'none',
+                    }}
+                    resizeMode="cover"
+                />
+            )}
         </View>
     );
 }

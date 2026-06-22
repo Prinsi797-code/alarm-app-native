@@ -183,7 +183,7 @@ export default {
   Customsounds: "Suara kustom terbuka selama 15 hari.",
   Pleasetryagain: "Terjadi kesalahan. Silakan coba lagi.",
   Activefor: "Aktif selama 15 hari",
-  Coins: "Koin",
+  Coins: "Saldo Koin",
   TotalCoins: "Total Koin",
   HowtoEarnCoins: "Cara Mendapatkan Koin",
   SetEdit: "Atur atau Edit Alarm",
@@ -229,6 +229,38 @@ export default {
   Classic: "Klasik",
   Dark: "Terang Mencolok",
   Sunset: "Gelap Mencolok",
-  Forest: "Gelap"
+  Forest: "Gelap",
+
+  HowToUnlocked: "Cara Membuka Latar Belakang & Nada Dering",
+  CoinBalance: "Saldo Koin",
+  CoinsButton: "Koin »",
+  RemoveAd: "Buka Premium & Hapus Iklan",
+  ChoosePlan: "Pilih Paket Anda",
+  Perweek: "Per minggu",
+  Bestannual: "Penawaran tahunan terbaik",
+  Permonth: "Per bulan",
+  subscribe: "Berlangganan Sekarang",
+  cancelanytime: "Batalkan kapan saja. Aman dengan App Store",
+  Restorepurchase: "Pulihkan Pembelian",
+  termsofservice: "Ketentuan layanan",
+  privacypolicy: "Kebijakan privasi",
+
+  Monthly: "Bulanan",
+  Weekly: "Mingguan",
+  Yearly: "Tahunan",
+  Restored: "✅ Dipulihkan!",
+  Yourpurchases: "Pembelian Anda berhasil dipulihkan.",
+  NoPurchases: "Tidak Ada Pembelian",
+  Noprevious: "Tidak ditemukan pembelian sebelumnya untuk akun ini.",
+  RestoreFailed: "Pemulihan Gagal",
+  Couldnotrestore: "Tidak dapat memulihkan pembelian. Silakan coba lagi.",
+  WelcometoPremium: "🎉 Selamat Datang di Premium!",
+  Yoursubscriptionisnowactive: "Langganan Anda sekarang aktif. Nikmati semua fitur!",
+  LetsGo: "Ayo Mulai!",
+  PurchasePending: "Pembelian Tertunda",
+  Yourpurchaseis: "Pembelian Anda sedang menunggu persetujuan. Akan aktif setelah disetujui.",
+  PurchaseFailed: "Pembelian Gagal",
+  Somethingwentwrong: "Terjadi kesalahan. Silakan coba lagi."
+
 
 };

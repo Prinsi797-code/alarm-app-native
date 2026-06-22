@@ -177,7 +177,7 @@ export default {
     Customsounds: "自定义声音已解锁 15 天。",
     Pleasetryagain: "发生错误。请重试。",
     Activefor: "有效期 15 天",
-    Coins: "金币",
+    Coins: "金币余额",
     TotalCoins: "金币总数",
     HowtoEarnCoins: "如何获得金币",
     SetEdit: "设置或编辑闹钟",
@@ -223,7 +223,39 @@ export default {
     Classic: "经典",
     Dark: "高亮浅色",
     Sunset: "高亮深色",
-    Forest: "深色"
+    Forest: "深色",
+
+    HowToUnlocked: "如何解锁背景和铃声",
+    CoinBalance: "金币余额",
+    CoinsButton: "金币 »",
+    RemoveAd: "解锁高级版并移除广告",
+    ChoosePlan: "选择您的套餐",
+    Perweek: "每周",
+    Bestannual: "最佳年度优惠",
+    Permonth: "每月",
+    subscribe: "立即订阅",
+    cancelanytime: "随时取消。由 App Store 安全保障",
+    Restorepurchase: "恢复购买",
+    termsofservice: "服务条款",
+    privacypolicy: "隐私政策",
+
+    Monthly: "每月",
+    Weekly: "每周",
+    Yearly: "每年",
+    Restored: "✅ 已恢复！",
+    Yourpurchases: "您的购买已成功恢复。",
+    NoPurchases: "未找到购买记录",
+    Noprevious: "此账户未找到之前的购买记录。",
+    RestoreFailed: "恢复失败",
+    Couldnotrestore: "无法恢复购买。请重试。",
+    WelcometoPremium: "🎉 欢迎使用 Premium！",
+    Yoursubscriptionisnowactive: "您的订阅现已激活。尽情享受所有功能！",
+    LetsGo: "开始吧！",
+    PurchasePending: "购买待处理",
+    Yourpurchaseis: "您的购买正在等待批准。批准后将自动激活。",
+    PurchaseFailed: "购买失败",
+    Somethingwentwrong: "发生错误。请重试。"
+
 
 
 };

@@ -184,7 +184,7 @@ export default {
   Customsounds: "Pasgemaakte klanke vir 15 dae ontsluit.",
   Pleasetryagain: "Iets het verkeerd geloop. Probeer asseblief weer.",
   Activefor: "Aktief vir 15 dae",
-  Coins: "Munte",
+  Coins: "Muntsaldo",
   TotalCoins: "Totale Munte",
   HowtoEarnCoins: "Hoe om Munte te Verdien",
   SetEdit: "Stel of Wysig 'n Alarm",
@@ -230,8 +230,38 @@ export default {
   Classic: "Klassiek",
   Dark: "Harde Lig",
   Sunset: "Harde Donker",
-  Forest: "Donker"
+  Forest: "Donker",
 
+  HowToUnlocked: "Hoe om agtergronde en luitone te ontsluit",
+  CoinBalance: "Muntsaldo",
+  CoinsButton: "Munte »",
+  RemoveAd: "Ontsluit Premium en verwyder advertensies",
+  ChoosePlan: "Kies jou plan",
+  Perweek: "Per week",
+  Bestannual: "Beste jaarlikse aanbod",
+  Permonth: "Per maand",
+  subscribe: "Teken nou in",
+  cancelanytime: "Kanselleer enige tyd. Veilig via App Store",
+  Restorepurchase: "Herstel aankope",
+  termsofservice: "Diensvoorwaardes",
+  privacypolicy: "Privaatheidsbeleid",
+
+  Monthly: "Maandeliks",
+  Weekly: "Weekliks",
+  Yearly: "Jaarliks",
+  Restored: "✅ Herstel!",
+  Yourpurchases: "Jou aankope is suksesvol herstel.",
+  NoPurchases: "Geen aankope gevind nie",
+  Noprevious: "Geen vorige aankope vir hierdie rekening gevind nie.",
+  RestoreFailed: "Herstel het misluk",
+  Couldnotrestore: "Kon nie aankope herstel nie. Probeer asseblief weer.",
+  WelcometoPremium: "🎉 Welkom by Premium!",
+  Yoursubscriptionisnowactive: "Jou intekening is nou aktief. Geniet al die funksies!",
+  LetsGo: "Kom Ons Gaan!",
+  PurchasePending: "Aankoop Hangende",
+  Yourpurchaseis: "Jou aankoop wag op goedkeuring. Dit sal aktiveer sodra dit goedgekeur is.",
+  PurchaseFailed: "Aankoop Misluk",
+  Somethingwentwrong: "Iets het verkeerd geloop. Probeer asseblief weer."
 
 
 

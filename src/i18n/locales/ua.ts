@@ -177,7 +177,7 @@ export default {
     Customsounds: "Власні звуки розблоковано на 15 днів.",
     Pleasetryagain: "Щось пішло не так. Будь ласка, спробуйте ще раз.",
     Activefor: "Активно протягом 15 днів",
-    Coins: "Монети",
+    Coins: "Баланс монет",
     TotalCoins: "Усього монет",
     HowtoEarnCoins: "Як заробити монети",
     SetEdit: "Встановити або редагувати будильник",
@@ -223,7 +223,38 @@ export default {
     Classic: "Класичний",
     Dark: "Яскравий Світлий",
     Sunset: "Яскравий Темний",
-    Forest: "Темний"
+    Forest: "Темний",
+
+    HowToUnlocked: "Як розблокувати фони та рінгтони",
+    CoinBalance: "Баланс монет",
+    CoinsButton: "Монети »",
+    RemoveAd: "Розблокуйте Premium і приберіть рекламу",
+    ChoosePlan: "Оберіть план",
+    Perweek: "На тиждень",
+    Bestannual: "Найкраща річна пропозиція",
+    Permonth: "На місяць",
+    subscribe: "Підписатися зараз",
+    cancelanytime: "Скасуйте будь-коли. Безпечно через App Store",
+    Restorepurchase: "Відновити покупки",
+    termsofservice: "Умови використання",
+    privacypolicy: "Політика конфіденційності",
+
+    Monthly: "Щомісяця",
+    Weekly: "Щотижня",
+    Yearly: "Щорічно",
+    Restored: "✅ Відновлено!",
+    Yourpurchases: "Ваші покупки успішно відновлено.",
+    NoPurchases: "Покупок не знайдено",
+    Noprevious: "Для цього облікового запису не знайдено попередніх покупок.",
+    RestoreFailed: "Помилка відновлення",
+    Couldnotrestore: "Не вдалося відновити покупки. Спробуйте ще раз.",
+    WelcometoPremium: "🎉 Ласкаво просимо до Premium!",
+    Yoursubscriptionisnowactive: "Вашу підписку активовано. Насолоджуйтеся всіма функціями!",
+    LetsGo: "Почнімо!",
+    PurchasePending: "Покупка очікує",
+    Yourpurchaseis: "Ваша покупка очікує схвалення. Вона буде активована після схвалення.",
+    PurchaseFailed: "Помилка покупки",
+    Somethingwentwrong: "Щось пішло не так. Спробуйте ще раз."
 
 
 };

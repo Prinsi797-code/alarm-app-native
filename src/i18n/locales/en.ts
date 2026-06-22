@@ -179,7 +179,7 @@ export default {
   Customsounds: "Custom sounds unlocked for 15 days.",
   Pleasetryagain: "Something went wrong. Please try again.",
   Activefor:"Active for 15 days",
-  Coins: "Coins",
+  Coins: "Coin Balance",
   TotalCoins: "Total Coins",
   HowtoEarnCoins: "How to Earn Coins",
   SetEdit: "Set or Edit an Alarm",
@@ -229,15 +229,42 @@ export default {
   Classic: "Classic",
   Dark: "Loud Light",
   Sunset: "Loud Dark",
-  Forest: "Dark"
+  Forest: "Dark",
 
-
-
-
-
-
-
-
+  HowToUnlocked: "How To Unlocked Backgrounds & Ringtons",
+  CoinBalance: "Coin Balance",
+  CoinsButton: "Coins »",
+  RemoveAd: "Unlock Premium & Remove Ads",
+  ChoosePlan: "Choose your Plan",
+  Perweek: "Per week",
+  Bestannual: "Best annual deal",
+  Permonth: "Per month",
+  subscribe: "Subscribe Now",
+  cancelanytime: "Cancel anytime. Secure with App Store",
+  Restorepurchase: "Restore Purchases",
+  termsofservice: "Terms of service",
+  privacypolicy: "Privacy Policy",
+  Monthly: "Monthly",
+  Weekly: "Weekly",
+  Yearly: "Yearly",
+  Restored: "✅ Restored!",
+  Yourpurchases: "Your purchases have been restored successfully.",
+  NoPurchases: "No Purchases Found",
+  Noprevious: "No previous purchases found for this account.",
+  RestoreFailed: "Restore Failed",
+  Couldnotrestore:"Could not restore purchases. Please try again.",
+  WelcometoPremium: "🎉 Welcome to Premium!",
+  Yoursubscriptionisnowactive: "Your subscription is now active. Enjoy all features!",
+  LetsGo: "Let\'s Go!",
+  PurchasePending: "Purchase Pending",
+  Yourpurchaseis: "Your purchase is pending approval. It will activate once approved.",
+  PurchaseFailed: "Purchase Failed",
+  Somethingwentwrong: "Something went wrong. Please try again.",
   
-  
+
+
+
+
+
+ 
 };

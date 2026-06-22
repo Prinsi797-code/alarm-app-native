@@ -6,6 +6,7 @@ import {
     BannerAdSize,
     TestIds,
 } from 'react-native-google-mobile-ads';
+import { PremiumStore } from '../utils/PremiumStore';
 import { AdEvents } from './AnalyticsService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -123,6 +124,12 @@ async function markInterShown(screen: string, flag: InterFlag): Promise<void> {
 }
 
 export async function showInterstitialAd(screen: string, onClosed?: () => void): Promise<void> {
+    const isPremium = await PremiumStore.isPremiumActive();
+    if (isPremium) {
+        onClosed?.();
+        return;
+    }
+
     const config = getScreenAdConfig(screen);
     const should = await shouldShowInter(screen, config.interFlag);
     if (!should) { onClosed?.(); return; }

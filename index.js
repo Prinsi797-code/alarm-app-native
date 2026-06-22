@@ -8,6 +8,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { navigationRef } from './src/navigation/navigationRef';
 
 const STORAGE_KEY = '@alarms_v3';
+const PENDING_ALARM_KEY = '@pending_alarm_press';
 
 function navigateWhenReady(screenName, params) {
   const tryNavigate = () => {
@@ -20,15 +21,25 @@ function navigateWhenReady(screenName, params) {
   setTimeout(tryNavigate, 300);
 }
 
+async function handleAlarmPress(alarmId) {
+  console.log('[index.js] handleAlarmPress called for:', alarmId);
+  try {
+    await AsyncStorage.setItem(PENDING_ALARM_KEY, alarmId);
+  } catch (e) {
+    console.log('[index.js] failed to save pending alarm:', e);
+  }
+  navigateWhenReady('AlarmRinging', { alarmId });
+}
+
 const TONE_MAP = {
   'Fine Day': require('./assets/sounds/fine_day.mp3'),
-  'Classic':  require('./assets/sounds/classic.mp3'),
-  'Radar':    require('./assets/sounds/radar.mp3'),
-  'Beacon':   require('./assets/sounds/beacon.mp3'),
-  'Einnt':    require('./assets/sounds/einnt.mp3'),
-  'Funny':    require('./assets/sounds/funny.mp3'),
-  'Gunfire':  require('./assets/sounds/gunfire.mp3'),
-  'Love':     require('./assets/sounds/love.mp3'),
+  'Classic': require('./assets/sounds/classic.mp3'),
+  'Radar': require('./assets/sounds/radar.mp3'),
+  'Beacon': require('./assets/sounds/beacon.mp3'),
+  'Einnt': require('./assets/sounds/einnt.mp3'),
+  'Funny': require('./assets/sounds/funny.mp3'),
+  'Gunfire': require('./assets/sounds/gunfire.mp3'),
+  'Love': require('./assets/sounds/love.mp3'),
 };
 
 async function playAlarmSound(alarmId) {
@@ -55,24 +66,35 @@ async function playAlarmSound(alarmId) {
 }
 
 notifee.onForegroundEvent(({ type, detail }) => {
-  if (type === EventType.DELIVERED || type === EventType.PRESS) {
-    const alarmId =
-      detail.notification?.data?.alarmId ?? detail.notification?.id;
-    if (alarmId) {
-      playAlarmSound(alarmId);
-      navigateWhenReady('AlarmRinging', { alarmId });
-    }
+  const alarmId =
+    detail.notification?.data?.alarmId ?? detail.notification?.id;
+
+  console.log('[index.js] onForegroundEvent type:', type, 'alarmId:', alarmId);
+
+  if (type === EventType.DELIVERED) {
+    if (alarmId) playAlarmSound(alarmId);
+  }
+
+  if (type === EventType.PRESS) {
+    if (alarmId) handleAlarmPress(alarmId); // 👈 ab yahan se
   }
 });
 
 notifee.onBackgroundEvent(async ({ type, detail }) => {
-    const alarmId =
-        detail.notification?.data?.alarmId ?? detail.notification?.id;
-    if (!alarmId) return;
+  const alarmId =
+    detail.notification?.data?.alarmId ?? detail.notification?.id;
 
-    if (type === EventType.PRESS) {
-        navigateWhenReady('AlarmRinging', { alarmId });
-    }
+  console.log('[index.js] onBackgroundEvent type:', type, 'alarmId:', alarmId);
+
+  if (!alarmId) return;
+
+  if (type === EventType.DELIVERED) {
+    await playAlarmSound(alarmId);
+  }
+
+  if (type === EventType.PRESS) {
+    await handleAlarmPress(alarmId);
+  }
 });
 
 AppRegistry.registerComponent(appName, () => App);

@@ -136,7 +136,7 @@ export default {
   Customsounds: "Sons personnalisés déverrouillés pendant 15 jours.",
   Pleasetryagain: "Une erreur s'est produite. Veuillez réessayer.",
   Activefor: "Actif pendant 15 jours",
-  Coins: "Pièces",
+  Coins: "Solde de Pièces",
   TotalCoins: "Total des pièces",
   HowtoEarnCoins: "Comment gagner des pièces",
   SetEdit: "Définir ou modifier une alarme",
@@ -182,12 +182,38 @@ export default {
   Classic: "Classique",
   Dark: "Clair Intense",
   Sunset: "Sombre Intense",
-  Forest: "Sombre"
+  Forest: "Sombre",
 
+  HowToUnlocked: "Comment débloquer les fonds d'écran et sonneries",
+  CoinBalance: "Solde de Pièces",
+  CoinsButton: "Pièces »",
+  RemoveAd: "Débloquez Premium et supprimez les publicités",
+  ChoosePlan: "Choisissez votre offre",
+  Perweek: "Par semaine",
+  Bestannual: "Meilleure offre annuelle",
+  Permonth: "Par mois",
+  subscribe: "S'abonner maintenant",
+  cancelanytime: "Annulez à tout moment. Sécurisé via l'App Store",
+  Restorepurchase: "Restaurer les achats",
+  termsofservice: "Conditions d'utilisation",
+  privacypolicy: "Politique de confidentialité",
 
-
-
-
+  Monthly: "Mensuel",
+  Weekly: "Hebdomadaire",
+  Yearly: "Annuel",
+  Restored: "✅ Restauré !",
+  Yourpurchases: "Vos achats ont été restaurés avec succès.",
+  NoPurchases: "Aucun achat trouvé",
+  Noprevious: "Aucun achat précédent trouvé pour ce compte.",
+  RestoreFailed: "Échec de la restauration",
+  Couldnotrestore: "Impossible de restaurer les achats. Veuillez réessayer.",
+  WelcometoPremium: "🎉 Bienvenue sur Premium !",
+  Yoursubscriptionisnowactive: "Votre abonnement est maintenant actif. Profitez de toutes les fonctionnalités !",
+  LetsGo: "C'est parti !",
+  PurchasePending: "Achat en attente",
+  Yourpurchaseis: "Votre achat est en attente d'approbation. Il sera activé une fois approuvé.",
+  PurchaseFailed: "Échec de l'achat",
+  Somethingwentwrong: "Une erreur s'est produite. Veuillez réessayer."
 
 
 };

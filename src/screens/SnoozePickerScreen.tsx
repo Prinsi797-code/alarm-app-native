@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useTranslation } from 'react-i18next';
 import { showInterstitialAd } from '../services/AdService';
 import AdNative from '../components/AdNative';
-
+import { PremiumStore } from '../utils/PremiumStore';
 export const SNOOZE_OPTS = [5, 10, 15, 30, 60];
 export const CUSTOM_SNOOZE = -1;
 export const DEFAULT_SNOOZE = 10;
@@ -101,6 +101,11 @@ export default function SnoozePickerScreen(props: Props) {
     const [isLoading, setIsLoading] = useState(false);
     const [initDone, setInitDone] = useState(!isNavMode);
     const [initSelected, setInitSelected] = useState(props.selected ?? DEFAULT_SNOOZE);
+    const [isPremium, setIsPremium] = useState(false);
+
+    useEffect(() => {
+        PremiumStore.isPremiumActive().then(setIsPremium);
+    }, []);
 
     const snoozeLabel = (mins: number): string => {
         if (mins === 60) return t('snooze_1hr');
@@ -139,9 +144,13 @@ export default function SnoozePickerScreen(props: Props) {
         if (val !== CUSTOM_SNOOZE) props.onSelect?.(val);
     };
 
-    // ── Back: show interstitial, then go back ──────────────────────────────
     const handleBack = () => {
         if (isLoading) return;
+        if (isPremium) {
+            if (props.onBack) props.onBack();
+            else navigation.goBack();
+            return;
+        }
         setIsLoading(true);
         showInterstitialAd('snooze_screen', () => {
             setIsLoading(false);
@@ -152,17 +161,26 @@ export default function SnoozePickerScreen(props: Props) {
 
     const handleSave = async () => {
         if (isLoading) return;
-        setIsLoading(true);
         const finalMins = localSelected === CUSTOM_SNOOZE ? customMins : localSelected;
 
         if (isNavMode) {
             await saveDefaultSnooze(finalMins);
+            if (isPremium) {
+                navigation.goBack();
+                return;
+            }
+            setIsLoading(true);
             showInterstitialAd('snooze_screen', () => {
                 setIsLoading(false);
                 navigation.goBack();
             });
         } else {
             props.onSelect?.(finalMins);
+            if (isPremium) {
+                props.onSave?.();
+                return;
+            }
+            setIsLoading(true);
             showInterstitialAd('snooze_screen', () => {
                 setIsLoading(false);
                 props.onSave?.();
@@ -170,23 +188,20 @@ export default function SnoozePickerScreen(props: Props) {
         }
     };
 
-
     if (!initDone) return (
         <View style={{ flex: 1, backgroundColor: colors.background }} />
     );
 
     return (
         <View style={{ flex: 1, backgroundColor: colors.background, paddingTop: ins.top }}>
-            {/* Header */}
             <View style={S.hdr}>
-                {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}> */}
-                    <TouchableOpacity onPress={handleBack} style={S.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
-                        <View style={[S.closeBtnCircle, { backgroundColor: colors.surface }]}>
-                            <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
-                        </View>
-                    </TouchableOpacity>
-                    <Text style={[S.hdrTitle, { color: colors.text }]}>{t('snooze')}</Text>
-                {/* </View> */}
+                <TouchableOpacity onPress={handleBack} style={S.closeBtn} activeOpacity={isLoading ? 1 : 0.7} disabled={isLoading}>
+                    <View style={[S.closeBtnCircle, { backgroundColor: colors.surface }]}>
+                        <Ionicons name="chevron-back" size={28} color={colors.textSecondary} />
+                    </View>
+                </TouchableOpacity>
+                <Text style={[S.hdrTitle, { color: colors.text }]}>{t('snooze')}</Text>
+
                 <TouchableOpacity
                     onPress={handleSave}
                     style={[S.saveBtn, {
@@ -199,7 +214,6 @@ export default function SnoozePickerScreen(props: Props) {
                 </TouchableOpacity>
             </View>
 
-            {/* Options list */}
             <View style={[S.listCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
                 {SNOOZE_OPTS.map((mins, index) => {
                     const isSelected = localSelected === mins;
@@ -228,7 +242,6 @@ export default function SnoozePickerScreen(props: Props) {
                     );
                 })}
 
-                {/* Custom option */}
                 <TouchableOpacity
                     onPress={() => handleSelect(CUSTOM_SNOOZE)}
                     activeOpacity={0.6}
@@ -250,7 +263,6 @@ export default function SnoozePickerScreen(props: Props) {
                 </TouchableOpacity>
             </View>
 
-            {/* Custom drum picker */}
             {localSelected === CUSTOM_SNOOZE && (
                 <View style={[S.drumCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
                     <Drum
@@ -268,8 +280,6 @@ export default function SnoozePickerScreen(props: Props) {
                     <Text style={[S.drumLabel, { color: colors.textSecondary }]}>{t('minutes')}</Text>
                 </View>
             )}
-
-            {/* Native ad — bottom */}
 
             <View style={S.stickyAdContainer}>
                 <AdNative screen="snooze_screen" colors={colors} />

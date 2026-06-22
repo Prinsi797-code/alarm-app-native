@@ -182,7 +182,7 @@ export default {
     Customsounds: "Na-unlock ang custom sounds sa loob ng 15 araw.",
     Pleasetryagain: "May nangyaring mali. Pakisubukang muli.",
     Activefor: "Aktibo sa loob ng 15 araw",
-    Coins: "Coins",
+    Coins: "Balanse ng Barya",
     TotalCoins: "Kabuuang Coins",
     HowtoEarnCoins: "Paano Kumita ng Coins",
     SetEdit: "Magtakda o Mag-edit ng Alarm",
@@ -228,7 +228,38 @@ export default {
     Classic: "Klasiko",
     Dark: "Matingkad na Light",
     Sunset: "Matingkad na Dark",
-    Forest: "Dark"
+    Forest: "Dark",
+
+    HowToUnlocked: "Paano I-unlock ang Mga Background at Ringtone",
+    CoinBalance: "Balanse ng Barya",
+    CoinsButton: "Mga Barya »",
+    RemoveAd: "I-unlock ang Premium at Alisin ang Ads",
+    ChoosePlan: "Piliin ang Iyong Plano",
+    Perweek: "Kada linggo",
+    Bestannual: "Pinakamagandang taunang deal",
+    Permonth: "Kada buwan",
+    subscribe: "Mag-subscribe Ngayon",
+    cancelanytime: "Kanselahin anumang oras. Ligtas sa App Store",
+    Restorepurchase: "Ibalik ang Mga Binili",
+    termsofservice: "Mga Tuntunin ng Serbisyo",
+    privacypolicy: "Patakaran sa Privacy",
+
+    Monthly: "Buwanan",
+    Weekly: "Lingguhan",
+    Yearly: "Taunan",
+    Restored: "✅ Naibalik!",
+    Yourpurchases: "Matagumpay na naibalik ang iyong mga binili.",
+    NoPurchases: "Walang Nakitang Binili",
+    Noprevious: "Walang nakitang nakaraang binili para sa account na ito.",
+    RestoreFailed: "Nabigo ang Pagbabalik",
+    Couldnotrestore: "Hindi maibalik ang mga binili. Pakisubukang muli.",
+    WelcometoPremium: "🎉 Maligayang Pagdating sa Premium!",
+    Yoursubscriptionisnowactive: "Aktibo na ang iyong subscription. I-enjoy ang lahat ng feature!",
+    LetsGo: "Tara Na!",
+    PurchasePending: "Nakabinbing Pagbili",
+    Yourpurchaseis: "Ang iyong pagbili ay naghihintay ng pag-apruba. Maa-activate ito kapag naaprubahan.",
+    PurchaseFailed: "Nabigong Pagbili",
+    Somethingwentwrong: "May nangyaring mali. Pakisubukang muli."
 
 
 };

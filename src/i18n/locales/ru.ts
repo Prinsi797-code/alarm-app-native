@@ -177,7 +177,7 @@ export default {
   Customsounds: "Пользовательские звуки разблокированы на 15 дней.",
   Pleasetryagain: "Что-то пошло не так. Попробуйте снова.",
   Activefor: "Активно 15 дней",
-  Coins: "Монеты",
+  Coins: "Баланс монет",
   TotalCoins: "Всего монет",
   HowtoEarnCoins: "Как заработать монеты",
   SetEdit: "Установить или изменить будильник",
@@ -223,7 +223,39 @@ export default {
   Classic: "Классический",
   Dark: "Яркий Светлый",
   Sunset: "Яркий Тёмный",
-  Forest: "Тёмный"
+  Forest: "Тёмный",
+
+  HowToUnlocked: "Как разблокировать фоны и рингтоны",
+  CoinBalance: "Баланс монет",
+  CoinsButton: "Монеты »",
+  RemoveAd: "Откройте Premium и уберите рекламу",
+  ChoosePlan: "Выберите план",
+  Perweek: "В неделю",
+  Bestannual: "Лучшее годовое предложение",
+  Permonth: "В месяц",
+  subscribe: "Подписаться сейчас",
+  cancelanytime: "Отмена в любое время. Безопасно через App Store",
+  Restorepurchase: "Восстановить покупки",
+  termsofservice: "Условия использования",
+  privacypolicy: "Политика конфиденциальности",
+
+  Monthly: "Ежемесячно",
+  Weekly: "Еженедельно",
+  Yearly: "Ежегодно",
+  Restored: "✅ Восстановлено!",
+  Yourpurchases: "Ваши покупки успешно восстановлены.",
+  NoPurchases: "Покупки не найдены",
+  Noprevious: "Для этой учетной записи не найдено предыдущих покупок.",
+  RestoreFailed: "Ошибка восстановления",
+  Couldnotrestore: "Не удалось восстановить покупки. Попробуйте снова.",
+  WelcometoPremium: "🎉 Добро пожаловать в Premium!",
+  Yoursubscriptionisnowactive: "Ваша подписка активна. Наслаждайтесь всеми функциями!",
+  LetsGo: "Поехали!",
+  PurchasePending: "Покупка ожидает",
+  Yourpurchaseis: "Ваша покупка ожидает подтверждения. Она будет активирована после одобрения.",
+  PurchaseFailed: "Ошибка покупки",
+  Somethingwentwrong: "Что-то пошло не так. Попробуйте снова."
+
 
 
 };

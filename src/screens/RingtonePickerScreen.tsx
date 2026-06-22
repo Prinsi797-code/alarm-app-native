@@ -25,7 +25,7 @@ import DocumentPicker from 'react-native-document-picker';
 import { CoinStore } from '../utils/CoinStore';
 import AdBanner from '../components/AdBanner';
 import RNFS from 'react-native-fs';
-
+import { PremiumStore } from '../utils/PremiumStore';
 
 const TONE_MAP: Record<string, any> = {
     'Fine Day': require('../../assets/sounds/fine_day.mp3'),
@@ -214,6 +214,11 @@ export default function RingtonePickerScreen({
     const [customSoundsDaysLeft, setCustomSoundsDaysLeft] = useState(0);
     const [unlockingSound, setUnlockingSound] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
+    const [isPremium, setIsPremium] = useState(false);
+
+    useEffect(() => {
+        PremiumStore.isPremiumActive().then(setIsPremium);
+    }, []);
 
     const handleTonePress = async (tone: string, customUri?: string) => {
         setLocalSelected(tone);
@@ -285,6 +290,8 @@ export default function RingtonePickerScreen({
         CoinStore.getDaysLeft(200).then(setCustomSoundsDaysLeft);
         return () => { stopPreview(); };
     }, []);
+
+    const hasCustomSoundsAccess = isPremium || customSoundsUnlocked;
 
     const handleSave = async () => {
         if (isLoading) return;
@@ -496,14 +503,16 @@ export default function RingtonePickerScreen({
                                     {t('CustomSounds')}
                                 </Text>
                                 <Text style={{ fontSize: 12, color: colors.textTertiary, marginTop: 1 }}>
-                                    {customSoundsUnlocked
-                                        ? `${customTones.length}/5 ${t('added')} · ${customSoundsDaysLeft}d left`
+                                    {hasCustomSoundsAccess
+                                        ? (isPremium
+                                            ? `${customTones.length}/5 ${t('added')}`
+                                            : `${customTones.length}/5 ${t('added')} · ${customSoundsDaysLeft}d left`)
                                         : t('coinsFor15days')}
                                 </Text>
                             </View>
                         </View>
 
-                        {!customSoundsUnlocked ? (
+                        {!hasCustomSoundsAccess ? (
                             <TouchableOpacity
                                 onPress={handleUnlockCustomSounds}
                                 disabled={unlockingSound}
@@ -540,7 +549,7 @@ export default function RingtonePickerScreen({
                         ) : null}
                     </View>
 
-                    {!customSoundsUnlocked ? (
+                    {!hasCustomSoundsAccess ? (
                         <View style={{ paddingVertical: 24, alignItems: 'center', gap: 6 }}>
                             <Text style={{ fontSize: 28 }}>🔒</Text>
                             <Text style={{ fontSize: 13, color: colors.textTertiary }}>

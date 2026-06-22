@@ -176,7 +176,7 @@ export default {
     Customsounds: "Âm thanh tùy chỉnh đã được mở khóa trong 15 ngày.",
     Pleasetryagain: "Đã xảy ra lỗi. Vui lòng thử lại.",
     Activefor: "Hoạt động trong 15 ngày",
-    Coins: "Xu",
+    Coins: "Số Dư Xu",
     TotalCoins: "Tổng số xu",
     HowtoEarnCoins: "Cách kiếm xu",
     SetEdit: "Đặt hoặc chỉnh sửa báo thức",
@@ -222,7 +222,40 @@ export default {
     Classic: "Cổ điển",
     Dark: "Sáng Nổi Bật",
     Sunset: "Tối Nổi Bật",
-    Forest: "Tối"
+    Forest: "Tối",
+
+    HowToUnlocked: "Cách mở khóa hình nền và nhạc chuông",
+    CoinBalance: "Số Dư Xu",
+    CoinsButton: "Xu »",
+    RemoveAd: "Mở khóa Premium & Xóa quảng cáo",
+    ChoosePlan: "Chọn gói của bạn",
+    Perweek: "Mỗi tuần",
+    Bestannual: "Ưu đãi năm tốt nhất",
+    Permonth: "Mỗi tháng",
+    subscribe: "Đăng ký ngay",
+    cancelanytime: "Hủy bất cứ lúc nào. Bảo mật bởi App Store",
+    Restorepurchase: "Khôi phục giao dịch mua",
+    termsofservice: "Điều khoản dịch vụ",
+    privacypolicy: "Chính sách bảo mật",
+
+    Monthly: "Hàng Tháng",
+    Weekly: "Hàng Tuần",
+    Yearly: "Hàng Năm",
+    Restored: "✅ Đã Khôi Phục!",
+    Yourpurchases: "Các giao dịch mua của bạn đã được khôi phục thành công.",
+    NoPurchases: "Không Tìm Thấy Giao Dịch Mua",
+    Noprevious: "Không tìm thấy giao dịch mua trước đó cho tài khoản này.",
+    RestoreFailed: "Khôi Phục Thất Bại",
+    Couldnotrestore: "Không thể khôi phục giao dịch mua. Vui lòng thử lại.",
+    WelcometoPremium: "🎉 Chào Mừng Đến Với Premium!",
+    Yoursubscriptionisnowactive: "Gói đăng ký của bạn hiện đã hoạt động. Hãy tận hưởng mọi tính năng!",
+    LetsGo: "Bắt Đầu!",
+    PurchasePending: "Đang Chờ Mua Hàng",
+    Yourpurchaseis: "Giao dịch mua của bạn đang chờ phê duyệt. Sẽ được kích hoạt sau khi được chấp thuận.",
+    PurchaseFailed: "Mua Hàng Thất Bại",
+    Somethingwentwrong: "Đã xảy ra lỗi. Vui lòng thử lại."
+
+
 
 
 };

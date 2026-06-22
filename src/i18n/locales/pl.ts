@@ -182,7 +182,7 @@ export default {
   Customsounds: "Niestandardowe dźwięki odblokowane na 15 dni.",
   Pleasetryagain: "Coś poszło nie tak. Spróbuj ponownie.",
   Activefor: "Aktywne przez 15 dni",
-  Coins: "Monety",
+  Coins: "Saldo Monet",
   TotalCoins: "Łączna liczba monet",
   HowtoEarnCoins: "Jak zdobywać monety",
   SetEdit: "Ustaw lub edytuj alarm",
@@ -228,7 +228,38 @@ export default {
   Classic: "Klasyczny",
   Dark: "Intensywny Jasny",
   Sunset: "Intensywny Ciemny",
-  Forest: "Ciemny"
+  Forest: "Ciemny",
+
+  HowToUnlocked: "Jak odblokować tła i dzwonki",
+  CoinBalance: "Saldo Monet",
+  CoinsButton: "Monety »",
+  RemoveAd: "Odblokuj Premium i usuń reklamy",
+  ChoosePlan: "Wybierz plan",
+  Perweek: "Tygodniowo",
+  Bestannual: "Najlepsza oferta roczna",
+  Permonth: "Miesięcznie",
+  subscribe: "Subskrybuj teraz",
+  cancelanytime: "Anuluj w dowolnym momencie. Bezpieczne przez App Store",
+  Restorepurchase: "Przywróć zakupy",
+  termsofservice: "Warunki korzystania",
+  privacypolicy: "Polityka prywatności",
+
+  Monthly: "Miesięcznie",
+  Weekly: "Tygodniowo",
+  Yearly: "Rocznie",
+  Restored: "✅ Przywrócono!",
+  Yourpurchases: "Twoje zakupy zostały pomyślnie przywrócone.",
+  NoPurchases: "Nie znaleziono zakupów",
+  Noprevious: "Nie znaleziono wcześniejszych zakupów dla tego konta.",
+  RestoreFailed: "Przywracanie nie powiodło się",
+  Couldnotrestore: "Nie można przywrócić zakupów. Spróbuj ponownie.",
+  WelcometoPremium: "🎉 Witamy w Premium!",
+  Yoursubscriptionisnowactive: "Twoja subskrypcja jest teraz aktywna. Korzystaj ze wszystkich funkcji!",
+  LetsGo: "Zaczynajmy!",
+  PurchasePending: "Zakup oczekuje",
+  Yourpurchaseis: "Twój zakup oczekuje na zatwierdzenie. Zostanie aktywowany po zatwierdzeniu.",
+  PurchaseFailed: "Zakup nieudany",
+  Somethingwentwrong: "Coś poszło nie tak. Spróbuj ponownie."
 
 
 };

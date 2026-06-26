@@ -180,7 +180,7 @@ export default function StopwatchScreen() {
         )}
       </ScrollView>
 
-      <View style={[S.btnRow, { paddingBottom: ins.bottom + 130 }]}>
+      <View style={[S.btnRow, { paddingBottom: ins.bottom + 150 }]}>
         <TouchableOpacity onPress={handleReset} style={S.iconBtn} activeOpacity={0.75}>
           <View style={[S.iconBtnInner, { borderColor: colors.primary + '66' }]}>
             <Ionicons name="refresh" size={22} color={colors.primary} />

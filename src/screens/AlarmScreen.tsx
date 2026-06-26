@@ -1744,7 +1744,6 @@ export default function AlarmScreen() {
         setHeaderCoins(await CoinStore.getCoins());
         setIsAdLoading(true);
         if (isPremium) {
-            // Premium users ko ad nahi dikhana, seedha close karo
             setIsAdLoading(false);
             setEditing(undefined);
             if (total > 0) {

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, AppState } from 'react-native';
 import { BannerAd, BannerAdSize } from 'react-native-google-mobile-ads';
-import { getScreenAdConfig } from '../services/AdService';
+import { getScreenAdConfig, onRemoteConfigUpdated } from '../services/AdService';
 import { PremiumStore } from '../utils/PremiumStore';
 
 interface Props {
@@ -23,8 +23,7 @@ export default function AdBanner({ screen }: Props) {
 
         const sub = AppState.addEventListener('change', async (state) => {
             if (state === 'active') {
-                // Wait for initRemoteConfig() in App.tsx to finish first
-                await new Promise(res => setTimeout(res, 1000));
+                await new Promise(res => setTimeout(res, 1000)); 
                 setConfig(getScreenAdConfig(screen));
             }
         });

@@ -12,7 +12,9 @@ import { useTheme } from '../contexts/ThemeContext';
 import { Country } from '../data/countries';
 import { WorldClockCard } from '../components/WorldClockCard';
 import AddCountryScreen from './AddCountryScreen';
+import LottieView from 'lottie-react-native';
 import { useTranslation } from 'react-i18next';
+import PurchaseScreen from './PurchaseScreen';
 
 const { width: SW, height: SH } = Dimensions.get('window');
 const WORLD_CLOCKS_KEY = '@world_clocks_v1';
@@ -30,6 +32,7 @@ function AnalogClock({ size = 200, colors }: { size?: number; colors: any }) {
   const secondAnim = useRef(new Animated.Value(0)).current;
   const minuteAnim = useRef(new Animated.Value(0)).current;
   const hourAnim = useRef(new Animated.Value(0)).current;
+  const [isPremium, setIsPremium] = useState(false);
 
   useEffect(() => {
     const tick = () => {
@@ -181,7 +184,6 @@ export default function ClockScreen() {
   const route = useRoute<any>();
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
-
   const [worldClocks, setWorldClocks] = useState<Country[]>([]);
   const [showAddCountry, setShowAddCountry] = useState(false);
 
@@ -227,7 +229,7 @@ export default function ClockScreen() {
   const digitalOpacity = scrollY.interpolate({ inputRange: [THRESHOLD * 0.5, THRESHOLD], outputRange: [0, 1], extrapolate: 'clamp' });
   const digitalTranslateX = scrollY.interpolate({ inputRange: [THRESHOLD * 0.5, THRESHOLD], outputRange: [16, 0], extrapolate: 'clamp' });
   const largeclockOpacity = scrollY.interpolate({ inputRange: [0, THRESHOLD * 0.6], outputRange: [1, 0], extrapolate: 'clamp' });
-
+  const [showPremium, setShowPremium] = useState(false);
   const ORB_SIZE = SW * 1.9;
   const ORB_VISIBLE = SH * 0.40;
   const MINI_HEADER_H = CLOCK_SMALL + 150;
@@ -255,13 +257,27 @@ export default function ClockScreen() {
       {/* Header */}
       <View style={[hdr.wrap, { paddingTop: ins.top + 12 }]}>
         <Text style={[hdr.title, { color: colors.text }]}>{t('worldClock')}</Text>
-        <TouchableOpacity style={hdr.gear} onPress={() => navigation.getParent()?.navigate('Settings')}>
-          <Image
-            source={require('../../assets/icons/settings.png')}
-            style={{ width: 30, height: 30, tintColor: colors.textSecondary }}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+          <TouchableOpacity
+            onPress={() => setShowPremium(true)}
+            style={[hdr.gear, { marginTop: -15 }]}
+            activeOpacity={0.8}
+          >
+            <LottieView
+              source={require('../../assets/animations/premium_star.json')}
+              autoPlay
+              loop
+              style={{ width: 43, height: 43 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={hdr.gear} onPress={() => navigation.getParent()?.navigate('Settings')}>
+            <Image
+              source={require('../../assets/icons/settings.png')}
+              style={{ width: 30, height: 30, tintColor: colors.textSecondary }}
+              resizeMode="contain"
+            />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Scroll content */}
@@ -347,6 +363,14 @@ export default function ClockScreen() {
           onBack={() => setShowAddCountry(false)}
         />
       </Modal>
+      <PurchaseScreen
+        visible={showPremium}
+        onClose={() => setShowPremium(false)}
+        onSuccess={() => {
+          setShowPremium(false);
+          setIsPremium(true);
+        }}
+      />
     </View>
   );
 }

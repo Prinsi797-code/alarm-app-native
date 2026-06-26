@@ -41,6 +41,25 @@ const SCREEN_KEYS: Record<string, {
 const SHOWN_LIFETIME_KEY = (s: string) => `@ad_shown_lifetime_${s}`;
 const SHOWN_DATE_KEY = (s: string) => `@ad_shown_date_${s}`;
 
+// 👇 NEW: simple pub-sub so other components (AdBanner etc.) know
+// the moment fetchAndActivate() has REALLY finished, instead of guessing with setTimeout.
+type Listener = () => void;
+const rcListeners: Listener[] = [];
+
+export function onRemoteConfigUpdated(cb: Listener): () => void {
+    rcListeners.push(cb);
+    return () => {
+        const i = rcListeners.indexOf(cb);
+        if (i > -1) rcListeners.splice(i, 1);
+    };
+}
+
+function notifyRemoteConfigListeners() {
+    rcListeners.forEach(l => {
+        try { l(); } catch (e) { console.log('[RC] listener error:', e); }
+    });
+}
+
 export async function initRemoteConfig(): Promise<void> {
     try {
         const rc = remoteConfig();
@@ -66,16 +85,23 @@ export async function initRemoteConfig(): Promise<void> {
             theme_baner_flag: 0, theme_baner_id: '',
             country_inter_flag: 0, country_inter_id: '',
             country_baner_flag: 0, country_baner_id: '',
-
         });
 
-        await rc.fetchAndActivate();
+        // NOTE: as of newer @react-native-firebase versions, this boolean means
+        // "new values were fetched remotely" — NOT "activated". Don't rely on it
+        // to mean "values changed in the active config".
+        const fetched = await rc.fetchAndActivate();
+        console.log('[RC] fetchAndActivate -> fetched new values:', fetched);
 
         console.log('[RC] main_baner_flag:', rc.getValue('main_baner_flag').asNumber());
         console.log('[RC] main_baner_flag source:', rc.getValue('main_baner_flag').getSource());
 
-    } catch (e) {
-        console.log('[RC] init error:', e);
+        // 👇 tell every subscribed component (AdBanner etc.) to re-read config NOW
+        notifyRemoteConfigListeners();
+
+    } catch (e: any) {
+        // 👇 IMPORTANT: log message + code, this is how you'll SEE if it's throttling
+        console.log('[RC] init error:', e?.message ?? e, e?.code ?? '');
     }
 }
 

@@ -104,9 +104,12 @@ export default function SettingsScreen() {
   ];
 
   const handleMore = async (key: string) => {
-    if (key === 'Privacy') Linking.openURL('https://yourapp.com/privacy');
-    else if (key === 'Share') Share.share({ message: 'Check out this amazing Alarm app!' });
-    else if (key === 'Rate') Linking.openURL('itms-apps://itunes.apple.com/app/id...');
+    if (key === 'Privacy') Linking.openURL('https://alarm-app.blogspot.com/');
+    else if (key === 'Share') Share.share({
+      message: 'Check out this amazing Alarm app! https://apps.apple.com/in/app/alarm2026-smart-alarm-clock/id6779944599',
+      url: 'https://apps.apple.com/in/app/alarm2026-smart-alarm-clock/id6779944599',
+    });
+    else if (key === 'Rate') Linking.openURL('https://apps.apple.com/in/app/alarm2026-smart-alarm-clock/id6779944599');
   };
 
   const S = makeStyles(colors, isDark);

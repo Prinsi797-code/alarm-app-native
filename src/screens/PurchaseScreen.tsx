@@ -365,11 +365,11 @@ export default function PurchaseScreen({ visible, onClose, onSuccess }: Props) {
                 )}
               </TouchableOpacity>
               <Text style={styles.linkSep}>|</Text>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 onPress={() => Linking.openURL('https://www.apple.com/legal/internet-services/itunes/dev/stdeula/')}
               >
                 <Text style={styles.linkText}>{t('termsofservice')}</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
               <Text style={styles.linkSep}>|</Text>
               <TouchableOpacity
                 onPress={() => Linking.openURL('https://alarm-app.blogspot.com/')}
